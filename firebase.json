@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "source": "/",
+    "predeploy": ["npm run build functions"]
+  },
+  "hosting": {
+    "public": "dist/apps/volleymotion",
+    "ignore": ["firebase.json", "**/node_modules/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}

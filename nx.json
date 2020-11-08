@@ -29,6 +29,9 @@
     "volleymotion-e2e": {
       "tags": [],
       "implicitDependencies": ["volleymotion"]
+    },
+    "functions": {
+      "tags": []
     }
   }
 }
