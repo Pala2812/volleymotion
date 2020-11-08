@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form (ngSubmit)="login(loginForm)" class="login-form" [formGroup]="loginForm">
+            <mat-form-field>
+                <input matInput placeholder="E-Mail" formControlName="email" autocomplete="email" type="email">
+                <mat-error *ngIf="loginForm?.controls?.email?.errors?.required">
+                    Dieses Feld wird benötigt
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Passwort" formControlName="password" autocomplete="current-password" type="password">
+                <mat-error *ngIf="loginForm?.controls?.password?.errors?.required">
+                    Diesed Feld wird benötigt
+                </mat-error>
+            </mat-form-field>
+            <button mat-flat-button class="login-button" color="primary" type="submit">Login</button>
+        </form>
+    </mat-card-content>
+</mat-card>
