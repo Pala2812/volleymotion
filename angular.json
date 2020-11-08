@@ -10,7 +10,7 @@
       },
       "root": "apps/volleymotion",
       "sourceRoot": "apps/volleymotion/src",
-      "prefix": "volleymotion",
+      "prefix": "vm",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -25,7 +25,10 @@
               "apps/volleymotion/src/favicon.ico",
               "apps/volleymotion/src/assets"
             ],
-            "styles": ["apps/volleymotion/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/volleymotion/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -79,7 +82,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/volleymotion/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/volleymotion/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -112,7 +117,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/volleymotion-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/volleymotion-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
