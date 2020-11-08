@@ -12,7 +12,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'turniere',
+    loadChildren: () =>
+      import('./tournaments/tournaments.module').then(
+        (m) => m.TournamentsModule
+      ),
+  },
+  { path: '', redirectTo: 'turniere', pathMatch: 'full' },
 ];
 @NgModule({
   declarations: [],
