@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'vm-login',
@@ -9,7 +12,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
@@ -28,7 +31,9 @@ export class LoginComponent implements OnInit {
       const email = controls.email.value;
       const password = controls.password.value;
 
-      console.log(email, password);
+      this.authService
+        .signInWithEmailAndPassword(email, password)
+        .subscribe(() => this.router.navigate(['turniere']));
     }
   }
 }

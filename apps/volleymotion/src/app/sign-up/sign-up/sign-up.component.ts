@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../core/services/auth.service';
 import { PasswordErrorMatcher } from '../password-error-matcher';
 
 @Component({
@@ -10,7 +13,8 @@ import { PasswordErrorMatcher } from '../password-error-matcher';
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   passwordMatcher = new PasswordErrorMatcher();
-  constructor() {}
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.signUpForm = this.initSignUpForm();
@@ -39,8 +43,9 @@ export class SignUpComponent implements OnInit {
       const controls = form.controls;
       const email = controls.email.value;
       const password = controls.password.value;
-      console.log(email);
-      console.log(password);
+      this.authService
+        .createUserWithEmailAndPassword(email, password)
+        .subscribe(() => this.router.navigate(['turniere']));
     }
   }
 }
