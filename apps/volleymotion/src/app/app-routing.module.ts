@@ -14,6 +14,18 @@ const routes: Routes = [
       import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
   },
   {
+    path: 'impressum',
+    loadChildren: () =>
+      import('./impressum/impressum.module').then((m) => m.ImpressumModule),
+  },
+  {
+    path: 'datenschutz',
+    loadChildren: () =>
+      import('./data-privacy/data-privacy.module').then(
+        (m) => m.DataPrivacyModule
+      ),
+  },
+  {
     path: '',
     component: HomeComponent,
     children: [
