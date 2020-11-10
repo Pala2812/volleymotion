@@ -14,6 +14,8 @@ import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
 import { reducers } from './core/store/reducers';
 import { LayoutModule } from './core/layout/layout.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,8 +42,15 @@ import { LayoutModule } from './core/layout/layout.module';
       logOnly: environment.production,
     }),
     LayoutModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { floatLabel: 'auto' },
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

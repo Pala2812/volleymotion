@@ -18,6 +18,11 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
+        path: 'benutzer',
+        loadChildren: () =>
+          import('./user/user.module').then((m) => m.UserModule),
+      },
+      {
         path: 'turniere',
         loadChildren: () =>
           import('./tournaments/tournaments.module').then(

@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  height: 100%;
+  padding: 3rem 1rem 1rem 1rem;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .mat-flat-button {
+      margin-top: 1rem;
+    }
+  }
+}

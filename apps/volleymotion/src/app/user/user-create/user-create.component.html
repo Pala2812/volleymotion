@@ -1,0 +1,71 @@
+<form [formGroup]="userCreateForm" (ngSubmit)="save(userCreateForm)">
+    <mat-form-field appearance="fill">
+        <mat-label>Vorname</mat-label>
+        <input matInput formControlName="firstname">
+        <mat-error *ngIf="userCreateForm?.controls?.firstname?.errors?.required">
+            Vorname wird benötigt
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nachname</mat-label>
+        <input matInput formControlName="lastname">
+        <mat-error *ngIf="userCreateForm?.controls?.lastname?.errors?.required">
+            Nachname wird benötigt
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" (click)="birthday.open()">
+        <mat-label>Geburtstag</mat-label>
+        <mat-datepicker #birthday></mat-datepicker>
+        <input (focus)="$event.target.blur()" [matDatepicker]="birthday" matInput placeholder="Geburtstag"
+            formControlName="birthday">
+        <mat-error *ngIf="userCreateForm?.controls?.birthday?.errors?.required">
+            Geburtstag wird benötigt
+        </mat-error>
+    </mat-form-field>
+
+    <form formGroupName="address">
+        <mat-form-field appearance="fill">
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput formControlName="postalCode" type="number">
+            <mat-error *ngIf="address?.controls?.postalCode?.errors?.required">
+                Postleitzahl wird benötigt
+            </mat-error>
+            <mat-error *ngIf="address?.controls?.postalCode?.errors?.minLength">
+                Postleitzahl muss 5 Zeichen lang sein
+            </mat-error>
+            <mat-error *ngIf="address?.controls?.postalCode?.errors?.maxLength">
+                Postleitzahl muss 5 Zeichen lang sein
+            </mat-error>
+        </mat-form-field>
+    </form>
+
+    <form formGroupName="userInfo">
+        <mat-form-field appearance="fill">
+            <mat-label>Vereinsmitglied</mat-label>
+            <mat-select formControlName="isClubMember">
+                <mat-option *ngFor="let option of isClubMemberOptions" [value]="option?.value">
+                    {{option?.key}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userInfo?.controls?.isClubMember?.errors?.required">
+                Angabe wird benötigt
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Position</mat-label>
+            <mat-select formControlName="position">
+                <mat-option *ngFor="let option of positionOptions" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userInfo?.controls?.position?.errors?.required">
+                Angabe wird benötigt
+            </mat-error>
+        </mat-form-field>
+    </form>
+
+    <button mat-flat-button color="primary" type="submit">Speichern</button>
+</form>
