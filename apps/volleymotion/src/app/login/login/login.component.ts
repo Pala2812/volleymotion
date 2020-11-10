@@ -1,21 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { AuthService } from '../../core/services/auth.service';
+import { AuthActions } from '../../core/store/actions';
+import { StoreState } from '../../core/store/reducers';
+import { AuthSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  isSiginingInWithEmailAndPassword$: Observable<boolean>;
   loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private unsubscribe$ = new Subject();
+
+  constructor(
+    private store: Store<StoreState>,
+    private actions$: Actions,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
+    this.isSiginingInWithEmailAndPassword$ = this.store.pipe(
+      select(AuthSelectors.selectIsSigningInWithEmailAndPassword)
+    );
+
+    this.actions$
+      .pipe(
+        ofType(AuthActions.SignInWithEMailAndPasswordSuccess),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(() => this.router.navigate(['']));
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initForm(): FormGroup {
@@ -31,9 +59,9 @@ export class LoginComponent implements OnInit {
       const email = controls.email.value;
       const password = controls.password.value;
 
-      this.authService
-        .signInWithEmailAndPassword(email, password)
-        .subscribe(() => this.router.navigate(['turniere']));
+      this.store.dispatch(
+        AuthActions.SignInWithEmailAndPassword({ email, password })
+      );
     }
   }
 }

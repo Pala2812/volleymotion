@@ -11,12 +11,14 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Passwort" formControlName="password" autocomplete="current-password" type="password">
+                <input matInput placeholder="Passwort" formControlName="password" autocomplete="current-password"
+                    type="password">
                 <mat-error *ngIf="loginForm?.controls?.password?.errors?.required">
                     Diesed Feld wird benötigt
                 </mat-error>
             </mat-form-field>
-            <button mat-flat-button class="login-button" color="primary" type="submit">Login</button>
+            <button mat-flat-button class="login-button" color="primary" type="submit"
+                [disabled]="isSiginingInWithEmailAndPassword$ | async">Login</button>
         </form>
     </mat-card-content>
 </mat-card>

@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
+import { AuthActions } from '../../core/store/actions';
+import { AuthSelectors } from '../../core/store/selectors';
+import { StoreState } from '../../core/store/reducers';
 import { PasswordErrorMatcher } from '../password-error-matcher';
 
 @Component({
@@ -10,14 +17,37 @@ import { PasswordErrorMatcher } from '../password-error-matcher';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
+  isCreatingUserWithEmailAndPassword$: Observable<boolean>;
   signUpForm: FormGroup;
   passwordMatcher = new PasswordErrorMatcher();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private unsubscribe$ = new Subject();
+
+  constructor(
+    private store: Store<StoreState>,
+    private actions$: Actions,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.signUpForm = this.initSignUpForm();
+
+    this.actions$
+      .pipe(
+        ofType(AuthActions.CreateUserWithEmailAndPasswordSuccess),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(() => this.router.navigate(['']));
+
+    this.isCreatingUserWithEmailAndPassword$ = this.store.pipe(
+      select(AuthSelectors.selectIsCreatingUserWithEMailAndPassword)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initSignUpForm(): FormGroup {
@@ -43,9 +73,10 @@ export class SignUpComponent implements OnInit {
       const controls = form.controls;
       const email = controls.email.value;
       const password = controls.password.value;
-      this.authService
-        .createUserWithEmailAndPassword(email, password)
-        .subscribe(() => this.router.navigate(['turniere']));
+
+      this.store.dispatch(
+        AuthActions.CreateUserWithEmailAndPassword({ email, password })
+      );
     }
   }
 }

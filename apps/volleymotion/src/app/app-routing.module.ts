@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './core/layout/home/home.component';
 
 const routes: Routes = [
   {
@@ -13,13 +14,23 @@ const routes: Routes = [
       import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
   },
   {
-    path: 'turniere',
-    loadChildren: () =>
-      import('./tournaments/tournaments.module').then(
-        (m) => m.TournamentsModule
-      ),
+    path: '',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'turniere',
+        loadChildren: () =>
+          import('./tournaments/tournaments.module').then(
+            (m) => m.TournamentsModule
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'turniere',
+        pathMatch: 'full',
+      },
+    ],
   },
-  { path: '', redirectTo: 'turniere', pathMatch: 'full' },
 ];
 @NgModule({
   declarations: [],
