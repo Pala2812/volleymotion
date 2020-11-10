@@ -7,13 +7,13 @@ export const authFeatureKey = 'auth';
 export interface State {
   isCreatingUserWithEMailAndPassword: boolean;
   isSigningInWithEMailAndPassword: boolean;
-  user: User;
+  uid: string;
 }
 
 export const initialState: State = {
   isCreatingUserWithEMailAndPassword: false,
   isSigningInWithEMailAndPassword: false,
-  user: undefined,
+  uid: undefined,
 };
 
 export const reducer = createReducer(
@@ -22,9 +22,9 @@ export const reducer = createReducer(
     ...state,
     isCreatingUserWithEMailAndPassword: true,
   })),
-  on(AuthActions.CreateUserWithEmailAndPasswordSuccess, (state, { user }) => ({
+  on(AuthActions.CreateUserWithEmailAndPasswordSuccess, (state, { uid }) => ({
     ...state,
-    user,
+    uid,
     isCreatingUserWithEMailAndPassword: false,
   })),
   on(AuthActions.CreateUserWithEmaiAndPasswordFailure, (state) => ({
@@ -36,13 +36,15 @@ export const reducer = createReducer(
     ...state,
     isSigningInWithEMailAndPassword: true,
   })),
-  on(AuthActions.SignInWithEMailAndPasswordSuccess, (state, { user }) => ({
+  on(AuthActions.SignInWithEMailAndPasswordSuccess, (state, { uid }) => ({
     ...state,
-    user,
+    uid,
     isSigningInWithEMailAndPassword: false,
   })),
   on(AuthActions.SignInWithEmailAndPasswordFailure, (state) => ({
     ...state,
     isSigningInWithEMailAndPassword: false,
-  }))
+  })),
+
+  on(AuthActions.setUid, (state, { uid }) => ({ ...state, uid }))
 );

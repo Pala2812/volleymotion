@@ -55,12 +55,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(form: FormGroup) {
     if (form.valid) {
-      const controls = form.controls;
-      const email = controls.email.value;
-      const password = controls.password.value;
-
+      const credentials = form.value;
       this.store.dispatch(
-        AuthActions.SignInWithEmailAndPassword({ email, password })
+        AuthActions.SignInWithEmailAndPassword(credentials)
       );
     }
   }

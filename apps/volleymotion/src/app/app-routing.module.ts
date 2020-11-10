@@ -4,19 +4,19 @@ import { HomeComponent } from './core/layout/home/home.component';
 
 const routes: Routes = [
   {
-    path: 'login',
-    loadChildren: () =>
-      import('./login/login.module').then((m) => m.LoginModule),
-  },
-  {
-    path: 'sign-up',
-    loadChildren: () =>
-      import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
-  },
-  {
     path: '',
     component: HomeComponent,
     children: [
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('./login/login.module').then((m) => m.LoginModule),
+      },
+      {
+        path: 'sign-up',
+        loadChildren: () =>
+          import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
+      },
       {
         path: 'benutzer',
         loadChildren: () =>

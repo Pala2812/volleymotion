@@ -26,7 +26,6 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictActionImmutability: true,
-        strictActionSerializability: true,
         strictActionTypeUniqueness: true,
         strictActionWithinNgZone: true,
         strictStateImmutability: true,

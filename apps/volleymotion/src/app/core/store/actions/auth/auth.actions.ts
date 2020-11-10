@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../models';
 const key = '[Auth]';
 
 export const CreateUserWithEmailAndPassword = createAction(
@@ -9,7 +8,7 @@ export const CreateUserWithEmailAndPassword = createAction(
 
 export const CreateUserWithEmailAndPasswordSuccess = createAction(
   `${key} Create User With Email And Password Success`,
-  props<{ user: User }>()
+  props<{ uid: string }>()
 );
 
 export const CreateUserWithEmaiAndPasswordFailure = createAction(
@@ -24,10 +23,12 @@ export const SignInWithEmailAndPassword = createAction(
 
 export const SignInWithEMailAndPasswordSuccess = createAction(
   `${key} Sign In With Email And Password Success`,
-  props<{ user: User }>()
+  props<{ uid: string }>()
 );
 
 export const SignInWithEmailAndPasswordFailure = createAction(
   `${key} Sign In With Email and Password Failure`,
   props<{ error: any }>()
 );
+
+export const setUid = createAction(`${key} Set Uid`, props<{ uid: string }>());

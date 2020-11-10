@@ -38,7 +38,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         ofType(AuthActions.CreateUserWithEmailAndPasswordSuccess),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(() => this.router.navigate(['']));
+      .subscribe(({ uid }) => this.router.navigate([`benutzer/erstellen/${uid}`]));
 
     this.isCreatingUserWithEmailAndPassword$ = this.store.pipe(
       select(AuthSelectors.selectIsCreatingUserWithEMailAndPassword)

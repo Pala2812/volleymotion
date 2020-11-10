@@ -7,6 +7,9 @@ export const onAccountCreate = functions
   .onCreate(async (user) => {
     const uid = user?.uid;
     const email = user?.email;
-
-    return await admin.firestore().doc(`users/${uid}`).create({ uid, email });
+    const createdAt = admin.firestore.Timestamp.now();
+    return await admin
+      .firestore()
+      .doc(`users/${uid}`)
+      .create({ uid, email, createdAt });
   });

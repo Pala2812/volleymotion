@@ -14,3 +14,5 @@ export const selectIsSigningInWithEmailAndPassword = createSelector(
   selectAuth,
   (state) => state.isSigningInWithEMailAndPassword
 );
+
+export const selectUid = createSelector(selectAuth, (state) => state.uid);

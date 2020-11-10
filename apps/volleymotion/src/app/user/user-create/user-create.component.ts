@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { UserActions } from '../../core/store/actions';
+import { StoreState } from '../../core/store/reducers';
+import { UserSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-user-create',
@@ -7,6 +16,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user-create.component.scss'],
 })
 export class UserCreateComponent implements OnInit {
+  isUpdatingUser$: Observable<boolean>;
   userCreateForm: FormGroup;
   positionOptions = [
     'Zuspieler',
@@ -23,10 +33,25 @@ export class UserCreateComponent implements OnInit {
     { key: 'Ich bin in einem Verein angemeldet/tätig', value: true },
     { key: 'Ich bin in keinem Verein angemeldet/tätig', value: false },
   ];
-  constructor() {}
+
+  private unsubscribe$ = new Subject();
+
+  constructor(
+    private store: Store<StoreState>,
+    private actions$: Actions,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.userCreateForm = this.initUserCreateFrom();
+
+    this.actions$
+      .pipe(ofType(UserActions.UpdateUserSuccess), takeUntil(this.unsubscribe$))
+      .subscribe(() => this.router.navigate(['']));
+
+    this.isUpdatingUser$ = this.store.pipe(
+      select(UserSelectors.selectIsUpdatingUser)
+    );
   }
 
   get userInfo() {
@@ -59,6 +84,7 @@ export class UserCreateComponent implements OnInit {
   save(form: FormGroup) {
     if (form.valid) {
       const user = form.value;
+      this.store.dispatch(UserActions.UpdateUser({ user }));
     }
   }
 }

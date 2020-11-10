@@ -6,10 +6,11 @@ import { UserAddress } from './user-address';
 
 export interface User {
   uid: string;
+  createdAt: Timestamp;
   email: string;
   firstname: string;
   lastname: string;
   address: UserAddress;
-  birthday: Date | Timestamp;
+  birthday: number;
   userInfo: UserInfo;
 }
