@@ -3,12 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, withLatestFrom } from 'rxjs/operators';
 
 import { Survey, SurveyComment } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
-import { SurveySelectors } from '../../core/store/selectors';
+import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 import { SurveyCreateEditComponent } from '../survey-create-edit/survey-create-edit.component';
 
 @Component({
@@ -54,10 +54,16 @@ export class SurveyDetailComponent implements OnInit {
   }
   likeSurvey() {
     this.survey$
-      .pipe(take(1))
-      .subscribe((survey) =>
-        this.store.dispatch(SurveyActions.likeSurvey({ id: survey.id }))
-      );
+      .pipe(
+        withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
+        take(1)
+      )
+      .subscribe((params) => {
+        if (!params[1]) {
+          return alert('Bitte registrieren Sie sich');
+        }
+        this.store.dispatch(SurveyActions.likeSurvey({ id: params[0].id }));
+      });
   }
 
   sendMessage(form: FormGroup) {

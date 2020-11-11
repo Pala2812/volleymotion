@@ -4,6 +4,11 @@
   .mat-icon-button {
     margin-left: auto;
   }
+
+  .title-link {
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 .nav-list-container {
@@ -68,7 +73,7 @@
     color: #fff;
 
     a {
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
       color: #fff;
       text-decoration: none;
       font-size: large;

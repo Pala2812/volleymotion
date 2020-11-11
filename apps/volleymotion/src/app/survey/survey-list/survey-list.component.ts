@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { Survey } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
-import { SurveySelectors } from '../../core/store/selectors';
+import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-survey-list',
@@ -31,7 +32,16 @@ export class SurveyListComponent implements OnInit {
     this.router.navigate([`umfragen/detail/${survey.id}`]);
   }
 
-  likeSurvey(survey: Survey) {
-    this.store.dispatch(SurveyActions.likeSurvey({id: survey.id}));
+  likeSurvey(survey: Survey, event: Event) {
+    this.store
+      .pipe(select(AuthSelectors.selectUid))
+      .pipe(take(1))
+      .subscribe((uid) => {
+        if (!uid) {
+          return alert('Bitte registrieren Sie sich');
+        }
+        this.store.dispatch(SurveyActions.likeSurvey({ id: survey.id }));
+        event.stopImmediatePropagation();
+      });
   }
 }

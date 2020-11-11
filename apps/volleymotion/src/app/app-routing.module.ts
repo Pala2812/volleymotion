@@ -47,7 +47,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'turniere',
+        redirectTo: 'umfragen',
         pathMatch: 'full',
       },
     ],

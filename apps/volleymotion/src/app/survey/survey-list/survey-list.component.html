@@ -7,7 +7,7 @@
             <div class="survey-content" [innerHTML]="survey?.description"></div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-icon-button (click)="likeSurvey(survey)">
+            <button mat-icon-button (click)="likeSurvey(survey, $event)">
                 <mat-icon color="primary">thumb_up</mat-icon>
             </button>
         </mat-card-actions>
