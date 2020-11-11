@@ -33,20 +33,27 @@
   }
 
   .nav-list {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
 
     .nav-list-item {
       font-weight: 500;
       font-size: larger;
+      padding: 1rem;
 
       .nav-list-item-link {
-        padding: 1rem;
         text-decoration: none;
-        color: #fff;
-        border-radius: 0.5rem;
+        transition: color 0.25s ease-out;
+        color: rgb(189, 132, 235);
 
         &.router-link-active {
-          background-color: rgba(#fff, 0.1);
+          color: #fff;
+          border-radius: 0.5rem;
+        }
+
+        &:hover {
+          color: #fff;
         }
       }
     }

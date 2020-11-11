@@ -30,8 +30,14 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'about',
+        loadChildren: () =>
+          import('./about/about.module').then((m) => m.AboutModule),
+      },
+      {
         path: 'umfragen',
-        loadChildren: () => import('./survey/survey.module').then(m => m.SurveyModule),
+        loadChildren: () =>
+          import('./survey/survey.module').then((m) => m.SurveyModule),
       },
       {
         path: 'impressum',
