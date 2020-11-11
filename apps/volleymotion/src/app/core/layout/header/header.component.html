@@ -1,3 +1,25 @@
 <nav>
-    
+    <mat-toolbar color="primary">
+        <h1>Volley-Motion</h1>
+        <button mat-icon-button (click)="toggleMenu()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <div class="nav-list-container" [class.is-visible]="isMenuVisible">
+        <!--   <ul class="nav-list">
+            <li class="nav-list-time"></li>
+            <li class="nav-list-time"></li>
+        </ul>
+
+        -->
+        <div class="logout-container">
+            <button class="logout-btn" mat-icon-button (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+            </button>
+            <mat-label>
+                Logout
+            </mat-label>
+        </div>
+    </div>
 </nav>

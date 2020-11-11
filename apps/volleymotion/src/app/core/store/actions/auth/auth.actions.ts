@@ -32,3 +32,5 @@ export const SignInWithEmailAndPasswordFailure = createAction(
 );
 
 export const setUid = createAction(`${key} Set Uid`, props<{ uid: string }>());
+
+export const signOut = createAction(`${key} Sign Out`);

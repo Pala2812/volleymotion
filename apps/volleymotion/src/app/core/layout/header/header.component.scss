@@ -1,4 +1,37 @@
-:host {
-  height: 4rem;
-  background-color: blue;
+.mat-toolbar {
+  box-shadow: 2px 5px 5px rgba(black, 0.2);
+
+  .mat-icon-button {
+    margin-left: auto;
+  }
+}
+
+.nav-list-container {
+  position: absolute;
+  display: grid;
+  grid-template-rows: 0.8fr 0.2fr;
+  height: 100%;
+  width: 100%;
+  background-color: blueviolet;
+  transform: translateY(100vh);
+  opacity: 0;
+  transition: opacity 0.15s ease-out, transform 0.33s ease-out;
+
+  &.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .logout-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    color: #fff;
+
+    .logout-btn {
+      .mat-icon {
+        color: #fff;
+      }
+    }
+  }
 }
