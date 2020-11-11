@@ -3,9 +3,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { from, of } from 'rxjs';
-import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
-import { Survey } from '../../../models';
+import { Survey, SurveyComment } from '../../../models';
 import { SurveyActions } from '../../actions';
 import { StoreState } from '../../reducers';
 import { AuthSelectors } from '../../selectors';
@@ -79,6 +85,43 @@ export class SurveyEffects {
           map(() => SurveyActions.likeSurveySuccess()),
           catchError((error) => of(SurveyActions.likeSurveyFailure({ error })))
         )
+      )
+    )
+  );
+
+  addCommentToSurvey$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SurveyActions.addCommentToSurvey),
+      switchMap(({ message }) =>
+        from(
+          this.fs
+            .collection(`surveys/${message.surveyId}/comments`)
+            .add(message)
+        ).pipe(
+          map(() => SurveyActions.addCommentToSurveySuccess()),
+          catchError((error) =>
+            of(SurveyActions.addCommentToSurveyFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  loadCommentsFromSurvey$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SurveyActions.loadCommentsOfSurvey),
+      switchMap(({ id }) =>
+        this.fs
+          .collection<SurveyComment>(`surveys/${id}/comments`)
+          .valueChanges()
+          .pipe(
+            map((surveyComments) =>
+              SurveyActions.loadCommentsOfSurveySuccess({ surveyComments })
+            ),
+            catchError((error) =>
+              of(SurveyActions.loadCommentsOfSurveyFailure({ error }))
+            )
+          )
       )
     )
   );

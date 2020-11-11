@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Survey } from '../../../models';
+import { Survey, SurveyComment } from '../../../models';
 import { SurveyActions } from '../../actions';
 
 export const surveyFeatureKey = 'survey';
@@ -10,8 +10,10 @@ export interface State {
   isCreatingSurvey: boolean;
   isLoadingSurveys: boolean;
   isLikingSurvey: boolean;
+  isLoadingSurveyComments: boolean;
   surveys: Survey[];
   survey: Survey;
+  surveyComments: SurveyComment[];
 }
 
 export const initialState: State = {
@@ -19,8 +21,10 @@ export const initialState: State = {
   isCreatingSurvey: false,
   isLoadingSurveys: false,
   isLikingSurvey: false,
+  isLoadingSurveyComments: false,
   surveys: [],
   survey: undefined,
+  surveyComments: [],
 };
 
 export const reducer = createReducer(
@@ -77,5 +81,22 @@ export const reducer = createReducer(
       ...state,
       isLoadingSurvey: false,
     })
-  )
+  ),
+
+  on(SurveyActions.loadCommentsOfSurvey, (state) => ({
+    ...state,
+    isLoadingSurveyComments: true,
+  })),
+  on(
+    SurveyActions.loadCommentsOfSurveySuccess,
+    (state, { surveyComments }) => ({
+      ...state,
+      surveyComments,
+      isLoadingSurveyComments: false,
+    })
+  ),
+  on(SurveyActions.loadCommentsOfSurveyFailure, (state) => ({
+    ...state,
+    isLoadingSurveyComments: false,
+  }))
 );

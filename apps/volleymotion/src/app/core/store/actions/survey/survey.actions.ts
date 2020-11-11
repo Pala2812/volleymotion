@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Survey } from '../../../models';
+import { Survey, SurveyComment } from '../../../models';
 
 const key = '[Survey]';
 
@@ -49,5 +49,32 @@ export const likeSurvey = createAction(
 export const likeSurveySuccess = createAction(`${key} Like Survey Success`);
 export const likeSurveyFailure = createAction(
   `${key} Like Survey Failure`,
+  props<{ error: any }>()
+);
+
+export const addCommentToSurvey = createAction(
+  `${key} Add Comment To Survey`,
+  props<{ message: SurveyComment }>()
+);
+export const addCommentToSurveySuccess = createAction(
+  `${key} Add Comment To Survey Success`
+);
+export const addCommentToSurveyFailure = createAction(
+  `${key} Add Comment To Survey Failure`,
+  props<{ error: any }>()
+);
+
+export const loadCommentsOfSurvey = createAction(
+  `${key} Load Comments Of Survey`,
+  props<{ id: string }>()
+);
+
+export const loadCommentsOfSurveySuccess = createAction(
+  `${key} Load Comments Of Survey Success`,
+  props<{ surveyComments: SurveyComment[] }>()
+);
+
+export const loadCommentsOfSurveyFailure = createAction(
+  `${key} Load Comments Of Survey Failure`,
   props<{ error: any }>()
 );

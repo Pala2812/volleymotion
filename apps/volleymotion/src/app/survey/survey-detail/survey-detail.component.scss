@@ -1,14 +1,41 @@
 :host {
   display: grid;
-  grid-template-rows: 0.7fr 0.3fr;
-  padding: 2rem;
+  grid-template-rows: 1fr auto;
+  grid-row-gap: 1rem;
+  height: 100%;
+  padding: 1rem;
 
-  .mat-card {
+  .survey-detail-container {
+    display: grid;
+    grid-template-columns: 0.8fr 0.2fr;
+    grid-column-gap: 1rem;
+
+    .mat-card {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .mat-card-content {
+        height: 100%;
+      }
+
+      .mat-card-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr auto;
     width: 100%;
 
-    .mat-card-actions {
-      display: flex;
-      justify-content: flex-end;
+    .mat-form-field {
+      width: 100%;
+    }
+    .mat-icon-button {
+      height: 100%;
     }
   }
 }

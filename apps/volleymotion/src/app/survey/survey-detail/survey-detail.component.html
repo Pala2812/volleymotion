@@ -1,18 +1,48 @@
 <ng-template #survey>
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                {{(survey$ | async)?.title}}
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="content" [innerHTML]="(survey$ | async)?.description"></div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-icon-button (click)="likeSurvey()">
-                <mat-icon color="primary">thumb_up</mat-icon>
-            </button>
-        </mat-card-actions>
-    </mat-card>
+    <div class="survey-detail-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    {{(survey$ | async)?.title}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="content" [innerHTML]="(survey$ | async)?.description"></div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-icon-button (click)="likeSurvey()">
+                    <mat-icon color="primary">thumb_up</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Kommetare</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p *ngFor="let comment of surveyComments$ | async">{{comment?.message}}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </ng-template>
+
 <p *ngIf="isLoadingSurvey$ | async; else survey">Loading</p>
+
+<mat-card>
+    <form [formGroup]="messageForm" (ngSubmit)="sendMessage(messageForm)">
+        <mat-form-field>
+            <mat-label>Kommentar schreiben</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
+            <mat-error *ngIf="messageForm?.controls?.message?.errors?.required">
+                Nachricht wird benötigt
+            </mat-error>
+            <mat-error *ngIf="messageForm?.controls?.message?.errors?.maxLength">
+                Nachricht braucht einen Inhalt
+            </mat-error>
+        </mat-form-field>
+        <button mat-button type="submit">
+            <mat-icon color="primary">send</mat-icon>
+        </button>
+    </form>
+</mat-card>

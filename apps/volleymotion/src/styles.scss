@@ -4,6 +4,7 @@ html,
 body {
   height: 100%;
   overflow-y: hidden;
+  background-color: rgb(245, 247, 251);
 }
 body {
   margin: 0;
@@ -20,4 +21,8 @@ body {
       display: none;
     }
   }
+}
+
+.mat-card {
+  box-shadow: 0 0 .5rem rgba(black, 0.25) !important;
 }
