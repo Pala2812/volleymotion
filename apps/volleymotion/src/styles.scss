@@ -24,5 +24,17 @@ body {
 }
 
 .mat-card {
-  box-shadow: 0 0 .5rem rgba(black, 0.25) !important;
+  box-shadow: 0 0 0.5rem rgba(black, 0.25) !important;
+}
+
+quill-editor {
+  width: 100%;
+
+  .ql-container {
+    min-height: 300px;
+
+    > * {
+      min-height: 300px;
+    }
+  }
 }

@@ -21,13 +21,18 @@
                 <mat-card-title>Kommetare</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p *ngFor="let comment of surveyComments$ | async">{{comment?.message}}</p>
+                <ng-template #comments>
+                    <div class="comments">
+                        <p *ngFor="let comment of (surveyComments$ | async)">{{comment?.message}}</p>
+                    </div>
+                </ng-template>
+                <mat-spinner *ngIf="isLoadingSurvey$ | async; else comments"></mat-spinner>
             </mat-card-content>
         </mat-card>
     </div>
 </ng-template>
 
-<p *ngIf="isLoadingSurvey$ | async; else survey">Loading</p>
+<mat-spinner *ngIf="isLoadingSurvey$ | async; else survey"></mat-spinner>
 
 <mat-card>
     <form [formGroup]="messageForm" (ngSubmit)="sendMessage(messageForm)">

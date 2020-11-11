@@ -22,5 +22,10 @@
         </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button color="primary"  [disabled]="isCreatingSurvey$ | async">Veröffentlichen</button>
+    <button mat-flat-button color="primary"  [disabled]="isCreatingSurvey$ | async">
+        <ng-template #text>
+            <span>Veröffentlichen</span>
+        </ng-template>
+        <mat-spinner *ngIf="(isCreatingSurvey$ | async); else text" [diameter]=5></mat-spinner>
+    </button>
 </form>

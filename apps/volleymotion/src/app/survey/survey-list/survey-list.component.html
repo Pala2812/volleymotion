@@ -14,8 +14,8 @@
     </mat-card>
 </ng-template>
 
+<mat-spinner *ngIf="isLoadingSurveys$ | async; else surveys" [diameter]="10"></mat-spinner>
 
-<p *ngIf="isLoadingSurveys$ | async; else surveys">Loading</p>
 <button mat-fab class="create-btn" color="primary" [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>
 </button>

@@ -5,6 +5,7 @@
 
   .mat-card {
     margin-bottom: 1rem;
+    cursor: pointer;
 
     .survey-content {
       max-height: 20rem;
@@ -14,6 +15,10 @@
       display: flex;
       justify-content: flex-end;
     }
+  }
+
+  .mat-spinner {
+    margin: auto;
   }
 
   .create-btn {

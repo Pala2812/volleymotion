@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatDatepickerModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatInputModule,
@@ -25,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatDatepickerModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class AngularMaterialModule {}
