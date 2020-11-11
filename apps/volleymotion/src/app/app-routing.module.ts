@@ -30,7 +30,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'about',
+        path: 'die-mission',
         loadChildren: () =>
           import('./about/about.module').then((m) => m.AboutModule),
       },
