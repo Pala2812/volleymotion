@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AuthActions } from '../../store/actions';
 
 import { StoreState } from '../../store/reducers';
+import { AuthSelectors } from '../../store/selectors';
 
 @Component({
   selector: 'vm-header',
@@ -10,11 +12,14 @@ import { StoreState } from '../../store/reducers';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  uid$: Observable<string>;
   isMenuVisible = false;
 
   constructor(private store: Store<StoreState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
+  }
 
   toggleMenu() {
     this.isMenuVisible = !this.isMenuVisible;
