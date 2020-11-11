@@ -1,0 +1,21 @@
+<ng-template #surveys>
+    <mat-card *ngFor="let survey of surveys$ | async" (click)="viewDetail(survey)">
+        <mat-card-header>
+            <mat-card-title>{{survey?.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="survey-content" [innerHTML]="survey?.description"></div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-icon-button (click)="likeSurvey(survey)">
+                <mat-icon color="primary">thumb_up</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</ng-template>
+
+
+<p *ngIf="isLoadingSurveys$ | async; else surveys">Loading</p>
+<button mat-fab class="create-btn" color="primary" [routerLink]="['../erstellen']">
+    <mat-icon>add</mat-icon>
+</button>

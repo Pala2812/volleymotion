@@ -16,10 +16,14 @@
   transform: translateY(100vh);
   opacity: 0;
   transition: opacity 0.15s ease-out, transform 0.33s ease-out;
+  display: none;
+  z-index: 0;
 
   &.is-visible {
     transform: translateY(0);
     opacity: 1;
+    display: grid;
+    z-index: 10000;
   }
 
   .logout-container {

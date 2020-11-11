@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  grid-template-rows: 0.7fr 0.3fr;
+  padding: 2rem;
+
+  .mat-card {
+    width: 100%;
+
+    .mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

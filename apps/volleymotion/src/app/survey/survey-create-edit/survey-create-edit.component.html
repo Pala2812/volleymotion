@@ -1,0 +1,26 @@
+<form [formGroup]="surveyForm" (ngSubmit)="publish(surveyForm)">
+    <mat-form-field>
+        <mat-label>Überschrift</mat-label>
+        <input matInput formControlName="title">
+        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.required">
+            Überschrift wird benötigt
+        </mat-error>
+        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.minLength">
+            Überschrift muss mindestens 5 Zeichen lang sein
+        </mat-error>
+        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.maxLength">
+            Überschrift darf nicht mehr als 60 Zeichen haben
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="no-underline">
+        <input matInput formControlName="description" hidden>
+        <quill-editor class="editor" placeholder="Beschreibung eingeben" (onContentChanged)="patchDescription($event)">
+        </quill-editor>
+        <mat-error *ngIf="surveyForm?.controls?.description?.errors?.required">
+            Beschreibung wird benötigt
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary"  [disabled]="isCreatingSurvey$ | async">Veröffentlichen</button>
+</form>

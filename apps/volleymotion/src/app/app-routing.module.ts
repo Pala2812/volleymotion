@@ -30,6 +30,10 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'umfragen',
+        loadChildren: () => import('./survey/survey.module').then(m => m.SurveyModule),
+      },
+      {
         path: 'impressum',
         loadChildren: () =>
           import('./impressum/impressum.module').then((m) => m.ImpressumModule),
