@@ -4,13 +4,15 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +38,7 @@ import { LayoutModule } from './core/layout/layout.module';
     EffectsModule.forRoot(effects),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireAnalyticsModule,
     AngularFirestoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -44,7 +47,9 @@ import { LayoutModule } from './core/layout/layout.module';
     QuillModule.forRoot(),
     MatNativeDateModule,
     LayoutModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [
     {
