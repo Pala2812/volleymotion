@@ -16,6 +16,6 @@
 
 <mat-spinner *ngIf="isLoadingSurveys$ | async; else surveys" [diameter]="10"></mat-spinner>
 
-<button mat-fab class="create-btn" color="primary" [routerLink]="['../erstellen']" aria-label="Umfrage erstellen">
+<button mat-fab class="create-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
     <mat-icon>add</mat-icon>
 </button>
