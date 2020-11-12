@@ -3,7 +3,7 @@
         <a routerLink="/" class="title-link">
             <h1>Volley-Motion</h1>
         </a>
-        <button mat-icon-button (click)="toggleMenu()">
+        <button aria-label="menu-toggle" mat-icon-button (click)="toggleMenu()">
             <mat-icon>menu</mat-icon>
         </button>
     </mat-toolbar>
@@ -22,7 +22,7 @@
 
 
         <div class="logout-container" *ngIf="uid$ | async; else auth ">
-            <button class="logout-btn" mat-icon-button (click)="logout()">
+            <button class="logout-btn" mat-icon-button (click)="logout()" aria-label="logout">
                 <mat-icon>exit_to_app</mat-icon>
             </button>
             <mat-label>

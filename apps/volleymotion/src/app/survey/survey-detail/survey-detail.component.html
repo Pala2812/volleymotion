@@ -10,7 +10,7 @@
                 <div class="content" [innerHTML]="(survey$ | async)?.description"></div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-icon-button (click)="likeSurvey()">
+                <button mat-icon-button (click)="likeSurvey()" aria-label="Umfrage liken">
                     <mat-icon color="primary">thumb_up</mat-icon>
                 </button>
             </mat-card-actions>
@@ -46,7 +46,7 @@
                 Nachricht braucht einen Inhalt
             </mat-error>
         </mat-form-field>
-        <button mat-button type="submit">
+        <button mat-button type="submit" aria-label="Kommentar senden">
             <mat-icon color="primary">send</mat-icon>
         </button>
     </form>
