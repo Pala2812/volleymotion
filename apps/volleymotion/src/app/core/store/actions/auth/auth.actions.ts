@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
+import { UserPreferences } from '../../../models/user-preferences.model';
 const key = '[Auth]';
 
 export const CreateUserWithEmailAndPassword = createAction(
   `${key} Create User With Email And Password`,
-  props<{ email: string; password: string }>()
+  props<{ email: string; password: string; userPreferences: UserPreferences }>()
 );
 
 export const CreateUserWithEmailAndPasswordSuccess = createAction(

@@ -3,7 +3,7 @@ import Timestamp = firebase.firestore.Timestamp;
 
 import { UserInfo } from './user-info';
 import { UserAddress } from './user-address';
-
+import { UserPreferences } from './user-preferences.model';
 export interface User {
   uid: string;
   createdAt: Timestamp;
@@ -13,4 +13,5 @@ export interface User {
   address: UserAddress;
   birthday: number;
   userInfo: UserInfo;
+  userPreferences: UserPreferences;
 }

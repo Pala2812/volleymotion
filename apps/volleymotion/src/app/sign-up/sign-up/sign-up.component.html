@@ -4,6 +4,7 @@
     </mat-card-header>
     <mat-card-content>
         <form class="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
+
             <mat-form-field>
                 <input matInput placeholder="E-Mail" autocomplete="email" formControlName="email">
                 <mat-error *ngIf="signUpForm?.controls?.email?.errors?.required">
@@ -21,12 +22,34 @@
                     Dieses Feld wird benötigt
                 </mat-error>
             </mat-form-field>
+
             <mat-form-field>
                 <input matInput type="password" autocomplete="new-password" placeholder="Password wiederholen"
                     formControlName="passwordMatch" [errorStateMatcher]="passwordMatcher">
                 <mat-error *ngIf="signUpForm?.errors?.mismatch">
                     Passwörter stimmen nicht überein
                 </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="no-underline  no-padding-bottom">
+                <input matInput formControlName="isAgbAccepted" hidden>
+                <mat-checkbox>Ich habe die AGB gelesen und stimme dieser zu.</mat-checkbox>
+                <mat-error *ngIf="signUpForm?.controls?.isAgbAccepted?.errors">
+                    Bitte stimme der AGB zu
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="no-underline  no-padding-bottom">
+                <input matInput formControlName="isDataPrivacyAccepted" hidden>
+                <mat-checkbox>Ich habe die Datenschutzerklärung gelesen und stimme dieser zu.</mat-checkbox>
+                <mat-error *ngIf="signUpForm?.controls?.isDataPrivacyAccepted?.errors">
+                    Bitte stimme der Datenschutzerklärung zu
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="no-underline no-padding-bottom">
+                <input matInput formControlName="isNewsletterAccepted" hidden>
+                <mat-checkbox>Ich möchte Newsletter-Emails erhalten.</mat-checkbox>
             </mat-form-field>
 
             <button class="sign-up-button" mat-flat-button color="primary" type="submit" aria-label="signup"

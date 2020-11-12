@@ -6,11 +6,11 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AuthService } from '../../core/services/auth.service';
 import { AuthActions } from '../../core/store/actions';
 import { AuthSelectors } from '../../core/store/selectors';
 import { StoreState } from '../../core/store/reducers';
 import { PasswordErrorMatcher } from '../password-error-matcher';
+import { UserPreferences } from '../../core/models/user-preferences.model';
 
 @Component({
   selector: 'vm-sign-up',
@@ -21,6 +21,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
   isCreatingUserWithEmailAndPassword$: Observable<boolean>;
   signUpForm: FormGroup;
   passwordMatcher = new PasswordErrorMatcher();
+  userPreferences: UserPreferences = {
+    isAgbAccepted: false,
+    isDataPrivacyAccepted: false,
+    isNewsletterAccepted: false,
+  };
 
   private unsubscribe$ = new Subject();
 
@@ -38,7 +43,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
         ofType(AuthActions.CreateUserWithEmailAndPasswordSuccess),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(({ uid }) => this.router.navigate([`benutzer/erstellen/${uid}`]));
+      .subscribe(({ uid }) =>
+        this.router.navigate([`benutzer/erstellen/${uid}`])
+      );
 
     this.isCreatingUserWithEmailAndPassword$ = this.store.pipe(
       select(AuthSelectors.selectIsCreatingUserWithEMailAndPassword)
@@ -56,6 +63,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required]),
         passwordMatch: new FormControl(''),
+        isAgbAccepted: new FormControl(false, [Validators.requiredTrue]),
+        isDataPrivacyAccepted: new FormControl(false, [Validators.requiredTrue]),
+        isNewsletterAccepted: new FormControl(false),
       },
       { validators: [this.validatePassword] }
     );
@@ -72,10 +82,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (form.valid) {
       const controls = form.controls;
       const email = controls.email.value;
+      const isAgbAccepted = controls.isAgbAccepted.value;
+      const isDataPrivacyAccepted = controls.isDataPrivacyAccepted.value;
+      const isNewsletterAccepted = controls.isNewsletterAccepted.value;
       const password = controls.password.value;
 
+      const userPreferences: UserPreferences = {
+        isAgbAccepted,
+        isDataPrivacyAccepted,
+        isNewsletterAccepted,
+      };
       this.store.dispatch(
-        AuthActions.CreateUserWithEmailAndPassword({ email, password })
+        AuthActions.CreateUserWithEmailAndPassword({ email, password, userPreferences })
       );
     }
   }

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { from, throwError } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { UserPreferences } from '../models/user-preferences.model';
 
 import { User } from '../models/user.model';
 @Injectable({
@@ -30,7 +31,7 @@ export class AuthService {
     );
   }
 
-  createUserWithEmailAndPassword(email: string, password: string) {
+  createUserWithEmailAndPassword(email: string, password: string, userPreferences: UserPreferences) {
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
       mergeMap((userCredentials) =>
         this.fs
@@ -38,6 +39,7 @@ export class AuthService {
           .snapshotChanges()
           .pipe(
             filter((snapshot) => snapshot.payload.exists),
+            mergeMap((snapshot) => this.fs.doc(`users/${snapshot.payload.id}`).update(userPreferences).then(() => snapshot)),
             map((snapshot) => snapshot.payload.data())
           )
       )

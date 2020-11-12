@@ -18,6 +18,16 @@
       display: flex;
       flex-direction: column;
 
+      mat-form-field {
+        &.no-underline {
+          height: 50px;
+
+          .mat-form-field-infix {
+            padding-bottom: 0;
+          }
+        }
+      }
+
       .sign-up-button {
         margin-top: 1rem;
       }

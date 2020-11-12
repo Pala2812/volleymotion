@@ -12,8 +12,8 @@ export class AuthEffects {
   createUserWithEMailAndPassword = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.CreateUserWithEmailAndPassword),
-      mergeMap(({ email, password }) =>
-        this.authService.createUserWithEmailAndPassword(email, password).pipe(
+      mergeMap(({ email, password, userPreferences }) =>
+        this.authService.createUserWithEmailAndPassword(email, password, userPreferences).pipe(
           map((user) =>
             AuthActions.CreateUserWithEmailAndPasswordSuccess({ uid: user.uid })
           ),

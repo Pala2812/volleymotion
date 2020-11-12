@@ -7,7 +7,7 @@ body {
   background-color: rgb(245, 247, 251);
 
   &.offline {
-    filter: grayscale(.75)
+    filter: grayscale(0.75);
   }
 }
 body {
@@ -20,6 +20,16 @@ body {
 }
 
 .mat-form-field.no-underline {
+  &.no-padding-bottom {
+    .mat-form-field-wrapper {
+      .mat-form-field-infix {
+        padding-bottom: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+    }
+  }
+
   .mat-form-field-wrapper {
     .mat-form-field-underline {
       display: none;
