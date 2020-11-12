@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AuthActions } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit {
     private auth: AngularFireAuth,
     private store: Store<StoreState>,
     private swUpdate: SwUpdate,
-    private networkStatusService: NetworkStatusService
+    private networkStatusService: NetworkStatusService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +36,15 @@ export class AppComponent implements OnInit {
   verifyAndUpdate() {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-        if (confirm('New version available. Load New Version?')) {
+        const ref = this.snackbar.open(
+          'Eine neue Version ist Verfügbar',
+          'Updaten',
+          { horizontalPosition: 'left', verticalPosition: 'top' }
+        );
+
+        ref.onAction().subscribe((action) => {
           window.location.reload();
-        }
+        });
       });
     }
   }

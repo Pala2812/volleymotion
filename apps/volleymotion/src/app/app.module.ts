@@ -5,7 +5,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
@@ -40,6 +40,7 @@ import { LayoutModule } from './core/layout/layout.module';
     AngularFireAuthModule,
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
+    MatSnackBarModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
