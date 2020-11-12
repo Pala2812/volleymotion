@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
+
 import { AuthActions } from './core/store/actions';
-
 import { StoreState } from './core/store/reducers';
-
+import { NetworkStatusService } from './core/services/network-status.service';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   constructor(
     private auth: AngularFireAuth,
     private store: Store<StoreState>,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private networkStatusService: NetworkStatusService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
       }
     });
     this.verifyAndUpdate();
+    this.networkStatusService.init();
   }
 
   verifyAndUpdate() {
