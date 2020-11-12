@@ -1,6 +1,6 @@
 <nav>
     <mat-toolbar color="primary">
-        <a routerLink="/" class="title-link" (click)="toggleMenu()">
+        <a routerLink="/" class="title-link" (click)="closeMenu()">
             <img class="title-link-logo" src="assets/logo.svg">
             <h1>Volley-Motion</h1>
         </a>
@@ -16,8 +16,8 @@
                     routerLinkActive="router-link-active">Umfragen</a>
             </li>
             <li class="nav-list-item" (click)="toggleMenu()">
-                <a [routerLink]="['/die-mission']" class="nav-list-item-link"
-                    routerLinkActive="router-link-active">Die Mission</a>
+                <a [routerLink]="['/die-mission']" class="nav-list-item-link" routerLinkActive="router-link-active">Die
+                    Mission</a>
             </li>
         </ul>
 

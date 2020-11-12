@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit {
     this.isMenuVisible = !this.isMenuVisible;
   }
 
+  closeMenu() {
+    this.isMenuVisible = false;
+  }
+
   logout() {
     this.store.dispatch(AuthActions.signOut());
     this.toggleMenu();

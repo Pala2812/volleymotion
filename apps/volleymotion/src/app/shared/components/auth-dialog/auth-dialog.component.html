@@ -3,7 +3,7 @@
     <p>Diese Funktion ist nur für registriete Benutzer möglich.</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button>Abbrechen</button>
-    <button mat-flat-button color="accent">Login</button>
-    <button mat-flat-button color="primary">Sign-Up</button>
+    <button mat-button aria-label="cancel-btn" matDialogClose>Abbrechen</button>
+    <button mat-flat-button color="accent" matDialogClose [routerLink]="['/login']" aria-label="login-btn">Login</button>
+    <button mat-flat-button color="primary" matDialogClose [routerLink]="['/sign-up']" aria-label="sign-up-btn">Sign-Up</button>
 </mat-dialog-actions>
