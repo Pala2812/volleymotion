@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { SwUpdate } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
 import { AuthActions } from './core/store/actions';
 
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private auth: AngularFireAuth,
-    private store: Store<StoreState>
+    private store: Store<StoreState>,
+    private swUpdate: SwUpdate
   ) {}
 
   ngOnInit(): void {
@@ -24,5 +26,16 @@ export class AppComponent implements OnInit {
         this.store.dispatch(AuthActions.setUid({ uid: user.uid }));
       }
     });
+    this.verifyAndUpdate();
+  }
+
+  verifyAndUpdate() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm('New version available. Load New Version?')) {
+          window.location.reload();
+        }
+      });
+    }
   }
 }
