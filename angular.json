@@ -23,7 +23,8 @@
             "aot": true,
             "assets": [
               "apps/volleymotion/src/favicon.ico",
-              "apps/volleymotion/src/assets"
+              "apps/volleymotion/src/assets",
+              "apps/volleymotion/src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -62,7 +63,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/volleymotion/ngsw-config.json"
             }
           }
         },

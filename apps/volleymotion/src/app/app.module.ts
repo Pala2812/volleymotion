@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
 import { reducers } from './core/store/reducers';
 import { LayoutModule } from './core/layout/layout.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { LayoutModule } from './core/layout/layout.module';
     QuillModule.forRoot(),
     MatNativeDateModule,
     LayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {
