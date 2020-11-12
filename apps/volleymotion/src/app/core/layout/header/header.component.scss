@@ -6,8 +6,16 @@
   }
 
   .title-link {
+    display: flex;
+    align-items: center;
     color: #fff;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+
+    .title-link-logo {
+      margin-right: .5rem;
+      width: 2.5rem;
+    }
   }
 }
 
