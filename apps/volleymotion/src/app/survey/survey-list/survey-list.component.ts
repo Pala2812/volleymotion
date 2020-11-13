@@ -18,20 +18,22 @@ import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-di
 })
 export class SurveyListComponent implements OnInit {
   isLoadingSurveys$: Observable<boolean>;
+  isReportingSurvey$: Observable<boolean>;
+  isLikingSurvey$: Observable<boolean>;
   uid$: Observable<string>;
   surveys$: Observable<Survey[]>;
 
   constructor(
     private store: Store<StoreState>,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.store.dispatch(SurveyActions.loadSurveys());
-    this.isLoadingSurveys$ = this.store.pipe(
-      select(SurveySelectors.selectIsLoadingSurveys)
-    );
+    this.isLoadingSurveys$ = this.store.pipe(select(SurveySelectors.selectIsLoadingSurveys));
+    this.isLikingSurvey$ = this.store.pipe(select(SurveySelectors.selectIsLikingSurvey));
+    this.isReportingSurvey$ = this.store.pipe(select(SurveySelectors.selectIsReportingSurvey));
     this.surveys$ = this.store.pipe(select(SurveySelectors.selectSurveys));
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
   }

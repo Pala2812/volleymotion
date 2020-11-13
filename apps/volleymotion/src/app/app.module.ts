@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
 import { reducers } from './core/store/reducers';
+import { SnackbarService } from './core/services/snackbar.service';
 import { LayoutModule } from './core/layout/layout.module';
 
 @NgModule({
@@ -53,6 +54,7 @@ import { LayoutModule } from './core/layout/layout.module';
     }),
   ],
   providers: [
+    SnackbarService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { floatLabel: 'auto' },
