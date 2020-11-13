@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { Survey, SurveyComment } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
-import { SurveyCreateEditComponent } from '../survey-create-edit/survey-create-edit.component';
+import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-dialog.component';
 
 @Component({
   selector: 'vm-survey-detail',
@@ -25,7 +26,8 @@ export class SurveyDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<StoreState>
+    private store: Store<StoreState>,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -52,22 +54,31 @@ export class SurveyDetailComponent implements OnInit {
       message: new FormControl('', [Validators.required]),
     });
   }
-  likeSurvey() {
-    this.survey$
-      .pipe(
-        withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
-        take(1)
-      )
-      .subscribe((params) => {
-        if (!params[1]) {
-          return alert('Bitte registrieren Sie sich');
+
+  likeSurvey(survey: Survey, event: Event) {
+    this.store
+      .pipe(select(AuthSelectors.selectUid))
+      .pipe(take(1))
+      .subscribe((uid) => {
+        if (!uid) {
+          return this.dialog.open(AuthDialogComponent);
         }
-        this.store.dispatch(SurveyActions.likeSurvey({ id: params[0].id }));
+        this.store.dispatch(SurveyActions.likeSurvey({ id: survey.id }));
+        event.stopImmediatePropagation();
       });
   }
 
   reportSurvey(survey: Survey, event: Event) {
-    event.stopImmediatePropagation();
+    this.store
+      .pipe(select(AuthSelectors.selectUid))
+      .pipe(take(1))
+      .subscribe((uid) => {
+        if (!uid) {
+          return this.dialog.open(AuthDialogComponent);
+        }
+        this.store.dispatch(SurveyActions.reportSurvey({ id: survey.id }));
+        event.stopImmediatePropagation();
+      });
   }
 
   sendMessage(form: FormGroup) {

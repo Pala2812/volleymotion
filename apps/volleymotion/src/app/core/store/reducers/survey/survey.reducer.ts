@@ -10,6 +10,7 @@ export interface State {
   isCreatingSurvey: boolean;
   isLoadingSurveys: boolean;
   isLikingSurvey: boolean;
+  isReportingSurvey: boolean;
   isLoadingSurveyComments: boolean;
   surveys: Survey[];
   survey: Survey;
@@ -20,6 +21,7 @@ export const initialState: State = {
   isLoadingSurvey: false,
   isCreatingSurvey: false,
   isLoadingSurveys: false,
+  isReportingSurvey: false,
   isLikingSurvey: false,
   isLoadingSurveyComments: false,
   surveys: [],
@@ -98,5 +100,18 @@ export const reducer = createReducer(
   on(SurveyActions.loadCommentsOfSurveyFailure, (state) => ({
     ...state,
     isLoadingSurveyComments: false,
-  }))
+  })),
+
+  on(SurveyActions.reportSurvey, (state) => ({
+    ...state,
+    isReportingSurvey: true,
+  })),
+  on(
+    SurveyActions.reportSurveySuccess,
+    SurveyActions.reportSurveyFailure,
+    (state) => ({
+      ...state,
+      isReportingSurvey: false,
+    })
+  ),
 );

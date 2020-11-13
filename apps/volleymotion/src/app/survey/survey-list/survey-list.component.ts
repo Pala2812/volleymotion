@@ -64,6 +64,15 @@ export class SurveyListComponent implements OnInit {
   }
 
   reportSurvey(survey: Survey, event: Event) {
-    event.stopImmediatePropagation();
+    this.store
+      .pipe(select(AuthSelectors.selectUid))
+      .pipe(take(1))
+      .subscribe((uid) => {
+        if (!uid) {
+          return this.dialog.open(AuthDialogComponent);
+        }
+        this.store.dispatch(SurveyActions.reportSurvey({ id: survey.id }));
+        event.stopImmediatePropagation();
+      });
   }
 }

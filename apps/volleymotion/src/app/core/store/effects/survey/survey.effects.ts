@@ -5,6 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { from, of } from 'rxjs';
 import {
   catchError,
+  concatMap,
   map,
   mergeMap,
   switchMap,
@@ -28,7 +29,7 @@ export class SurveyEffects {
     this.actions$.pipe(
       ofType(SurveyActions.createSurvey),
       mergeMap(({ survey }) =>
-        from(this.fs.collection('surveys').add(survey)).pipe(
+        from(this.fs.collection('surveys').add({...survey, id: this.fs.createId()})).pipe(
           map(() => SurveyActions.createSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.createSurveyFailure({ error }))
@@ -122,6 +123,25 @@ export class SurveyEffects {
               of(SurveyActions.loadCommentsOfSurveyFailure({ error }))
             )
           )
+      )
+    )
+  );
+
+  reportSurvey$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SurveyActions.reportSurvey),
+      withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
+      concatMap((params) =>
+        from(
+          this.fs
+            .doc(`surveys/${params[0].id}/reports/${params[1]}`)
+            .set({ uid: params[1] })
+        ).pipe(
+          map(() => SurveyActions.reportSurveySuccess()),
+          catchError((error) =>
+            of(SurveyActions.reportSurveyFailure({ error }))
+          )
+        )
       )
     )
   );

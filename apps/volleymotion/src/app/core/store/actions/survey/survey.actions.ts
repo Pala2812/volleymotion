@@ -78,3 +78,15 @@ export const loadCommentsOfSurveyFailure = createAction(
   `${key} Load Comments Of Survey Failure`,
   props<{ error: any }>()
 );
+
+export const reportSurvey = createAction(
+  `${key} Report Survey`,
+  props<{ id: string }>()
+);
+
+export const reportSurveySuccess = createAction(`${key} Report Survey Success`);
+
+export const reportSurveyFailure = createAction(
+  `${key} Report Survey Failure`,
+  props<{ error: any }>()
+);

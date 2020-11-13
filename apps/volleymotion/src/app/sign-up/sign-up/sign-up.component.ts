@@ -11,6 +11,7 @@ import { AuthSelectors } from '../../core/store/selectors';
 import { StoreState } from '../../core/store/reducers';
 import { PasswordErrorMatcher } from '../password-error-matcher';
 import { UserPreferences } from '../../core/models/user-preferences.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vm-sign-up',
@@ -32,7 +33,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<StoreState>,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +47,19 @@ export class SignUpComponent implements OnInit, OnDestroy {
       )
       .subscribe(({ uid }) =>
         this.router.navigate([`benutzer/erstellen/${uid}`])
+      );
+
+    this.actions$
+      .pipe(
+        ofType(AuthActions.CreateUserWithEmaiAndPasswordFailure),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(({ error }) =>
+        this.snackbar.open(error.message, undefined, {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+        })
       );
 
     this.isCreatingUserWithEmailAndPassword$ = this.store.pipe(
@@ -64,7 +79,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
         password: new FormControl('', [Validators.required]),
         passwordMatch: new FormControl(''),
         isAgbAccepted: new FormControl(false, [Validators.requiredTrue]),
-        isDataPrivacyAccepted: new FormControl(false, [Validators.requiredTrue]),
+        isDataPrivacyAccepted: new FormControl(false, [
+          Validators.requiredTrue,
+        ]),
         isNewsletterAccepted: new FormControl(false),
       },
       { validators: [this.validatePassword] }
@@ -93,8 +110,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
         isNewsletterAccepted,
       };
       this.store.dispatch(
-        AuthActions.CreateUserWithEmailAndPassword({ email, password, userPreferences })
+        AuthActions.CreateUserWithEmailAndPassword({
+          email,
+          password,
+          userPreferences,
+        })
       );
     }
+  }
+
+  onCheckboxChanged(control: string, event: any) {
+    this.signUpForm.controls[control].patchValue(event.checked);
   }
 }

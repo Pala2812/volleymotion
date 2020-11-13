@@ -33,7 +33,7 @@
 
             <mat-form-field class="no-underline  no-padding-bottom">
                 <input matInput formControlName="isAgbAccepted" hidden>
-                <mat-checkbox>Ich habe die AGB gelesen und stimme dieser zu.</mat-checkbox>
+                <mat-checkbox (change)="onCheckboxChanged('isAgbAccepted', $event)">Ich habe die AGB gelesen und stimme dieser zu.</mat-checkbox>
                 <mat-error *ngIf="signUpForm?.controls?.isAgbAccepted?.errors">
                     Bitte stimme der AGB zu
                 </mat-error>
@@ -41,7 +41,7 @@
 
             <mat-form-field class="no-underline  no-padding-bottom">
                 <input matInput formControlName="isDataPrivacyAccepted" hidden>
-                <mat-checkbox>Ich habe die Datenschutzerklärung gelesen und stimme dieser zu.</mat-checkbox>
+                <mat-checkbox (change)="onCheckboxChanged('isDataPrivacyAccepted', $event)">Ich habe die Datenschutzerklärung gelesen und stimme dieser zu.</mat-checkbox>
                 <mat-error *ngIf="signUpForm?.controls?.isDataPrivacyAccepted?.errors">
                     Bitte stimme der Datenschutzerklärung zu
                 </mat-error>
@@ -49,7 +49,7 @@
 
             <mat-form-field class="no-underline no-padding-bottom">
                 <input matInput formControlName="isNewsletterAccepted" hidden>
-                <mat-checkbox>Ich möchte Newsletter-Emails erhalten.</mat-checkbox>
+                <mat-checkbox (change)="onCheckboxChanged('isNewsletterAccepted', $event)">Ich möchte Newsletter-Emails erhalten.</mat-checkbox>
             </mat-form-field>
 
             <button class="sign-up-button" mat-flat-button color="primary" type="submit" aria-label="signup"
