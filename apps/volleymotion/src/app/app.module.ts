@@ -18,7 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
-import { reducers } from './core/store/reducers';
+import { reducers, metaReducers } from './core/store/reducers';
 import { SnackbarService } from './core/services/snackbar.service';
 import { LayoutModule } from './core/layout/layout.module';
 
@@ -35,11 +35,12 @@ import { LayoutModule } from './core/layout/layout.module';
         strictActionWithinNgZone: true,
         strictStateImmutability: true,
       },
+      metaReducers,
     }),
     EffectsModule.forRoot(effects),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFireAnalyticsModule,
+    environment.production ? AngularFireAnalyticsModule : [],
     AngularFirestoreModule,
     MatSnackBarModule,
     StoreDevtoolsModule.instrument({

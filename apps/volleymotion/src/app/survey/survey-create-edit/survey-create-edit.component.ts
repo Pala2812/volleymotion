@@ -69,19 +69,22 @@ export class SurveyCreateEditComponent
   }
 
   ngAfterViewInit(): void {
-    this.store
-      .pipe(
-        select(SurveySelectors.selectSurvey),
-        filter((survey) => !!survey),
-        take(1)
-      )
-      .subscribe((survey) => {
-        this.surveyForm = this.initSurveyForm(survey);
-        (this?.quill as any)?.writeValue(survey?.description);
-      });
+    if (this.isEdit) {
+      this.store
+        .pipe(
+          select(SurveySelectors.selectSurvey),
+          filter((survey) => !!survey),
+          take(1)
+        )
+        .subscribe((survey) => {
+          this.surveyForm = this.initSurveyForm(survey);
+          (this?.quill as any)?.writeValue(survey?.description);
+        });
+    }
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({survey: undefined}));
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

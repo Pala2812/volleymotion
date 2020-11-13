@@ -2,25 +2,36 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+
 import { AuthService } from '../../../services/auth.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { AuthActions } from '../../actions';
+import { SignInWithEmailAndPasswordFailure } from '../../actions/auth/auth.actions';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private snackbar: SnackbarService
+  ) {}
 
-  createUserWithEMailAndPassword = createEffect(() =>
+  createUserWithEMailAndPassword$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.CreateUserWithEmailAndPassword),
       mergeMap(({ email, password, userPreferences }) =>
-        this.authService.createUserWithEmailAndPassword(email, password, userPreferences).pipe(
-          map((user) =>
-            AuthActions.CreateUserWithEmailAndPasswordSuccess({ uid: user.uid })
-          ),
-          catchError((error) =>
-            of(AuthActions.CreateUserWithEmaiAndPasswordFailure({ error }))
+        this.authService
+          .createUserWithEmailAndPassword(email, password, userPreferences)
+          .pipe(
+            map((user) =>
+              AuthActions.CreateUserWithEmailAndPasswordSuccess({
+                uid: user.uid,
+              })
+            ),
+            catchError((error) =>
+              of(AuthActions.CreateUserWithEmaiAndPasswordFailure({ error }))
+            )
           )
-        )
       )
     )
   );
@@ -39,6 +50,18 @@ export class AuthEffects {
         )
       )
     )
+  );
+
+  onError$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(
+          AuthActions.CreateUserWithEmaiAndPasswordFailure,
+          SignInWithEmailAndPasswordFailure
+        ),
+        tap(({ error }) => this.snackbar.openSnackbar(error?.message, 'error'))
+      ),
+    { dispatch: false }
   );
 
   signOut$ = createEffect(

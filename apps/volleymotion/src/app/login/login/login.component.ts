@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.router.navigate(['']));
+
+
   }
 
   ngOnDestroy(): void {
