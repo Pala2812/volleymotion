@@ -7,6 +7,9 @@
             <div class="survey-content" [innerHTML]="survey?.description"></div>
         </mat-card-content>
         <mat-card-actions>
+            <button mat-icon-button (click)="reportSurvey(survey, $event)"> 
+                <mat-icon color="warn">report</mat-icon>
+            </button>
             <button mat-icon-button (click)="likeSurvey(survey, $event)" aria-label="Umfrage liken">
                 <mat-icon color="primary">thumb_up</mat-icon>
             </button>

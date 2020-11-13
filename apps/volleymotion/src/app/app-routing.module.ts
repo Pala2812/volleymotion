@@ -23,13 +23,6 @@ const routes: Routes = [
           import('./user/user.module').then((m) => m.UserModule),
       },
       {
-        path: 'turniere',
-        loadChildren: () =>
-          import('./tournaments/tournaments.module').then(
-            (m) => m.TournamentsModule
-          ),
-      },
-      {
         path: 'die-mission',
         loadChildren: () =>
           import('./about/about.module').then((m) => m.AboutModule),

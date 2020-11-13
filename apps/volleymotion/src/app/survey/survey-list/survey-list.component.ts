@@ -62,4 +62,8 @@ export class SurveyListComponent implements OnInit {
         this.router.navigate(['umfragen/erstellen']);
       });
   }
+
+  reportSurvey(survey: Survey, event: Event) {
+    event.stopImmediatePropagation();
+  }
 }

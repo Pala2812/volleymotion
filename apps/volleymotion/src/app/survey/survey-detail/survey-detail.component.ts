@@ -66,6 +66,10 @@ export class SurveyDetailComponent implements OnInit {
       });
   }
 
+  reportSurvey(survey: Survey, event: Event) {
+    event.stopImmediatePropagation();
+  }
+
   sendMessage(form: FormGroup) {
     if (form.valid) {
       this.survey$.pipe(take(1)).subscribe((survey) => {
