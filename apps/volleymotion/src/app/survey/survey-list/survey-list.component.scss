@@ -14,6 +14,10 @@
     .mat-card-actions {
       display: flex;
       justify-content: flex-end;
+
+      .edit {
+        color: rgb(96, 96, 240);
+      }
     }
   }
 

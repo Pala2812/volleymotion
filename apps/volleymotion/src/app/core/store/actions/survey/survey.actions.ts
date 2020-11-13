@@ -42,6 +42,18 @@ export const createSurveyFailure = createAction(
   props<{ error: any }>()
 );
 
+export const updateSurvey = createAction(
+  `${key} Update Survey`,
+  props<{ survey: Survey }>()
+);
+
+export const updateSurveySuccess = createAction(`${key} Update Survey Success`);
+
+export const updateSurveyFailure = createAction(
+  `${key} Update Survey Failure`,
+  props<{ error: any }>()
+);
+
 export const likeSurvey = createAction(
   `${key} Like Survey`,
   props<{ id: string }>()

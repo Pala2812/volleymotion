@@ -8,6 +8,7 @@ import { SurveyListComponent } from './survey-list/survey-list.component';
 const routes: Routes = [
   { path: 'liste', component: SurveyListComponent },
   { path: 'detail/:id', component: SurveyDetailComponent },
+  { path: 'bearbeiten/:id', component: SurveyCreateEditComponent },
   { path: 'erstellen', component: SurveyCreateEditComponent },
   { path: '', redirectTo: 'liste', pathMatch: 'full' },
 ];

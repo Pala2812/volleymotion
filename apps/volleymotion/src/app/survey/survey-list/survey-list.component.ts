@@ -18,6 +18,7 @@ import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-di
 })
 export class SurveyListComponent implements OnInit {
   isLoadingSurveys$: Observable<boolean>;
+  uid$: Observable<string>;
   surveys$: Observable<Survey[]>;
 
   constructor(
@@ -32,6 +33,7 @@ export class SurveyListComponent implements OnInit {
       select(SurveySelectors.selectIsLoadingSurveys)
     );
     this.surveys$ = this.store.pipe(select(SurveySelectors.selectSurveys));
+    this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
   }
 
   viewDetail(survey: Survey) {
@@ -74,5 +76,10 @@ export class SurveyListComponent implements OnInit {
         this.store.dispatch(SurveyActions.reportSurvey({ id: survey.id }));
         event.stopImmediatePropagation();
       });
+  }
+
+  editSurvey(survey: Survey, event: Event) {
+    this.router.navigate([`umfragen/bearbeiten/${survey.id}`]);
+    event.stopImmediatePropagation();
   }
 }

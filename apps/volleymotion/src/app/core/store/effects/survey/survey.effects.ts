@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { from, of } from 'rxjs';
+import { forkJoin, from, of } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -12,7 +12,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { Survey, SurveyComment } from '../../../models';
+import { Survey, SurveyComment, User } from '../../../models';
 import { SurveyActions } from '../../actions';
 import { StoreState } from '../../reducers';
 import { AuthSelectors } from '../../selectors';
@@ -29,10 +29,24 @@ export class SurveyEffects {
     this.actions$.pipe(
       ofType(SurveyActions.createSurvey),
       mergeMap(({ survey }) =>
-        from(this.fs.collection('surveys').add({...survey, id: this.fs.createId()})).pipe(
+        from(this.fs.doc(`surveys/${survey.id}`).set(survey)).pipe(
           map(() => SurveyActions.createSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.createSurveyFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  updateSurvey$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SurveyActions.updateSurvey),
+      concatMap(({ survey }) =>
+        from(this.fs.doc(`surveys/${survey?.id}`).ref.update(survey)).pipe(
+          map(() => SurveyActions.updateSurveySuccess()),
+          catchError((error) =>
+            of(SurveyActions.updateSurveyFailure({ error }))
           )
         )
       )
@@ -116,6 +130,29 @@ export class SurveyEffects {
           .collection<SurveyComment>(`surveys/${id}/comments`)
           .valueChanges()
           .pipe(
+            mergeMap((surveyComments) =>
+              forkJoin(
+                surveyComments.map((comment) =>
+                  this.fs
+                    .doc(`users/${comment.uid}`)
+                    .ref.get()
+                    .then((doc) => doc.data() as User)
+                )
+              ).pipe(
+                map((users) =>
+                  surveyComments.map((comment) => {
+                    const user = users.find((user) => (user.uid = comment.uid));
+                    comment.user = user;
+                    return comment;
+                  })
+                )
+              )
+            ),
+            map((surveyComments) =>
+              surveyComments.sort(
+                (a, b) => a?.createdAt?.toMillis() - b?.createdAt?.toMillis()
+              )
+            ),
             map((surveyComments) =>
               SurveyActions.loadCommentsOfSurveySuccess({ surveyComments })
             ),

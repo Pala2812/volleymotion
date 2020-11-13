@@ -15,16 +15,18 @@
 
     <mat-form-field class="no-underline">
         <input matInput formControlName="description" hidden>
-        <quill-editor class="editor" placeholder="Beschreibung eingeben" (onContentChanged)="patchDescription($event)">
+        <quill-editor #quill class="editor" placeholder="Beschreibung eingeben"
+            (onContentChanged)="patchDescription($event)">
         </quill-editor>
         <mat-error *ngIf="surveyForm?.controls?.description?.errors?.required">
             Beschreibung wird benötigt
         </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button color="primary"  [disabled]="isCreatingSurvey$ | async" aria-label="veröffentlichen">
+    <button mat-flat-button color="primary" [disabled]="isCreatingSurvey$ | async" aria-label="veröffentlichen">
         <ng-template #text>
-            <span>Veröffentlichen</span>
+            <span *ngIf="!isEdit">Veröffentlichen</span>
+            <span *ngIf="isEdit">Updaten</span>
         </ng-template>
         <mat-spinner *ngIf="(isCreatingSurvey$ | async); else text" [diameter]=5></mat-spinner>
     </button>

@@ -4,7 +4,7 @@ import Timestamp = firebase.firestore.Timestamp;
 export interface Survey {
     id: string;
     uid: string;
-    createdAt: Timestamp | firebase.firestore.FieldValue;
+    createdAt: Timestamp;
     title: string;
     description: string;
 }

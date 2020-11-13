@@ -7,6 +7,7 @@ import { AuthActions } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthSelectors } from './core/store/selectors';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',

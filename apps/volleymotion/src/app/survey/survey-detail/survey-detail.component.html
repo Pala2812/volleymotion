@@ -10,10 +10,10 @@
                 <div class="content" [innerHTML]="(survey$ | async)?.description"></div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-icon-button (click)="reportSurvey(survey, $event)"> 
+                <button mat-icon-button (click)="reportSurvey(survey, $event)">
                     <mat-icon color="warn">report</mat-icon>
                 </button>
-                <button mat-icon-button (click)="likeSurvey()" aria-label="Umfrage liken">
+                <button mat-icon-button (click)="likeSurvey(survey)" aria-label="Umfrage liken">
                     <mat-icon color="primary">thumb_up</mat-icon>
                 </button>
             </mat-card-actions>
@@ -26,10 +26,17 @@
             <mat-card-content>
                 <ng-template #comments>
                     <div class="comments">
-                        <p *ngFor="let comment of (surveyComments$ | async)">{{comment?.message}}</p>
+                        <div class="comment" *ngFor="let comment of (surveyComments$ | async)">
+                            <div class="user-name">
+                                {{comment?.user?.firstname}}
+                                <span class="user-position">({{comment?.user?.userInfo?.position}})</span>
+                            </div>
+                            <p class="message">{{comment?.message}}</p>
+                            <small>{{comment?.createdAt?.toDate() | date: 'dd.MM.yyyy HH:mm'}}</small>
+                        </div>
                     </div>
                 </ng-template>
-                <mat-spinner *ngIf="isLoadingSurvey$ | async; else comments"></mat-spinner>
+                <mat-spinner *ngIf="isLoadingSurveyComments$ | async; else comments" color="primary" [diameter]="10"></mat-spinner>
             </mat-card-content>
         </mat-card>
     </div>

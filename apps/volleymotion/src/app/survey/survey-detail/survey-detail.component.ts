@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, withLatestFrom } from 'rxjs/operators';
+import firebase from 'firebase/app';
 
 import { Survey, SurveyComment } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
@@ -83,18 +84,33 @@ export class SurveyDetailComponent implements OnInit {
 
   sendMessage(form: FormGroup) {
     if (form.valid) {
-      this.survey$.pipe(take(1)).subscribe((survey) => {
-        const comment = form.controls.message.value;
-        const message: SurveyComment = {
-          message: comment,
-          surveyId: survey.id,
-        };
-        this.store.dispatch(SurveyActions.addCommentToSurvey({ message }));
-        form.reset();
-        Object.keys(form.controls).forEach((key) => {
-          form.get(key).setErrors(null);
+      this.survey$
+        .pipe(
+          withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
+          take(1)
+        )
+        .subscribe((params) => {
+          const survey = params[0];
+          const uid = params[1];
+
+          if (!uid) {
+            return this.dialog.open(AuthDialogComponent);
+          }
+          
+          const comment = form.controls.message.value;
+          const message: SurveyComment = {
+            uid,
+            message: comment,
+            surveyId: survey.id,
+          };
+          (message as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
+
+          this.store.dispatch(SurveyActions.addCommentToSurvey({ message }));
+          form.reset();
+          Object.keys(form.controls).forEach((key) => {
+            form.get(key).setErrors(null);
+          });
         });
-      });
     }
   }
 }

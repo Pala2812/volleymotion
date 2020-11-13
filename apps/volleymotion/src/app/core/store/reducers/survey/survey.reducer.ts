@@ -8,6 +8,7 @@ export const surveyFeatureKey = 'survey';
 export interface State {
   isLoadingSurvey: boolean;
   isCreatingSurvey: boolean;
+  isUpdatingSurvey: boolean;
   isLoadingSurveys: boolean;
   isLikingSurvey: boolean;
   isReportingSurvey: boolean;
@@ -20,6 +21,7 @@ export interface State {
 export const initialState: State = {
   isLoadingSurvey: false,
   isCreatingSurvey: false,
+  isUpdatingSurvey: false,
   isLoadingSurveys: false,
   isReportingSurvey: false,
   isLikingSurvey: false,
@@ -38,6 +40,19 @@ export const reducer = createReducer(
   on(
     SurveyActions.createSurveySuccess,
     SurveyActions.createSurveyFailure,
+    (state) => ({
+      ...state,
+      isLoadingSurveys: false,
+    })
+  ),
+
+  on(SurveyActions.updateSurvey, (state) => ({
+    ...state,
+    isLoadingSurveys: true,
+  })),
+  on(
+    SurveyActions.updateSurveySuccess,
+    SurveyActions.updateSurveyFailure,
     (state) => ({
       ...state,
       isLoadingSurveys: false,
@@ -113,5 +128,5 @@ export const reducer = createReducer(
       ...state,
       isReportingSurvey: false,
     })
-  ),
+  )
 );
