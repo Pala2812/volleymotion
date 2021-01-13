@@ -29,6 +29,10 @@ const routes: Routes = [
               import('./matches/matches.module').then((m) => m.MatchesModule),
           },
           {
+            path: 'mannschaften',
+            loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
+          },
+          {
             path: 'spieler',
             loadChildren: () =>
               import('./players/players.module').then((m) => m.PlayersModule),
