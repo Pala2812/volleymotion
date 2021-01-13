@@ -38,6 +38,15 @@ const routes: Routes = [
           import('./players/players.module').then((m) => m.PlayersModule),
       },
       {
+        path: 'chat',
+        loadChildren: () =>
+          import('./chat/chat.module').then((m) => m.ChatModule),
+      },
+      {
+        path: 'training',
+        loadChildren: () => import('./training/training.module').then(m => m.TrainingModule)
+      },
+      {
         path: 'umfragen',
         loadChildren: () =>
           import('./survey/survey.module').then((m) => m.SurveyModule),
