@@ -16,12 +16,14 @@
                     routerLinkActive="router-link-active">Umfragen</a>
             </li>
             <li class="nav-list-item" (click)="toggleMenu()">
-                <a [routerLink]="['/die-mission']" class="nav-list-item-link" routerLinkActive="router-link-active">Die
-                    Mission</a>
+                <a [routerLink]="['/spiele']" class="nav-list-item-link"
+                    routerLinkActive="router-link-active">Spiele</a>
+            </li>
+            <li class="nav-list-item" (click)="toggleMenu()">
+                <a [routerLink]="['/spieler']" class="nav-list-item-link"
+                    routerLinkActive="router-link-active">Spieler</a>
             </li>
         </ul>
-
-
         <div class="logout-container" *ngIf="uid$ | async; else auth ">
             <button class="logout-btn" mat-icon-button (click)="logout()" aria-label="logout">
                 <mat-icon>exit_to_app</mat-icon>

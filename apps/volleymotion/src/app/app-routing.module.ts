@@ -28,6 +28,16 @@ const routes: Routes = [
           import('./about/about.module').then((m) => m.AboutModule),
       },
       {
+        path: 'spiele',
+        loadChildren: () =>
+          import('./matches/matches.module').then((m) => m.MatchesModule),
+      },
+      {
+        path: 'spieler',
+        loadChildren: () =>
+          import('./players/players.module').then((m) => m.PlayersModule),
+      },
+      {
         path: 'umfragen',
         loadChildren: () =>
           import('./survey/survey.module').then((m) => m.SurveyModule),
