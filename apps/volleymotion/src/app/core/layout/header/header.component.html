@@ -12,10 +12,6 @@
     <div class="nav-list-container" [class.is-visible]="isMenuVisible">
         <ul class="nav-list">
             <li class="nav-list-item" (click)="toggleMenu()">
-                <a [routerLink]="['/umfragen']" class="nav-list-item-link"
-                    routerLinkActive="router-link-active">Umfragen</a>
-            </li>
-            <li class="nav-list-item" (click)="toggleMenu()">
                 <a [routerLink]="['/mannschaften']" class="nav-list-item-link"
                     routerLinkActive="router-link-active">Mannschaften</a>
             </li>
@@ -30,6 +26,10 @@
             <li class="nav-list-item" (click)="toggleMenu()">
                 <a [routerLink]="['/spieler']" class="nav-list-item-link"
                     routerLinkActive="router-link-active">Spieler</a>
+            </li>
+            <li class="nav-list-item" (click)="toggleMenu()">
+                <a [routerLink]="['/trainingsspiele']" class="nav-list-item-link"
+                    routerLinkActive="router-link-active">Trainingsspiele</a>
             </li>
             <li class="nav-list-item" (click)="toggleMenu()">
                 <a [routerLink]="['/chat']" class="nav-list-item-link" routerLinkActive="router-link-active">Chat</a>

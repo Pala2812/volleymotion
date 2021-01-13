@@ -24,23 +24,9 @@ const routes: Routes = [
         component: DashboardComponent,
         children: [
           {
-            path: 'spiele',
-            loadChildren: () =>
-              import('./matches/matches.module').then((m) => m.MatchesModule),
-          },
-          {
             path: 'mannschaften',
-            loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
-          },
-          {
-            path: 'spieler',
             loadChildren: () =>
-              import('./players/players.module').then((m) => m.PlayersModule),
-          },
-          {
-            path: 'chat',
-            loadChildren: () =>
-              import('./chat/chat.module').then((m) => m.ChatModule),
+              import('./teams/teams.module').then((m) => m.TeamsModule),
           },
           {
             path: 'training',
@@ -48,6 +34,28 @@ const routes: Routes = [
               import('./training/training.module').then(
                 (m) => m.TrainingModule
               ),
+          },
+          {
+            path: 'spiele',
+            loadChildren: () =>
+              import('./matches/matches.module').then((m) => m.MatchesModule),
+          },
+          {
+            path: 'spieler',
+            loadChildren: () =>
+              import('./players/players.module').then((m) => m.PlayersModule),
+          },
+          {
+            path: 'trainingsspiele',
+            loadChildren: () =>
+              import('./training-matches/training-matches.module').then(
+                (m) => m.TrainingMatchesModule
+              ),
+          },
+          {
+            path: 'chat',
+            loadChildren: () =>
+              import('./chat/chat.module').then((m) => m.ChatModule),
           },
         ],
       },
