@@ -4,18 +4,18 @@
 
 @include nb-install() {
   @include nb-theme-global();
-};
+}
 
 html,
 body {
   height: 100%;
-  overflow-y: hidden;
   background-color: rgb(245, 247, 251);
 
   &.offline {
     filter: grayscale(0.75);
   }
 }
+
 body {
   margin: 0;
   font-family: Lato, 'Helvetica Neue', sans-serif;
@@ -57,4 +57,8 @@ quill-editor {
       min-height: 300px;
     }
   }
+}
+
+.nb-theme-cosmic nb-chat {
+  height: 80vh;
 }
