@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { RouterModule } from '@angular/router';
+import { TimestampPipe } from './pipes/timestamp.pipe';
 
 @NgModule({
-  declarations: [AuthDialogComponent],
+  declarations: [AuthDialogComponent, TimestampPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -15,7 +16,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     AngularMaterialModule,
   ],
-  exports: [ReactiveFormsModule, AngularMaterialModule, AuthDialogComponent],
+  exports: [ReactiveFormsModule, AngularMaterialModule, AuthDialogComponent, TimestampPipe],
   entryComponents: [AuthDialogComponent],
 })
 export class SharedModule {}

@@ -17,3 +17,5 @@ export const UpdateUserFailure = createAction(
   `${key} Update User Failure`,
   props<{ error: Error }>()
 );
+
+export const setUser = createAction(`${key} Set User`, props<{ user: User }>());

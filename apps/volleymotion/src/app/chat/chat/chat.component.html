@@ -1,1 +1,11 @@
-<p>chat works!</p>
+<nb-chat title="Trainer chat" noMessagesPlaceholder="Noch keine Mitteilungen">
+
+    <nb-chat-message *ngFor="let message of messages$ | async" 
+                      [message]="message.message" 
+                      [sender]="message.user.firstname" 
+                      [date]="message.createdAt | timestamp">
+    </nb-chat-message>
+
+    <nb-chat-form messagePlaceholder="Nachricht eingeben" (send)="sendMessage($event)" [dropFiles]="false">
+    </nb-chat-form>
+</nb-chat>

@@ -9,90 +9,66 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'login',
-        loadChildren: () =>
-          import('./login/login.module').then((m) => m.LoginModule),
-      },
-      {
-        path: 'sign-up',
-        loadChildren: () =>
-          import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
-      },
-      {
-        path: '',
+        path: 'dashboard',
         component: DashboardComponent,
-        children: [
-          {
-            path: 'mannschaften',
-            loadChildren: () =>
-              import('./teams/teams.module').then((m) => m.TeamsModule),
-          },
-          {
-            path: 'training',
-            loadChildren: () =>
-              import('./training/training.module').then(
-                (m) => m.TrainingModule
-              ),
-          },
-          {
-            path: 'spiele',
-            loadChildren: () =>
-              import('./matches/matches.module').then((m) => m.MatchesModule),
-          },
-          {
-            path: 'spieler',
-            loadChildren: () =>
-              import('./players/players.module').then((m) => m.PlayersModule),
-          },
-          {
-            path: 'trainingsspiele',
-            loadChildren: () =>
-              import('./training-matches/training-matches.module').then(
-                (m) => m.TrainingMatchesModule
-              ),
-          },
-          {
-            path: 'chat',
-            loadChildren: () =>
-              import('./chat/chat.module').then((m) => m.ChatModule),
-          },
-        ],
       },
       {
-        path: 'benutzer',
+        path: 'mannschaften',
         loadChildren: () =>
-          import('./user/user.module').then((m) => m.UserModule),
+          import('./teams/teams.module').then((m) => m.TeamsModule),
       },
       {
-        path: 'die-mission',
+        path: 'training',
         loadChildren: () =>
-          import('./about/about.module').then((m) => m.AboutModule),
-      },
-
-      {
-        path: 'umfragen',
-        loadChildren: () =>
-          import('./survey/survey.module').then((m) => m.SurveyModule),
+          import('./training/training.module').then((m) => m.TrainingModule),
       },
       {
-        path: 'impressum',
+        path: 'spiele',
         loadChildren: () =>
-          import('./impressum/impressum.module').then((m) => m.ImpressumModule),
+          import('./matches/matches.module').then((m) => m.MatchesModule),
       },
       {
-        path: 'datenschutz',
+        path: 'spieler',
         loadChildren: () =>
-          import('./data-privacy/data-privacy.module').then(
-            (m) => m.DataPrivacyModule
+          import('./players/players.module').then((m) => m.PlayersModule),
+      },
+      {
+        path: 'trainingsspiele',
+        loadChildren: () =>
+          import('./training-matches/training-matches.module').then(
+            (m) => m.TrainingMatchesModule
           ),
       },
       {
-        path: '',
-        redirectTo: 'umfragen',
-        pathMatch: 'full',
+        path: 'chat',
+        loadChildren: () =>
+          import('./chat/chat.module').then((m) => m.ChatModule),
       },
     ],
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () =>
+      import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
+  },
+  {
+    path: 'impressum',
+    loadChildren: () =>
+      import('./impressum/impressum.module').then((m) => m.ImpressumModule),
+  },
+  {
+    path: 'datenschutz',
+    loadChildren: () =>
+      import('./data-privacy/data-privacy.module').then(
+        (m) => m.DataPrivacyModule
+      ),
   },
 ];
 @NgModule({

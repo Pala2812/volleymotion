@@ -31,7 +31,7 @@ export class AuthService {
     );
   }
 
-  createUserWithEmailAndPassword(email: string, password: string, userPreferences: UserPreferences) {
+  createUserWithEmailAndPassword(email: string, password: string, user: Partial<User>) {
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
       mergeMap((userCredentials) =>
         this.fs
@@ -39,7 +39,7 @@ export class AuthService {
           .snapshotChanges()
           .pipe(
             filter((snapshot) => snapshot.payload.exists),
-            mergeMap((snapshot) => this.fs.doc(`users/${snapshot.payload.id}`).update(userPreferences).then(() => snapshot)),
+            mergeMap((snapshot) => this.fs.doc(`users/${snapshot.payload.id}`).update(user).then(() => snapshot)),
             map((snapshot) => snapshot.payload.data())
           )
       )

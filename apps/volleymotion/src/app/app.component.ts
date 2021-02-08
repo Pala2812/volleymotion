@@ -3,11 +3,13 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
 
-import { AuthActions } from './core/store/actions';
+import { AuthActions, UserActions } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthSelectors } from './core/store/selectors';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { User } from './core/models';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -19,15 +21,23 @@ export class AppComponent implements OnInit {
   constructor(
     private auth: AngularFireAuth,
     private store: Store<StoreState>,
+    private fs: AngularFirestore,
     private swUpdate: SwUpdate,
     private networkStatusService: NetworkStatusService,
     private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.auth.user.subscribe((user) => {
-      if (user) {
-        this.store.dispatch(AuthActions.setUid({ uid: user.uid }));
+    this.auth.user.subscribe((userCrendetials) => {
+      if (userCrendetials) {
+        this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
+        this.fs
+          .collection('users')
+          .doc<User>(userCrendetials.uid)
+          .valueChanges()
+          .subscribe((user) =>
+            this.store.dispatch(UserActions.setUser({ user }))
+          );
       }
     });
     this.verifyAndUpdate();

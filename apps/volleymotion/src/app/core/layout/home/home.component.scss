@@ -1,11 +1,27 @@
-:host {
-  display: grid;
-  height: 100%;
-  grid-template-rows: auto 1fr auto;
+a {
+  padding: 0 1rem;
+  text-decoration: none;
+}
 
-  .root {
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
+.header {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1em;
+  align-items: center;
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    .header-brand-logo {
+      width: 4em;
+    }
+
+    .header-brand-name {
+      font-size: 2em;
+      margin: 0;
+      margin-left: 0.3em;
+    }
   }
 }

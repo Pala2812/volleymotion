@@ -1,9 +1,27 @@
 <mat-card>
+
     <mat-card-header>
         <mat-card-title>Sign-Up</mat-card-title>
     </mat-card-header>
+
     <mat-card-content>
         <form class="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
+
+            <div class="row">
+                <mat-form-field>
+                    <input matInput placeholder="Vorname" autocomplete="name" formControlName="firstname">
+                    <mat-error>
+                        Name wird benötigt
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Nachname" autocomplete="family-name" formControlName="lastname">
+                    <mat-error>
+                        Nachname wird benötigt
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
             <mat-form-field>
                 <input matInput placeholder="E-Mail" autocomplete="email" formControlName="email">
@@ -33,23 +51,17 @@
 
             <mat-form-field class="no-underline  no-padding-bottom">
                 <input matInput formControlName="isAgbAccepted" hidden>
-                <mat-checkbox (change)="onCheckboxChanged('isAgbAccepted', $event)">Ich habe die AGB gelesen und stimme dieser zu.</mat-checkbox>
+                <mat-checkbox (change)="onCheckboxChanged('isAgbAccepted', $event)">Ich habe die AGB und Datenschutzerklärung gelesen und stimme
+                    dieser zu.</mat-checkbox>
                 <mat-error *ngIf="signUpForm?.controls?.isAgbAccepted?.errors">
                     Bitte stimme der AGB zu
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="no-underline  no-padding-bottom">
-                <input matInput formControlName="isDataPrivacyAccepted" hidden>
-                <mat-checkbox (change)="onCheckboxChanged('isDataPrivacyAccepted', $event)">Ich habe die Datenschutzerklärung gelesen und stimme dieser zu.</mat-checkbox>
-                <mat-error *ngIf="signUpForm?.controls?.isDataPrivacyAccepted?.errors">
-                    Bitte stimme der Datenschutzerklärung zu
-                </mat-error>
-            </mat-form-field>
-
             <mat-form-field class="no-underline no-padding-bottom">
                 <input matInput formControlName="isNewsletterAccepted" hidden>
-                <mat-checkbox (change)="onCheckboxChanged('isNewsletterAccepted', $event)">Ich möchte Newsletter-Emails erhalten.</mat-checkbox>
+                <mat-checkbox (change)="onCheckboxChanged('isNewsletterAccepted', $event)">Ich möchte Newsletter-Emails
+                    erhalten.</mat-checkbox>
             </mat-form-field>
 
             <button class="sign-up-button" mat-flat-button color="primary" type="submit" aria-label="signup"

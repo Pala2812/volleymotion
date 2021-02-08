@@ -1,5 +1,25 @@
-<vm-header></vm-header>
-<div class="root">
-    <router-outlet></router-outlet>
-</div>
-<vm-footer></vm-footer>
+<nb-layout>
+    <nb-layout-header fixed>
+      <div class="header">
+  
+        <button aria-label="menu-toggle" mat-icon-button (click)="toggleMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+  
+        <a routerLink="/" class="header-brand">
+          <img class="header-brand-logo" src="assets/logo.svg" alt="logo">
+          <h1 class="header-brand-name">Volleymotion</h1>
+        </a>
+      </div>
+    </nb-layout-header>
+  
+    <nb-layout-column>
+      <router-outlet></router-outlet>
+    </nb-layout-column>
+  
+    <nb-layout-footer fixed>
+      <a routerLink="./impressum">Impressum</a>
+      <a routerLink="./datenschutz">Datenschutz</a>
+    </nb-layout-footer>
+  
+  </nb-layout>

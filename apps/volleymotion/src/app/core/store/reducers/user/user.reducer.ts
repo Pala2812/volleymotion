@@ -26,5 +26,6 @@ export const reducer = createReducer(
   on(UserActions.UpdateUserFailure, (state) => ({
     ...state,
     isUpdatingUser: false,
-  }))
+  })),
+  on(UserActions.setUser, (state, { user }) => ({ ...state, user }))
 );
