@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
@@ -17,6 +18,7 @@ import { NebularModule } from './nebular/nebular.module';
     ReactiveFormsModule,
     AngularMaterialModule,
     NebularModule,
+    GoogleChartsModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -24,6 +26,7 @@ import { NebularModule } from './nebular/nebular.module';
     NebularModule,
     AuthDialogComponent,
     TimestampPipe,
+    GoogleChartsModule
   ],
   entryComponents: [AuthDialogComponent],
 })

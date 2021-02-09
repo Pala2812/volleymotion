@@ -24,11 +24,13 @@ const createSeason = (team: Team, name: string) => {
   const doc = firestore().collection('seasons').doc();
 
   const id = doc.id;
+  const teamId = team.id;
   const { uid } = team;
 
   const season: Season = {
     id,
     uid,
+    teamId,
     name,
     goal: '',
     tags: [],

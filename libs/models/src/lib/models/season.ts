@@ -1,5 +1,6 @@
 export interface Season {
   id: string;
+  teamId: string;
   uid: string;
   name: string;
   goal: string;

@@ -1,1 +1,3 @@
-<p>season-list works!</p>
+<nb-card *ngFor="let season of seasons$ | async" (click)="selectSeason(season)">
+    <nb-card-header>Saison {{season?.name}}</nb-card-header>
+</nb-card>

@@ -1,15 +1,24 @@
 import { createAction, props } from '@ngrx/store';
+import { Season } from '@volleymotion/models';
 
-export const loadSeasons = createAction(
-  '[Season] Load Seasons'
+const key = '[Season]';
+
+export const loadSeasonsByTeamId = createAction(
+  `${key} load Seasons By Team Id`,
+  props<{ teamId: string }>()
 );
 
-export const loadSeasonsSuccess = createAction(
-  '[Season] Load Seasons Success',
-  props<{ data: any }>()
+export const loadSeasonsByTeamIdSuccess = createAction(
+  `${key} Load Seasons By Team Id Success`,
+  props<{ seasons: Season[] }>()
 );
 
-export const loadSeasonsFailure = createAction(
-  '[Season] Load Seasons Failure',
+export const loadSeasonsByTeamIdFailure = createAction(
+  `${key} Load Seasons Failure`,
   props<{ error: any }>()
+);
+
+export const setSeason = createAction(
+  `${key} Set Season`,
+  props<{ season: Season }>()
 );

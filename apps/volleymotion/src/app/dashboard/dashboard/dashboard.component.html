@@ -1,0 +1,47 @@
+<div class="container" *ngIf="{
+    team: team$ | async,
+    season: season$ | async
+} as data">
+
+    <nb-card>
+        <nb-card-header>
+            Saisonziel
+        </nb-card-header>
+        <nb-card-body>
+           Wir wollen diese Saison in die Oberliga aufsteigen
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card>
+        <nb-card-header>
+           Trainingsfocus
+        </nb-card-header>
+        <nb-card-body>
+            Aufschlag Annahme Kondition
+        </nb-card-body>
+    </nb-card>
+
+</div>
+
+<div class="charts">
+    <nb-card class="chart-card">
+        <nb-card-header>Spiele</nb-card-header>
+        <nb-card-body class="chart-card-body">
+            <google-chart type="PieChart" [data]="data" [options]="options"></google-chart>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card class="chart-card">
+        <nb-card-header>Trainingsbeteiligung</nb-card-header>
+        <nb-card-body class="chart-card-body">
+            <google-chart type="PieChart" [data]="trainData" [options]="options"></google-chart>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card class="chart-card">
+        <nb-card-header>Trainingsfocus</nb-card-header>
+        <nb-card-body class="chart-card-body">
+            <google-chart type="PieChart" [data]="data" [options]="options"></google-chart>
+        </nb-card-body>
+    </nb-card>
+</div>
