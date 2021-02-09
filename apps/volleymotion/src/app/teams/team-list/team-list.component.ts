@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Team } from '@volleymotion/models';
@@ -18,7 +19,7 @@ export class TeamListComponent implements OnInit, OnDestroy {
   teams$: Observable<Team[]>;
   unsubscribe$ = new Subject();
 
-  constructor(private store: Store<StoreState>, private actions$: Actions) {}
+  constructor(private store: Store<StoreState>, private actions$: Actions, private router: Router) {}
 
   ngOnInit(): void {
     this.isLoadingTeams$ = this.store.pipe(
@@ -54,6 +55,7 @@ export class TeamListComponent implements OnInit, OnDestroy {
 
   selectTeam(team: Team) {
     this.store.dispatch(TeamActions.setTeam({ team }));
+    this.router.navigate(['saisons', team.id]);
   }
 
   deleteTeam(team: Team) {

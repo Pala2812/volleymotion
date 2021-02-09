@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 
 export const onTeamCreate = functions
   .region('europe-west3')
-  .firestore.document('teams')
+  .firestore.document('teams/{teamId}')
   .onCreate(async (snap) => {
     const team = snap.data() as Team;
     const nextYear = DateTime.local().plus({ years: 1 }).toJSDate();
@@ -16,7 +16,7 @@ export const onTeamCreate = functions
     const batch = firestore().batch();
     batch.create(currentSeason.doc, currentSeason.season);
     batch.create(nextSeason.doc, nextSeason.season);
-    
+
     await batch.commit().catch((error) => functions.logger.error(error));
   });
 
