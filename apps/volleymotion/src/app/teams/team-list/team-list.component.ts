@@ -48,7 +48,6 @@ export class TeamListComponent implements OnInit, OnDestroy {
         filter((user) => !!user)
       )
       .subscribe((user) => {
-        console.log(user);
         this.store.dispatch(TeamActions.loadTeams({ uid: user?.uid }));
       });
   }
