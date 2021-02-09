@@ -44,5 +44,16 @@ export class TeamEffects {
       )
     )
   );
-  
+
+  deleteTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TeamActions.deleteTeam),
+      switchMap(({ team }) =>
+        this.teamService.deleteTeam(team).pipe(
+          map(() => TeamActions.deleteTeamSuccess()),
+          catchError((error) => of(TeamActions.deleteTeamFailure({ error })))
+        )
+      )
+    )
+  );
 }

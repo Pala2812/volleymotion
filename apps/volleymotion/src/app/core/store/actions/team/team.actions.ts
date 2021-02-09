@@ -46,3 +46,17 @@ export const loadTeamByIdFailure = createAction(
   `${key} Load Team By Id Failure`,
   props<{ error: any }>()
 );
+
+export const deleteTeam = createAction(
+  `${key} Delete Team`,
+  props<{ team: Team }>()
+);
+
+export const deleteTeamSuccess = createAction(
+  `${key} Delete Team Success`,
+);
+
+export const deleteTeamFailure = createAction(
+  `${key} Delete Team Failure`,
+  props<{ error: Error }>()
+);

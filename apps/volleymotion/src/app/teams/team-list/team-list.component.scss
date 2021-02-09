@@ -5,13 +5,16 @@
 
   .team-card {
     position: relative;
-    padding-right: 5rem;
+    padding-right: 6rem;
 
-    .edit-btn {
+    .team-card-actions {
       position: absolute;
       top: 50%;
-      right: 1rem;
+      right: 0;
       transform: translateY(-50%);
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 5px;
     }
   }
 

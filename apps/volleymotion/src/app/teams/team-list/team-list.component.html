@@ -2,9 +2,16 @@
     <nb-card-header>
         {{team?.club}} {{team?.name}}
 
-        <button class="edit-btn" nbButton ghost status="danger" (click)="selectTeam(team)" [routerLink]="['../bearbeiten', team.id]">
-            <nb-icon icon="edit-outline"></nb-icon>
-        </button>
+        <div class="team-card-actions">
+            <button class="edit-btn" nbButton ghost status="info" (click)="selectTeam(team)" [routerLink]="['../bearbeiten', team.id]">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+    
+            <button class="delete-btn" nbButton ghost status="danger" (click)="deleteTeam(team)">
+                <nb-icon icon="trash-outline"></nb-icon>
+            </button>    
+        </div>
+
     </nb-card-header>
 </nb-card>
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">

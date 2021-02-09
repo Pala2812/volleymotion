@@ -35,4 +35,8 @@ export class TeamService {
         .then((doc) => doc.data() as Team)
     );
   }
+
+  deleteTeam(team: Team) {
+    return from(this.fs.collection('teams').doc(team.id).delete());
+  }
 }

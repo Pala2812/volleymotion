@@ -8,6 +8,7 @@ export interface State {
   isCreatingTeam: boolean;
   isLoadingTeams: boolean;
   isLoadingTeam: boolean;
+  isDeletingTeam: boolean;
   teams: Team[];
   team: Team;
 }
@@ -16,6 +17,7 @@ export const initialState: State = {
   isCreatingTeam: false,
   isLoadingTeams: false,
   isLoadingTeam: false,
+  isDeletingTeam: false,
   teams: [],
   team: undefined,
 };
@@ -40,5 +42,7 @@ export const reducer = createReducer(
   on(TeamActions.setTeam, (state, { team }) => ({ ...state, team })),
   on(TeamActions.loadTeamById, (state) => ({ ...state, isLoadingTeam: true })),
   on(TeamActions.loadTeamByIdSuccess, (state, {team}) => ({ ...state,team,  isLoadingTeam: false })),
-  on(TeamActions.loadTeamByIdFailure, (state) => ({ ...state, isLoadingTeam: false }))
+  on(TeamActions.loadTeamByIdFailure, (state) => ({ ...state, isLoadingTeam: false })),
+  on(TeamActions.deleteTeam, (state) => ({...state, isDeletingTeam: true})),
+  on(TeamActions.deleteTeamSuccess, TeamActions.deleteTeamFailure, (state) => ({...state, isDeletingTeam: false})),
 );
