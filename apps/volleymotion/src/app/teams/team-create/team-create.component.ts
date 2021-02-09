@@ -17,7 +17,6 @@ import { selectTeam } from '../../core/store/selectors/team/team.selectors';
   selector: 'vm-team-create',
   templateUrl: './team-create.component.html',
   styleUrls: ['./team-create.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamCreateComponent implements OnInit {
   isCreatingTeam$: Observable<boolean>;
@@ -57,13 +56,18 @@ export class TeamCreateComponent implements OnInit {
       if (this.id) {
         this.title = 'Mannschaft bearbeiten';
         this.buttonText = 'Mannschaft aktualisieren';
+        this.store.dispatch(TeamActions.setTeam({ team: undefined }));
         this.store.dispatch(TeamActions.loadTeamById({ id: this.id }));
       }
     });
 
     this.store
-      .pipe(select(TeamSelectors.selectTeam), takeUntil(this.unsubscribe$))
-      .subscribe((team) => this.form = this.initForm(team));
+      .pipe(
+        select(TeamSelectors.selectTeam),
+        filter((team) => !!team),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((team) => (this.form = this.initForm(team), console.log(team) ));
 
     this.store
       .pipe(

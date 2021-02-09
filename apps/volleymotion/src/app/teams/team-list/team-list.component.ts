@@ -4,7 +4,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Team } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { filter, take, takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 import { TeamActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
@@ -19,7 +19,11 @@ export class TeamListComponent implements OnInit, OnDestroy {
   teams$: Observable<Team[]>;
   unsubscribe$ = new Subject();
 
-  constructor(private store: Store<StoreState>, private actions$: Actions, private router: Router) {}
+  constructor(
+    private store: Store<StoreState>,
+    private actions$: Actions,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoadingTeams$ = this.store.pipe(
@@ -28,11 +32,13 @@ export class TeamListComponent implements OnInit, OnDestroy {
 
     this.teams$ = this.store.pipe(select(TeamSelectors.selectTeams));
 
-    this.actions$.pipe(
-      ofType(TeamActions.deleteTeamSuccess),
-      tap(() => this.loadTeams()),
-      takeUntil(this.unsubscribe$),
-    ).subscribe();
+    this.actions$
+      .pipe(
+        ofType(TeamActions.deleteTeamSuccess),
+        tap(() => this.loadTeams()),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
 
     this.loadTeams();
   }
@@ -58,7 +64,8 @@ export class TeamListComponent implements OnInit, OnDestroy {
     this.router.navigate(['saisons', team.id]);
   }
 
-  deleteTeam(team: Team) {
+  deleteTeam(team: Team, event: Event) {
     this.store.dispatch(TeamActions.deleteTeam({ team }));
+    event.stopImmediatePropagation();
   }
 }

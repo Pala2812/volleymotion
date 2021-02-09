@@ -1,3 +1,11 @@
-<nb-card *ngFor="let season of seasons$ | async" (click)="selectSeason(season)">
-    <nb-card-header>Saison {{season?.name}}</nb-card-header>
+<nb-card class="season-card" *ngFor="let season of seasons$ | async" (click)="selectSeason(season)">
+    <nb-card-header>Saison {{season?.name}}
+
+        <div class="season-card-actions">
+            <button class="edit-btn" nbButton ghost status="info" [routerLink]="['../bearbeiten', season.id, teamId]">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+        </div>
+
+    </nb-card-header>
 </nb-card>

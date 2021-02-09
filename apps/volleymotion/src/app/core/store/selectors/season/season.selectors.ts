@@ -10,6 +10,12 @@ export const selectIsLoadingSeasons = createSelector(
   (state) => state.isLoadingSeasons
 );
 
+export const selectIsUpdatingSeason = createSelector(
+  selectSeasonFeature,
+  (state) => state.isUpdatingSeason
+);
+
+
 export const selectSeasons = createSelector(
   selectSeasonFeature,
   (state) => state.seasons

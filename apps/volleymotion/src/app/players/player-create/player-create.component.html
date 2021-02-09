@@ -1,1 +1,38 @@
-// Hier wird es möglich sein ein Spieler anzulegen 
+<nb-card *ngIf="team$ | async as team">
+    <nb-card-header>
+        Spieler erstellen
+    </nb-card-header>
+
+    <nb-card-body>
+        <form [formGroup]="form" class="form" (ngSubmit)="submit(form, team)">
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Vorname" formControlName="firstname">
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Nachname" formControlName="lastname">
+            </nb-form-field>
+
+            <nb-select fullWidth placeholder="Position auswählen" formControlName="position">
+                <nb-option *ngFor="let position of positions" [value]="position">
+                    {{position}}
+                </nb-option>
+            </nb-select>
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Ist spielerisch stark in" formControlName="lastname">
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Ist spielerisch schwach in" formControlName="lastname">
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Möchte sich spielerisch verbessern in" formControlName="lastname">
+            </nb-form-field>
+
+            <button nbButton type="submit">Spieler erstellen</button>
+        </form>
+    </nb-card-body>
+</nb-card>

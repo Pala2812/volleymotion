@@ -41,7 +41,7 @@ export const reducer = createReducer(
   })),
   on(TeamActions.setTeam, (state, { team }) => ({ ...state, team })),
   on(TeamActions.loadTeamById, (state) => ({ ...state, isLoadingTeam: true })),
-  on(TeamActions.loadTeamByIdSuccess, (state, {team}) => ({ ...state,team,  isLoadingTeam: false })),
+  on(TeamActions.loadTeamByIdSuccess, (state, {team}) => ({ ...state, team,  isLoadingTeam: false })),
   on(TeamActions.loadTeamByIdFailure, (state) => ({ ...state, isLoadingTeam: false })),
   on(TeamActions.deleteTeam, (state) => ({...state, isDeletingTeam: true})),
   on(TeamActions.deleteTeamSuccess, TeamActions.deleteTeamFailure, (state) => ({...state, isDeletingTeam: false})),

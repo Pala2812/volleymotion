@@ -1,1 +1,11 @@
-<p>season-edit works!</p>
+<nb-card>
+    <nb-card-header>Saison bearbeiten</nb-card-header>
+
+    <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
+        <nb-form-field>
+            <input nbInput fullWidth placeholder="Saisonziel" formControlName="goal">
+        </nb-form-field>
+        <button nbButton type="submit" [disabled]="isUpdatingSeason$ | async">Saison aktualisieren</button>
+    </form>
+
+</nb-card>

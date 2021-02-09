@@ -15,6 +15,7 @@ import { SeasonSelectors } from '../../core/store/selectors';
 export class SeasonListComponent implements OnInit {
   isLoadingSeasons$: Observable<boolean>;
   seasons$: Observable<Season[]>;
+  teamId: string;
 
   constructor(
     private store: Store<StoreState>,
@@ -30,6 +31,7 @@ export class SeasonListComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       const teamId = params.id;
+      this.teamId = teamId;
       this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));
     });
   }

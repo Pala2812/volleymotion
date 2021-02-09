@@ -6,6 +6,7 @@ import {
   NbSelectModule,
   NbButtonModule,
   NbIconModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -16,6 +17,7 @@ import {
     NbSelectModule,
     NbButtonModule,
     NbIconModule,
+    NbAutocompleteModule,
   ],
   exports: [
     NbInputModule,
@@ -23,7 +25,8 @@ import {
     NbCardModule,
     NbSelectModule,
     NbButtonModule,
-    NbIconModule
+    NbIconModule,
+    NbAutocompleteModule,
   ],
 })
 export class NebularModule {}

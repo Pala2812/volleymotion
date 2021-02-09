@@ -17,12 +17,40 @@ export class SeasonEffects {
     this.actions$.pipe(
       ofType(SeasonActions.loadSeasonsByTeamId),
       switchMap(({ teamId }) =>
-        this.seasonService.getSeasonsByTeamId(teamId).pipe(
+        this.seasonService.loadSeasonsByTeamId(teamId).pipe(
           map((seasons) =>
             SeasonActions.loadSeasonsByTeamIdSuccess({ seasons })
           ),
           catchError((error) =>
             of(SeasonActions.loadSeasonsByTeamIdFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  updateSeason$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SeasonActions.updateSeason),
+      switchMap(({ season }) =>
+        this.seasonService.updateSeason(season).pipe(
+          map(() => SeasonActions.updateSeasonSuccess()),
+          catchError((error) =>
+            of(SeasonActions.updateSeasonFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  loadSeasonById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SeasonActions.loadSeasonById),
+      switchMap(({ id }) =>
+        this.seasonService.loadSeasonById(id).pipe(
+          map((season) => SeasonActions.loadSeasonByIdSuccess({ season })),
+          catchError((error) =>
+            of(SeasonActions.loadSeasonByIdFailure({ error }))
           )
         )
       )

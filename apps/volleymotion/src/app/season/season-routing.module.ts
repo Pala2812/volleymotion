@@ -6,7 +6,7 @@ import { SeasonListComponent } from './season-list/season-list.component';
 
 const routes: Routes = [
   { path: ':id', component: SeasonListComponent },
-  { path: 'bearbeiten', component: SeasonEditComponent },
+  { path: 'bearbeiten/:id/:teamId', component: SeasonEditComponent },
 ];
 
 @NgModule({

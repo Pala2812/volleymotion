@@ -9,7 +9,7 @@ import { from } from 'rxjs';
 export class SeasonService {
   constructor(private fs: AngularFirestore) {}
 
-  getSeasonsByTeamId(teamId: string) {
+  loadSeasonsByTeamId(teamId: string) {
     return from(
       this.fs
         .collection('seasons')
@@ -17,5 +17,13 @@ export class SeasonService {
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Season))
     );
+  }
+
+  loadSeasonById(id: string) {
+    return from(this.fs.collection('seasons').doc(id).ref.get().then(doc => doc.data() as Season));
+  }
+
+  updateSeason(season: Partial<Season>) {
+    return from(this.fs.collection('seasons').doc(season.id).update(season));
   }
 }
