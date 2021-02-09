@@ -5,15 +5,16 @@
 
     <nb-card-body>
         <form class="form" [formGroup]="form" (ngSubmit)="submit(form)">
+
             <nb-form-field>
-                <input nbInput placeholder="Name *">
+                <input nbInput fullWidth placeholder="Name *">
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput placeholder="Beschreibung">
+                <input nbInput fullWidth placeholder="Beschreibung">
             </nb-form-field>
 
-            <button nbButton type="submit">
+            <button nbButton type="submit" [disabled]="isSending$ | async">
                 Tag vorschlagen
             </button>
         </form>

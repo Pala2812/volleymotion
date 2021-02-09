@@ -1,1 +1,25 @@
-<p>tag-list works!</p>
+<nb-card>
+    <nb-card-header>Tags</nb-card-header>
+    <nb-card-body>
+        <mat-chip-list>
+            <mat-chip *ngFor="let tag of tags$ | async">
+                {{tag?.name}}
+            </mat-chip>
+        </mat-chip-list>
+    </nb-card-body>
+</nb-card>
+
+<nb-card>
+    <nb-card-header>Vorschläge</nb-card-header>
+    <nb-card-body>
+        <mat-chip-list>
+            <mat-chip *ngFor="let tagProposal of tagProposals$ | async">
+                {{tagProposal?.title}}
+            </mat-chip>
+        </mat-chip-list>
+    </nb-card-body>
+</nb-card>
+
+<button class="add-btn" mat-fab [routerLink]="['../vorschlagen']">
+    <mat-icon>add</mat-icon>
+</button>
