@@ -1,5 +1,12 @@
-// Hier kommt eine Liste der Mannschaften die der Trainer verwaltet
-// Hier kommt ein + Button für das anlegen neuer mannschaften
-// Wenn man eine Mannschaft auswählt wird man zur Saisonliste dieser Mannschaft weitergeleitet
-// Die Eigenschaften einer Mannschaft sind im GDrive festgehalten
-// Hier wird es auch Möglich sein eine Mannschaft zu löschen
+<nb-card class="team-card" *ngFor="let team of teams$ | async" (click)="selectTeam(team)">
+    <nb-card-header>
+        {{team?.club}} {{team?.name}}
+
+        <button class="edit-btn" nbButton ghost status="danger" (click)="selectTeam(team)" [routerLink]="['../bearbeiten', team.id]">
+            <nb-icon icon="edit-outline"></nb-icon>
+        </button>
+    </nb-card-header>
+</nb-card>
+<button class="add-btn" mat-fab [routerLink]="['../erstellen']">
+    <mat-icon>add</mat-icon>
+</button>

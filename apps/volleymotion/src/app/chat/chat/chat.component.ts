@@ -41,8 +41,6 @@ export class ChatComponent implements OnInit {
           message,
           createdAt,
         };
-
-        console.log(chatMessage);
         this.chatService.addChatMessage(chatMessage);
       });
   }

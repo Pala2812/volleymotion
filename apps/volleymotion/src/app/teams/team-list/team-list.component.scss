@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .team-card {
+    position: relative;
+    padding-right: 5rem;
+
+    .edit-btn {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+    }
+  }
+
+  .add-btn {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+  }
+}

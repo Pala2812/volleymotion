@@ -1,2 +1,25 @@
-// Hier wird es möglich eine Mannschaft zu erstellen oder bearbeiten
-// Die Eigenschaften einer Mannschaft sind im GDrive festgehalten
+<nb-card>
+
+    <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
+        <nb-card-header>{{title}}</nb-card-header>
+
+        <nb-form-field>
+            <input nbInput fullWidth formControlName="club" placeholder="Vereinsname">
+        </nb-form-field>
+
+        <nb-form-field>
+            <input nbInput fullWidth formControlName="name" placeholder="Mannschaftsname">
+        </nb-form-field>
+
+        <nb-select fullWidth formControlName="division" placeholder="Spielklasse auswählen">
+            <nb-option *ngFor="let division of divisions" [value]="division">
+                {{division}}
+            </nb-option>
+        </nb-select>
+
+        <button nbButton type="submit" [disabled]="isCreatingTeam$ | async">
+            {{buttonText}}
+        </button>
+    </form>
+
+</nb-card>
