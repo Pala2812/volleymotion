@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Player } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { PlayerActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { PlayerSelectors, TeamSelectors } from '../../core/store/selectors';
@@ -17,21 +18,41 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   players$: Observable<Player[]>;
   unsubscribe$ = new Subject();
 
-  constructor(private store: Store<StoreState>) {}
+  constructor(private store: Store<StoreState>, private actions$: Actions) {}
 
   ngOnInit(): void {
-    this.isLoadingPlayers$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
+    this.isLoadingPlayers$ = this.store.pipe(
+      select(PlayerSelectors.selectPlayers)
+    );
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
-    
-    this.store.pipe(select(TeamSelectors.selectTeam), takeUntil(this.unsubscribe$))
-      .subscribe(team => {
-        console.log(team);
-        this.store.dispatch(PlayerActions.loadPlayersByTeamId({teamId: team.id}));
-      });
+
+    this.actions$
+      .pipe(
+        ofType(PlayerActions.deletePlayerSuccess),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(() => this.loadPlayers());
+
+    this.loadPlayers();
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  loadPlayers() {
+    this.store
+      .pipe(select(TeamSelectors.selectTeam), takeUntil(this.unsubscribe$))
+      .subscribe((team) => {
+        this.store.dispatch(
+          PlayerActions.loadPlayersByTeamId({ teamId: team?.id })
+        );
+      });
+  }
+
+  deletePlayer(player: Player, event: Event) {
+    this.store.dispatch(PlayerActions.deletePlayer({ player }));
+    event.stopImmediatePropagation();
   }
 }

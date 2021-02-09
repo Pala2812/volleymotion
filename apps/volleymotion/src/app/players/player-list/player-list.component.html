@@ -1,6 +1,17 @@
-<nb-card *ngFor="let player of players$ | async">
+<nb-card class="player-card" *ngFor="let player of players$ | async">
     <nb-card-header>
         {{player?.firstname}} {{player?.lastname}} {{player?.position}}
+
+        <div class="player-card-actions">
+            <button class="edit-btn" nbButton ghost status="info" [routerLink]="['../bearbeiten', player?.id]">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+    
+            <button class="delete-btn" nbButton ghost status="danger" (click)="deletePlayer(player, $event)">
+                <nb-icon icon="trash-outline"></nb-icon>
+            </button>    
+        </div>
+
     </nb-card-header>
 </nb-card>
 

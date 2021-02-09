@@ -4,6 +4,8 @@ import { onAccountDelete } from './triggers/on-account-delete';
 import { onCommentCreate } from './triggers/on-comment-create';
 import { onTeamCreate } from './triggers/on-team-create';
 import { onTeamDelete } from './triggers/on-team-delete';
+import { onPlayerCreate } from './triggers/on-player-create';
+import { onPlayerDelete } from './triggers/on-player-delete';
 
 admin.initializeApp();
 
@@ -12,3 +14,5 @@ exports.onAccountDelete = onAccountDelete;
 exports.onCommentCreate = onCommentCreate;
 exports.onTeamCreate = onTeamCreate;
 exports.onTeamDelete = onTeamDelete;
+exports.onPlayerCreate = onPlayerCreate;
+exports.onPlayerDelete = onPlayerDelete;

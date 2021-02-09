@@ -24,4 +24,8 @@ export class PlayerService {
         .then((docs) => docs.docs.map((doc) => doc.data() as Player))
     );
   }
+
+  deletePlayer(player: Player) {
+    return from(this.fs.collection('players').doc(player.id).ref.delete());
+  }
 }

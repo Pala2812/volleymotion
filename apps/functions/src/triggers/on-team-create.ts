@@ -43,6 +43,9 @@ const createSeason = (team: Team, name: string) => {
       current: 0,
       max: 0,
     },
+    team: {
+      
+    }
   };
 
   return { doc, season };

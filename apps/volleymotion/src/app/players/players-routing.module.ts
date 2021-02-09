@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'liste', pathMatch: 'full' },
   { path: 'liste', component: PlayerListComponent },
   { path: 'erstellen', component: PlayerCreateComponent },
+  { path: 'bearbeiten/:id', component: PlayerCreateComponent },
   { path: 'detail/:id', component: PlayerDetailComponent },
 ];
 

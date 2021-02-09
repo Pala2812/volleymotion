@@ -42,4 +42,12 @@ export class PlayerEffects {
       )
     )
   );
+
+  deletePlayer$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.deletePlayer),
+    switchMap(({player}) => this.playerService.deletePlayer(player).pipe(
+      map(() => PlayerActions.deletePlayerSuccess()),
+      catchError(error => of(PlayerActions.deletePlayerFailure({error})))
+    ))
+  ))
 }

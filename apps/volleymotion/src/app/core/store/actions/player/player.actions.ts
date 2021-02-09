@@ -29,3 +29,15 @@ export const createPlayerFailure = createAction(
   `${key} Create Player Failure`,
   props<{ error: any }>()
 );
+
+export const deletePlayer = createAction(
+  `${key} Delete Player`,
+  props<{ player: Player }>()
+);
+export const deletePlayerSuccess = createAction(
+  `${key} Delete Player Succcess`
+);
+export const deletePlayerFailure = createAction(
+  `${key} Delete Player Failure`,
+  props<{ error }>()
+);

@@ -14,4 +14,7 @@ export interface Season {
     current: number;
     max: number;
   };
+  team: {
+    
+  }
 }
