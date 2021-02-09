@@ -7,6 +7,7 @@ import {
   NbButtonModule,
   NbIconModule,
   NbAutocompleteModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -18,6 +19,7 @@ import {
     NbButtonModule,
     NbIconModule,
     NbAutocompleteModule,
+    NbTooltipModule,
   ],
   exports: [
     NbInputModule,
@@ -27,6 +29,7 @@ import {
     NbButtonModule,
     NbIconModule,
     NbAutocompleteModule,
+    NbTooltipModule
   ],
 })
 export class NebularModule {}

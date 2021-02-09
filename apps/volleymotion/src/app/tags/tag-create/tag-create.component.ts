@@ -33,6 +33,7 @@ export class TagCreateComponent implements OnInit {
     if (form.valid) {
       const id = this.tagProposalService.getId();
       const tagProposal = { ...form.value, id };
+      console.log(tagProposal);
       this.tagProposalService
         .addTagProposal(tagProposal)
         .pipe(

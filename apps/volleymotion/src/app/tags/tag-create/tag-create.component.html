@@ -7,11 +7,11 @@
         <form class="form" [formGroup]="form" (ngSubmit)="submit(form)">
 
             <nb-form-field>
-                <input nbInput fullWidth placeholder="Name *">
+                <input nbInput fullWidth placeholder="Name *" formControlName="name">
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput fullWidth placeholder="Beschreibung">
+                <textarea nbInput fullWidth placeholder="Beschreibung" formControlName="description"></textarea>
             </nb-form-field>
 
             <button nbButton type="submit" [disabled]="isSending$ | async">

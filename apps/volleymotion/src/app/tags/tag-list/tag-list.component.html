@@ -13,8 +13,8 @@
     <nb-card-header>Vorschläge</nb-card-header>
     <nb-card-body>
         <mat-chip-list>
-            <mat-chip *ngFor="let tagProposal of tagProposals$ | async">
-                {{tagProposal?.title}}
+            <mat-chip *ngFor="let tagProposal of tagProposals$ | async" [nbTooltip]="tagProposal?.description">
+                {{tagProposal?.name}}
             </mat-chip>
         </mat-chip-list>
     </nb-card-body>
