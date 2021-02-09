@@ -38,6 +38,9 @@ export class TeamCreateComponent implements OnInit {
     'Bezirksklasse',
     'Kreisliga',
     'Kreisklasse',
+    'Jugend',
+    'Senioren',
+    'Hobby / Mixed'
   ];
 
   constructor(

@@ -1,0 +1,20 @@
+<nb-card>
+    <nb-card-header>
+        Feedback
+    </nb-card-header>
+
+    <nb-card-body>
+        <form class="form" [formGroup]="form" (ngSubmit)="submit(form)">
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Titel">
+            </nb-form-field>
+
+            <nb-form-field>
+                <textarea nbInput fullWidth placeholder="Beschreibung"></textarea>
+            </nb-form-field>
+
+            <button nbButton type="submit">Feedback absenden</button>
+        </form>
+    </nb-card-body>
+</nb-card>

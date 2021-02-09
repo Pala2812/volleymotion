@@ -4,7 +4,7 @@ import { Player, Season } from '@volleymotion/models';
 
 export const onPlayerDelete = functions
   .region('europe-west3')
-  .firestore.document('player/{playerId}')
+  .firestore.document('players/{playerId}')
   .onDelete(async (snap) => {
     const player = snap.data() as Player;
 
@@ -14,14 +14,14 @@ export const onPlayerDelete = functions
       .get()
       .then((docs) => docs.docs[0]);
 
-    const increment = firestore.FieldValue.increment(-1);
+    const decrement = firestore.FieldValue.increment(-1);
 
     const season: Partial<Season> = {
       team: {
-        [player.position]: increment,
-        total: increment,
+        [player.position]: decrement,
+        total: decrement,
       },
     };
 
-    await seasonDoc.ref.update(season);
+    await seasonDoc.ref.set(season, { merge: true });
   });

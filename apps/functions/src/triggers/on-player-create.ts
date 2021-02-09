@@ -4,7 +4,7 @@ import { Player, Season } from '@volleymotion/models';
 
 export const onPlayerCreate = functions
   .region('europe-west3')
-  .firestore.document('player/{playerId}')
+  .firestore.document('players/{playerId}')
   .onCreate(async (snap) => {
     const player = snap.data() as Player;
 
@@ -23,5 +23,5 @@ export const onPlayerCreate = functions
       },
     };
 
-    await seasonDoc.ref.update(season);
+    await seasonDoc.ref.set(season, { merge: true });
   });

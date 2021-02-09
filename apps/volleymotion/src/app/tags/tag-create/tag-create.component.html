@@ -1,0 +1,21 @@
+<nb-card>
+    <nb-card-header>
+        Tag vorschlagen
+    </nb-card-header>
+
+    <nb-card-body>
+        <form class="form" [formGroup]="form" (ngSubmit)="submit(form)">
+            <nb-form-field>
+                <input nbInput placeholder="Name *">
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput placeholder="Beschreibung">
+            </nb-form-field>
+
+            <button nbButton type="submit">
+                Tag vorschlagen
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>

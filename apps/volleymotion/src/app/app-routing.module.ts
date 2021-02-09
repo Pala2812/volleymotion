@@ -51,6 +51,14 @@ const routes: Routes = [
         loadChildren: () =>
           import('./chat/chat.module').then((m) => m.ChatModule),
       },
+      {
+        path: 'tags',
+        loadChildren: () => import('./tags/tags.module').then(m => m.TagsModule)
+      },
+      {
+        path: 'feedback',
+        loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
+      }
     ],
   },
   {
