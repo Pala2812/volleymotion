@@ -1,9 +1,9 @@
 import { Tag } from "./tag";
 
 export interface Player {
+    id: string;
     uid: string;
     teamId: string;
-    id: string;
     firstname: string;
     lastname: string;
     position: string;

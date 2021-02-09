@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Player, Team } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PlayerActions } from '../../core/store/actions';
 
 import { StoreState } from '../../core/store/reducers';
 import { TeamSelectors } from '../../core/store/selectors';
@@ -25,11 +29,23 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
     'Libero',
   ];
 
-  constructor(private fs: AngularFirestore, private store: Store<StoreState>) {}
+  constructor(
+    private fs: AngularFirestore,
+    private store: Store<StoreState>,
+    private router: Router,
+    private actions$: Actions
+  ) {}
 
   ngOnInit(): void {
     this.form = this.initForm();
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
+
+    this.actions$
+      .pipe(
+        ofType(PlayerActions.createPlayerSuccess),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(() => this.router.navigate(['spieler']));
   }
 
   ngOnDestroy(): void {
@@ -65,6 +81,8 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
         weakIn: [],
         improveIn: [],
       };
+
+      this.store.dispatch(PlayerActions.createPlayer({ player }));
     }
   }
 }

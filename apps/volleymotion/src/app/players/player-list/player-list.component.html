@@ -1,3 +1,9 @@
+<nb-card *ngFor="let player of players$ | async">
+    <nb-card-header>
+        {{player?.firstname}} {{player?.lastname}} {{player?.position}}
+    </nb-card-header>
+</nb-card>
+
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>
 </button>
