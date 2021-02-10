@@ -1,1 +1,28 @@
-// hier kann man ein Match anlegen
+<nb-card>
+
+    <nb-card-header>Spiel erstellen</nb-card-header>
+
+    <nb-card-body>
+        <form [formGroup]="form" class="form">
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Gegner" formControlName="opponent">
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker">
+                <nb-datepicker #datepicker></nb-datepicker>
+            </nb-form-field>
+
+            <nb-form-field>
+                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker"
+                    formControlName="startTime">
+                <nb-timepicker #timepicker hoursText="Stunde" minutesText="Minuten"></nb-timepicker>
+            </nb-form-field>
+
+            <button nbButton>Spiel erstellen</button>
+        </form>
+    </nb-card-body>
+
+</nb-card>
+
+// Ort

@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import de from '@angular/common/locales/de';
+import { registerLocaleData } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -21,11 +23,17 @@ import { effects } from './core/store/effects';
 import { reducers, metaReducers } from './core/store/reducers';
 import { SnackbarService } from './core/services/snackbar.service';
 import { LayoutModule } from './core/layout/layout.module';
-import { NbThemeModule, NbSidebarModule, NbMenuModule } from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbTimepickerModule,
+  NbDatepickerModule,
+} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 
-
+registerLocaleData(de, 'de-DE');
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -61,6 +69,8 @@ import { AngularMaterialModule } from './shared/angular-material/angular-materia
     AngularMaterialModule,
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    NbTimepickerModule.forRoot(),
     NbThemeModule.forRoot({ name: 'cosmic' }),
   ],
   providers: [
@@ -68,6 +78,10 @@ import { AngularMaterialModule } from './shared/angular-material/angular-materia
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { floatLabel: 'auto' },
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'de-DE',
     },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
   ],
