@@ -4,6 +4,7 @@ import { SurveyEffects } from './survey/survey.effects';
 import { TeamEffects } from './team/team.effects';
 import { SeasonEffects } from './season/season.effects';
 import { PlayerEffects } from './player/player.effects';
+import { MatchEffects } from './match/match.effects';
 
 export const effects: any[] = [
   AuthEffects,
@@ -12,4 +13,5 @@ export const effects: any[] = [
   TeamEffects,
   SeasonEffects,
   PlayerEffects,
+  MatchEffects,
 ];

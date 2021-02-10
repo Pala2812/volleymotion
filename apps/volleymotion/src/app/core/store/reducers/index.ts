@@ -7,6 +7,7 @@ import * as fromSurvey from './survey/survey.reducer';
 import * as fromTeam from './team/team.reducer';
 import * as fromSeason from './season/season.reducer';
 import * as fromPlayer from './player/player.reducer';
+import * as fromMatch from './match/match.reducer';
 
 import { AuthActions } from '../actions';
 
@@ -17,6 +18,7 @@ export interface StoreState {
   [fromTeam.teamFeatureKey]: fromTeam.State;
   [fromSeason.seasonFeatureKey]: fromSeason.State;
   [fromPlayer.playerFeatureKey]: fromPlayer.State;
+  [fromMatch.matchFeatureKey]: fromMatch.State;
 }
 
 export const reducers: ActionReducerMap<StoreState> = {
@@ -26,6 +28,7 @@ export const reducers: ActionReducerMap<StoreState> = {
   [fromTeam.teamFeatureKey]: fromTeam.reducer,
   [fromSeason.seasonFeatureKey]: fromSeason.reducer,
   [fromPlayer.playerFeatureKey]: fromPlayer.reducer,
+  [fromMatch.matchFeatureKey]: fromMatch.reducer,
 };
 
 export const metaReducers: MetaReducer<StoreState>[] = !environment.production

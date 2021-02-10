@@ -1,15 +1,33 @@
 import { createAction, props } from '@ngrx/store';
+import { Match } from '@volleymotion/models';
 
-export const loadMatchs = createAction(
-  '[Match] Load Matchs'
+const key = '[Match]';
+
+export const loadMatches = createAction(
+  `${key} Load Matches`,
+  props<{ teamId: string; seasonId: string }>()
 );
 
-export const loadMatchsSuccess = createAction(
-  '[Match] Load Matchs Success',
-  props<{ data: any }>()
+export const loadMatchesSuccess = createAction(
+  `${key} Load Matches Success`,
+  props<{ matches: Match[] }>()
 );
 
-export const loadMatchsFailure = createAction(
-  '[Match] Load Matchs Failure',
+export const loadMatchesFailure = createAction(
+  `${key} Load Matches Failure`,
   props<{ error: any }>()
+);
+
+export const createMatch = createAction(
+  `${key} Crate Match`,
+  props<{ match: Match }>()
+);
+
+export const createMatchSuccess = createAction(
+  `${key} Create Match Success`,
+);
+
+export const createMatchFailure = createAction(
+  `${key} Create Match Failure`,
+  props<{error: any}>()
 );

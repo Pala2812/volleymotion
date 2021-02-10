@@ -4,6 +4,7 @@ import * as SurveyActions from './survey/survey.actions';
 import * as TeamActions from './team/team.actions';
 import * as SeasonActions from './season/season.actions';
 import * as PlayerActions from './player/player.actions';
+import * as MatchActions from './match/match.actions';
 
 export {
   AuthActions,
@@ -12,4 +13,5 @@ export {
   SeasonActions,
   TeamActions,
   PlayerActions,
+  MatchActions,
 };
