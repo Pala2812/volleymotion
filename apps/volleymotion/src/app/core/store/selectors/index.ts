@@ -5,6 +5,7 @@ import * as TeamSelectors from './team/team.selectors';
 import * as SeasonSelectors from './season/season.selectors';
 import * as PlayerSelectors from './player/player.selectors';
 import * as MatchSelectors from './match/match.selectors';
+import * as TrainingMatchSelectors from './training-match/training-match.selectors';
 
 export {
   AuthSelectors,
@@ -14,4 +15,5 @@ export {
   SeasonSelectors,
   PlayerSelectors,
   MatchSelectors,
+  TrainingMatchSelectors,
 };

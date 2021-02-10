@@ -5,6 +5,7 @@ import * as TeamActions from './team/team.actions';
 import * as SeasonActions from './season/season.actions';
 import * as PlayerActions from './player/player.actions';
 import * as MatchActions from './match/match.actions';
+import * as TraningMatchActions from './training-match/training-match.actions';
 
 export {
   AuthActions,
@@ -14,4 +15,5 @@ export {
   TeamActions,
   PlayerActions,
   MatchActions,
+  TraningMatchActions,
 };

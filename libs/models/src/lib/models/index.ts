@@ -9,3 +9,4 @@ export * from './tag';
 export * from './match';
 export * from './address';
 export * from './_geoloc';
+export * from './training-match';
