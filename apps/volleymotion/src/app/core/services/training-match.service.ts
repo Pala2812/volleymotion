@@ -11,7 +11,7 @@ export class TrainingMatchService {
   constructor(private fs: AngularFirestore) {}
 
   createTrainingMatch(trainingMatch: TrainingMatch) {
-    return from(this.fs.collection('tranings-matches').doc(trainingMatch.id).set(trainingMatch));
+    return from(this.fs.collection('training-matches').doc(trainingMatch.id).set(trainingMatch));
   }
 
   deleteTrainingMatch(trainingMatch: TrainingMatch) {
@@ -19,6 +19,6 @@ export class TrainingMatchService {
   }
 
   loadTrainingMatches() {
-    return this.fs.collection<TrainingMatch>('traning-matches').valueChanges();
+    return this.fs.collection<TrainingMatch>('training-matches').valueChanges();
   }
 }

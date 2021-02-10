@@ -1,4 +1,7 @@
-<agm-map class="map" [latitude]="latitude" [longitude]="longitude" [zoom]="6"></agm-map>
+<agm-map class="map" [latitude]="latitude" [longitude]="longitude" [zoom]="6">
+    <agm-marker *ngFor="let traningMatch of traningMatches$ | async" [title]="traningMatch?.description"
+    [latitude]="traningMatch?._geoloc?.lat" [longitude]="traningMatch?._geoloc?.lng" (markerClick)="viewDetails(traningMatch)"></agm-marker>
+</agm-map>
 
 <button mat-fab class="add-btn" [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>

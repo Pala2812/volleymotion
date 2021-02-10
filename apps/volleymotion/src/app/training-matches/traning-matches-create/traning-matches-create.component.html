@@ -1,10 +1,10 @@
-<nb-card>
+<nb-card *ngIf="team">
     <nb-card-header>
         Trainingsspiel erstellen
     </nb-card-header>
 
     <nb-card-body>
-        <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
+        <form [formGroup]="form" class="form" (ngSubmit)="submit(form, team)">
 
             <div class="row">
                 <nb-form-field>
@@ -73,13 +73,15 @@
                 <textarea nbInput fullWidth formControlName="description" placeholder="Beschreibung"></textarea>
             </nb-form-field>
 
-            <nb-form-field>
-                <input nbInput fullWidth formControlName="email" placeholder="E-Mail" type="email">
-            </nb-form-field>
+            <form formGroupName="contact">
+                <nb-form-field>
+                    <input nbInput fullWidth formControlName="email" placeholder="E-Mail" type="email">
+                </nb-form-field>
 
-            <nb-form-field>
-                <input nbInput fullWidth formControlName="telefon" placeholder="Telefon" type="tel">
-            </nb-form-field>
+                <nb-form-field>
+                    <input nbInput fullWidth formControlName="telefon" placeholder="Telefon" type="tel">
+                </nb-form-field>
+            </form>
 
             <button nbButton type="submit">Trainingspiel erstellen</button>
         </form>
