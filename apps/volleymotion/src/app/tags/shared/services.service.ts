@@ -15,6 +15,10 @@ export class TagProposalService {
     );
   }
 
+  addTag(tag: Tag) {
+    return from(this.fs.doc(`tags/${tag.id}`).set(tag));
+  }
+
   getTagProposals() {
     return this.fs.collection<TagProposal>('tag-proposals').valueChanges();
   }

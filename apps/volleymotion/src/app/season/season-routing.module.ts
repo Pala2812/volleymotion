@@ -5,6 +5,7 @@ import { SeasonEditComponent } from './season-edit/season-edit.component';
 import { SeasonListComponent } from './season-list/season-list.component';
 
 const routes: Routes = [
+  { path: '', component: SeasonListComponent },
   { path: ':id', component: SeasonListComponent },
   { path: 'bearbeiten/:id/:teamId', component: SeasonEditComponent },
 ];

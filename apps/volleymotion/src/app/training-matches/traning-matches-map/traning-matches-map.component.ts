@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./traning-matches-map.component.scss']
 })
 export class TraningMatchesMapComponent implements OnInit {
-
+  latitude = 51.164305;
+  longitude = 10.4541205;
+  
   constructor() { }
 
   ngOnInit(): void {

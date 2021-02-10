@@ -6,5 +6,7 @@ export interface Team {
   uid: string;
   club: string;
   name: string;
+  teamType: string;
+  sportType: string;
   division: string;
 }

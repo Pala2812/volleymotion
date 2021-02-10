@@ -3,5 +3,6 @@ module.exports = {
     '<rootDir>/apps/volleymotion',
     '<rootDir>/apps/functions',
     '<rootDir>/libs/models',
+    '<rootDir>/libs/address-input',
   ],
 };

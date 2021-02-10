@@ -5,7 +5,7 @@ import { TraningMatchesCreateComponent } from './traning-matches-create/traning-
 import { TraningMatchesMapComponent } from './traning-matches-map/traning-matches-map.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'liste', pathMatch: 'fulll' },
+  { path: '', redirectTo: 'karte', pathMatch: 'full' },
   { path: 'karte', component: TraningMatchesMapComponent },
   { path: 'erstellen', component: TraningMatchesCreateComponent },
 ];

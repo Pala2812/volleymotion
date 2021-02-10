@@ -7,3 +7,5 @@ export * from './feedback';
 export * from './tag-proposal';
 export * from './tag';
 export * from './match';
+export * from './address';
+export * from './_geoloc';

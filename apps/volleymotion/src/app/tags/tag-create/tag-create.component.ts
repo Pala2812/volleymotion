@@ -32,10 +32,19 @@ export class TagCreateComponent implements OnInit {
   }
 
   submit(form: FormGroup) {
+    console.log(this.router.url);
     if (form.valid) {
       const id = this.tagProposalService.getId();
       const tagProposal = { ...form.value, id };
-      console.log(tagProposal);
+
+      if (this.router.url.includes('abc-erstellen')) {
+        delete tagProposal.description;
+        this.tagProposalService.addTag(tagProposal).subscribe(() => {
+          this.router.navigate(['tags']);
+        });
+        return;
+      }
+      
       this.tagProposalService
         .addTagProposal(tagProposal)
         .pipe(
@@ -44,7 +53,10 @@ export class TagCreateComponent implements OnInit {
         )
         .subscribe(() => {
           this.router.navigate(['tags']);
-          this.toastService.success('Vielen Dank für deinen Beitrag :)', 'Danke!');
+          this.toastService.success(
+            'Vielen Dank für deinen Beitrag :)',
+            'Danke!'
+          );
         });
     }
   }

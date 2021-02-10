@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'liste' },
   { path: 'liste', component: TagListComponent },
   { path: 'vorschlagen', component: TagCreateComponent },
+  { path: 'abc-erstellen', component: TagCreateComponent },
 ];
 
 @NgModule({

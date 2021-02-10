@@ -11,6 +11,18 @@
             <input nbInput fullWidth formControlName="name" placeholder="Mannschaftsname">
         </nb-form-field>
 
+        <nb-select fullWidth formControlName="sportType" placeholder="Volleyballart auswählen">
+            <nb-option *ngFor="let sportType of sportTypes" [value]="sportType">
+                {{sportType}}
+            </nb-option>
+        </nb-select>
+
+        <nb-select fullWidth formControlName="teamType" placeholder="Einteilung auswählen">
+            <nb-option *ngFor="let type of teamTypes" [value]="type">
+                {{type}}
+            </nb-option>
+        </nb-select>
+
         <nb-select fullWidth formControlName="division" placeholder="Spielklasse auswählen">
             <nb-option *ngFor="let division of divisions" [value]="division">
                 {{division}}

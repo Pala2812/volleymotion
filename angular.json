@@ -182,7 +182,7 @@
       "projectType": "library",
       "root": "libs/models",
       "sourceRoot": "libs/models/src",
-      "prefix": "volleymotion",
+      "prefix": "vm",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -194,6 +194,32 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "address-input": {
+      "projectType": "library",
+      "root": "libs/address-input",
+      "sourceRoot": "libs/address-input/src",
+      "prefix": "volleymotion",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/address-input/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/address-input/jest.config.js",
             "passWithNoTests": true
           }
         }

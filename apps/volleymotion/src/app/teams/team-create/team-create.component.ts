@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -12,7 +12,6 @@ import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { selectTeam } from '../../core/store/selectors/team/team.selectors';
 @Component({
   selector: 'vm-team-create',
   templateUrl: './team-create.component.html',
@@ -40,8 +39,10 @@ export class TeamCreateComponent implements OnInit {
     'Kreisklasse',
     'Jugend',
     'Senioren',
-    'Hobby / Mixed'
+    'Hobby / Mixed',
   ];
+  teamTypes = ['Damen', 'Herren', 'Jugend', 'Senioren', 'Hobby / Mixed'];
+  sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
   constructor(
     private store: Store<StoreState>,
@@ -70,7 +71,9 @@ export class TeamCreateComponent implements OnInit {
         filter((team) => !!team),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((team) => (this.form = this.initForm(team), console.log(team) ));
+      .subscribe(
+        (team) => ((this.form = this.initForm(team)), console.log(team))
+      );
 
     this.store
       .pipe(
@@ -93,6 +96,8 @@ export class TeamCreateComponent implements OnInit {
     return new FormGroup({
       club: new FormControl(team?.club ?? '', [Validators.required]),
       name: new FormControl(team?.name ?? '', [Validators.required]),
+      sportType: new FormControl(team?.sportType ?? '', [Validators.required]),
+      teamType: new FormControl(team?.teamType ?? '', [Validators.required]),
       division: new FormControl(team?.division ?? '', [Validators.required]),
     });
   }
@@ -116,6 +121,8 @@ export class TeamCreateComponent implements OnInit {
       const createdAt = firebase.default.firestore.FieldValue.serverTimestamp();
       const club = form.controls.club.value;
       const name = form.controls.name.value;
+      const sportType = form.controls.sportType.value;
+      const teamType = form.controls.teamType.value;
       const division = form.controls.division.value;
 
       const team: Team = {
@@ -124,8 +131,11 @@ export class TeamCreateComponent implements OnInit {
         createdAt,
         club,
         name,
+        sportType,
+        teamType,
         division,
       };
+    
       const action = TeamActions.createTeam({ team });
       this.store.dispatch(action);
     }

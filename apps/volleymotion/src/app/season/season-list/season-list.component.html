@@ -1,13 +1,20 @@
-<nb-card class="season-card" *ngFor="let season of seasons$ | async" (click)="selectSeason(season)">
-    <nb-card-header>Saison {{season?.name}}
+<ng-container *ngIf="teamId; else noTeam">
+    <nb-card class="season-card" *ngFor="let season of seasons$ | async" (click)="selectSeason(season)">
+        <nb-card-header>Saison {{season?.name}}
 
-        <div class="season-card-actions">
-            <button class="edit-btn" nbButton ghost status="info" [routerLink]="['../bearbeiten', season.id, teamId]">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </div>
+            <div class="season-card-actions">
+                <button class="edit-btn" nbButton ghost status="info"
+                    [routerLink]="['../bearbeiten', season.id, teamId]">
+                    <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
 
-    </nb-card-header>
-</nb-card>
+        </nb-card-header>
+    </nb-card>
+</ng-container>
 
-// wähle eine Mannschaft aus
+<ng-template #noTeam>
+    <nb-card class="no-team-card" accent="danger">
+        <nb-card-header>Bitte wähle eine <a [routerLink]="['/mannschaften']">Mannschaft</a> aus</nb-card-header>
+    </nb-card>
+</ng-template>

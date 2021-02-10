@@ -1,0 +1,16 @@
+.form {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 1em;
+  padding: 1em;
+
+  &.geocode-form {
+    padding-top: 0;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1em;
+  }
+}

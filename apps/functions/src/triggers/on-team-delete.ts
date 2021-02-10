@@ -10,7 +10,7 @@ export const onTeamDelete = functions
 
     const docs = await firestore()
       .collection('seasons')
-      .where('uid', '==', team.uid)
+      .where('teamId', '==', team.id)
       .get()
       .then((docs) => docs.docs);
 
