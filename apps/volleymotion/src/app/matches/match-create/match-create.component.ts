@@ -18,7 +18,15 @@ export class MatchCreateComponent implements OnInit {
   initForm() {
     return new FormGroup({
       opponent: new FormControl(''),
-      startTime: new FormControl(''),
+      date: new FormControl(''),
+      time: new FormControl(''),
     });
+  }
+
+  submit(form: FormGroup) {
+    console.log(form.value);
+    if (form.valid) {
+     
+    }
   }
 }

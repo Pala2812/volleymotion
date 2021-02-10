@@ -3,23 +3,22 @@
     <nb-card-header>Spiel erstellen</nb-card-header>
 
     <nb-card-body>
-        <form [formGroup]="form" class="form">
+        <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
             <nb-form-field>
                 <input nbInput fullWidth placeholder="Gegner" formControlName="opponent">
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker">
+                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker" formControlName="date">
                 <nb-datepicker #datepicker></nb-datepicker>
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker"
-                    formControlName="startTime">
+                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker" formControlName="time">
                 <nb-timepicker #timepicker hoursText="Stunde" minutesText="Minuten"></nb-timepicker>
             </nb-form-field>
 
-            <button nbButton>Spiel erstellen</button>
+            <button nbButton type="submit">Spiel erstellen</button>
         </form>
     </nb-card-body>
 

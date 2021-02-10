@@ -6,3 +6,4 @@ export * from './player';
 export * from './feedback';
 export * from './tag-proposal';
 export * from './tag';
+export * from './match';
