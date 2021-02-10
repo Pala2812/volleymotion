@@ -1,25 +1,36 @@
 <nb-layout>
-    <nb-layout-header fixed>
-      <div class="header">
-  
-        <button aria-label="menu-toggle" mat-icon-button (click)="toggleMenu()">
-          <mat-icon>menu</mat-icon>
-        </button>
-  
-        <a routerLink="/" class="header-brand">
-          <img class="header-brand-logo" src="assets/logo.svg" alt="logo">
-          <h1 class="header-brand-name">Volleymotion</h1>
-        </a>
-      </div>
-    </nb-layout-header>
-  
-    <nb-layout-column>
-      <router-outlet></router-outlet>
-    </nb-layout-column>
-  
-    <nb-layout-footer fixed>
-      <a routerLink="./impressum">Impressum</a>
-      <a routerLink="./datenschutz">Datenschutz</a>
-    </nb-layout-footer>
-  
-  </nb-layout>
+  <nb-layout-header fixed>
+    <div class="header">
+
+      <button aria-label="menu-toggle" mat-icon-button (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <a routerLink="/" class="header-brand">
+        <img class="header-brand-logo" src="assets/logo.svg" alt="logo">
+        <h1 class="header-brand-name">Volleymotion</h1>
+      </a>
+    </div>
+  </nb-layout-header>
+
+
+  <nb-sidebar [state]="sidebarState" class="sidebar">
+    <nb-menu [items]="items"></nb-menu>
+
+    <button nbButton ghost status="primary" class="logout-btn" (click)="logout()">
+      <nb-icon icon="log-out-outline"></nb-icon>
+      logout
+    </button>
+
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <a routerLink="./impressum">Impressum</a>
+    <a routerLink="./datenschutz">Datenschutz</a>
+  </nb-layout-footer>
+
+</nb-layout>

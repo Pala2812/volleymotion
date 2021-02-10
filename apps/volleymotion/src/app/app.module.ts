@@ -21,7 +21,7 @@ import { effects } from './core/store/effects';
 import { reducers, metaReducers } from './core/store/reducers';
 import { SnackbarService } from './core/services/snackbar.service';
 import { LayoutModule } from './core/layout/layout.module';
-import { NbThemeModule, NbSidebarModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbSidebarModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 
@@ -59,6 +59,7 @@ import { AngularMaterialModule } from './shared/angular-material/angular-materia
     }),
     NbEvaIconsModule,
     AngularMaterialModule,
+    NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbThemeModule.forRoot({ name: 'cosmic' }),
   ],

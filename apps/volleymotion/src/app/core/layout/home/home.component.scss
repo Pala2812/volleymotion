@@ -26,4 +26,20 @@ a {
   }
 }
 
+.sidebar {
+  position: relative;
 
+  .logout-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    nb-icon {
+      margin-bottom: .5em;
+    }
+  }
+}

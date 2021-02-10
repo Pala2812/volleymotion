@@ -66,3 +66,11 @@ quill-editor {
 .layout-container {
   position: relative;
 }
+
+.columns {
+  position: relative;
+}
+
+nb-sidebar.left {
+  transition: width 0.2s ease-out;
+}

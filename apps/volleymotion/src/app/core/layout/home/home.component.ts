@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NbMenuService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -13,25 +15,54 @@ import { AuthSelectors } from '../../store/selectors';
 })
 export class HomeComponent implements OnInit {
   uid$: Observable<string>;
-  sidebarState = "compacted";
-  isMenuVisible = false;
+  sidebarState = 'collapsed';
+  items = [
+    {
+      title: 'dashboard',
+      link: 'dashboard',
+      icon: 'pie-chart-outline',
+    },
+    {
+      title: 'Mannschaften',
+      link: 'mannschaften',
+      icon: 'people-outline',
+    },
+    {
+      title: 'Saisons',
+      link: 'saisons',
+      icon: 'activity-outline',
+    },
+    {
+      title: 'Training',
+      link: 'training',
+      icon: 'list-outline',
+    },
+    { title: 'Spiele', link: 'spiele', icon: 'clipboard-outline' },
+    { title: 'Spieler', link: 'spieler', icon: 'person-add-outline' },
+    { title: 'Trainingsspiele', link: 'trainingsspiele', icon: 'pin-outline' },
+    { title: 'Chat', link: 'chat', icon: 'paper-plane-outline' },
+    { title: 'Tags', link: 'tags', icon: 'hash-outline' },
+    { title: 'Feedback', link: 'feedback', icon: 'star-outline' },
+  ];
 
-  constructor(private store: Store<StoreState>) {}
+  constructor(
+    private store: Store<StoreState>,
+    private menuService: NbMenuService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
+    this.menuService.onItemClick().subscribe(() => this.toggleMenu());
   }
 
   toggleMenu() {
-    this.isMenuVisible = !this.isMenuVisible;
-  }
-
-  closeMenu() {
-    this.isMenuVisible = false;
+    this.sidebarState =
+      this.sidebarState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
   logout() {
     this.store.dispatch(AuthActions.signOut());
-    this.toggleMenu();
+    this.router.navigate(['sign-up'])
   }
 }
