@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
       link: 'training',
       icon: 'list-outline',
     },
-    { title: 'Spiele', link: 'spiele', icon: 'clipboard-outline' },
+    { title: 'Spieltage', link: 'spieltage', icon: 'clipboard-outline' },
     { title: 'Spieler', link: 'spieler', icon: 'person-add-outline' },
     { title: 'Trainingsspiele', link: 'trainingsspiele', icon: 'pin-outline' },
     { title: 'Chat', link: 'chat', icon: 'paper-plane-outline' },

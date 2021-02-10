@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -44,7 +43,6 @@ export class SurveyCreateEditComponent
     private actions: Actions,
     private router: Router,
     private route: ActivatedRoute,
-    private toast: MatSnackBar,
     private fs: AngularFirestore
   ) {}
 
@@ -98,13 +96,7 @@ export class SurveyCreateEditComponent
         ),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(({ error }) =>
-        this.toast.open(error?.message, undefined, {
-          duration: 2000,
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-        })
-      );
+      .subscribe();
   }
 
   navigateOnSuccess() {

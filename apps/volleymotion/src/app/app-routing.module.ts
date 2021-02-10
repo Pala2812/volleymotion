@@ -30,7 +30,7 @@ const routes: Routes = [
           import('./training/training.module').then((m) => m.TrainingModule),
       },
       {
-        path: 'spiele',
+        path: 'spieltage',
         loadChildren: () =>
           import('./matches/matches.module').then((m) => m.MatchesModule),
       },

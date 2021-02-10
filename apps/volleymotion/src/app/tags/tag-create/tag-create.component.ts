@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { TagProposalService } from '../shared/services.service';
@@ -15,7 +16,8 @@ export class TagCreateComponent implements OnInit {
 
   constructor(
     private tagProposalService: TagProposalService,
-    private router: Router
+    private router: Router,
+    private toastService: NbToastrService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,10 @@ export class TagCreateComponent implements OnInit {
           tap(() => this.isSending$.next(true)),
           finalize(() => this.isSending$.next(false))
         )
-        .subscribe(() => this.router.navigate(['tags']));
+        .subscribe(() => {
+          this.router.navigate(['tags']);
+          this.toastService.success('Vielen Dank für deinen Beitrag :)', 'Danke!');
+        });
     }
   }
 }

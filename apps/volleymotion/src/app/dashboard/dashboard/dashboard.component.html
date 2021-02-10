@@ -39,6 +39,13 @@
     </nb-card>
 
     <nb-card class="chart-card">
+        <nb-card-header>Spielbeteiligung</nb-card-header>
+        <nb-card-body class="chart-card-body">
+            <google-chart type="PieChart" [data]="trainData" [options]="options"></google-chart>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card class="chart-card">
         <nb-card-header>Trainingsfocus</nb-card-header>
         <nb-card-body class="chart-card-body">
             <google-chart type="PieChart" [data]="data" [options]="options"></google-chart>

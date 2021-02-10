@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -13,6 +12,7 @@ import { StoreState } from '../../core/store/reducers';
 import { PasswordErrorMatcher } from '../password-error-matcher';
 import { UserPreferences } from '../../core/models/user-preferences.model';
 import { User } from '../../core/models';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'vm-sign-up',
@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private store: Store<StoreState>,
     private actions$: Actions,
     private router: Router,
-    private snackbar: MatSnackBar
+    private toastService: NbToastrService
   ) {}
 
   ngOnInit(): void {
@@ -48,19 +48,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => this.router.navigate(['']));
 
-    this.actions$
-      .pipe(
-        ofType(AuthActions.CreateUserWithEmaiAndPasswordFailure),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(({ error }) =>
-        this.snackbar.open(error.message, undefined, {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-        })
-      );
-
     this.isCreatingUserWithEmailAndPassword$ = this.store.pipe(
       select(AuthSelectors.selectIsCreatingUserWithEMailAndPassword)
     );
@@ -72,24 +59,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   initSignUpForm(): FormGroup {
-    return new FormGroup(
-      {
-        firstname: new FormControl('', [Validators.required]),
-        lastname: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required]),
-        passwordMatch: new FormControl(''),
-        isAgbAccepted: new FormControl(false, [Validators.requiredTrue]),
-        isNewsletterAccepted: new FormControl(false),
-      },
-      { validators: [this.validatePassword] }
-    );
-  }
-
-  validatePassword(group: FormGroup) {
-    const password = group.get('password').value;
-    const passwordMatch = group.get('passwordMatch').value;
-    return password === passwordMatch ? null : { mismatch: true };
+    return new FormGroup({
+      firstname: new FormControl('', [Validators.required]),
+      lastname: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      isAgbAccepted: new FormControl(false, [Validators.requiredTrue]),
+      isNewsletterAccepted: new FormControl(false),
+    });
   }
 
   signUpWithEmailAndPassword(form: FormGroup) {

@@ -9,7 +9,6 @@ import { takeUntil } from 'rxjs/operators';
 import { AuthActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { AuthSelectors } from '../../core/store/selectors';
-
 @Component({
   selector: 'vm-login',
   templateUrl: './login.component.html',

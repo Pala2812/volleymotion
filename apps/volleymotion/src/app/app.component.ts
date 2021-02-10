@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { AuthActions, UserActions } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { User } from './core/models';
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
     private fs: AngularFirestore,
     private swUpdate: SwUpdate,
     private networkStatusService: NetworkStatusService,
-    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +45,7 @@ export class AppComponent implements OnInit {
   verifyAndUpdate() {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-        const ref = this.snackbar.open(
+      /*  const ref = this.snackbar.open(
           'Eine neue Version ist Verfügbar',
           'Updaten',
           { horizontalPosition: 'left', verticalPosition: 'top' }
@@ -55,7 +53,7 @@ export class AppComponent implements OnInit {
 
         ref.onAction().subscribe((action) => {
           window.location.reload();
-        });
+        }); */
       });
     }
   }

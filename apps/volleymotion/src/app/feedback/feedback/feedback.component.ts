@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbToastrService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { FeedbackService } from '../shared/services/feedback.service';
@@ -12,7 +13,10 @@ export class FeedbackComponent implements OnInit {
   isSending$ = new Subject<boolean>();
   form: FormGroup;
 
-  constructor(private feedbackService: FeedbackService) {}
+  constructor(
+    private feedbackService: FeedbackService,
+    private toast: NbToastrService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -30,10 +34,16 @@ export class FeedbackComponent implements OnInit {
       const id = this.feedbackService.getId();
       const feedback = { ...form.value, id };
 
-      this.feedbackService.createFeedback(feedback).pipe(
-        tap(() => this.isSending$.next(true)),
-        finalize(() => this.isSending$.next(false))
-      ).subscribe(() => this.resetForm(form));
+      this.feedbackService
+        .createFeedback(feedback)
+        .pipe(
+          tap(() => this.isSending$.next(true)),
+          finalize(() => this.isSending$.next(false))
+        )
+        .subscribe(() => {
+          this.toast.success('Vielen Dank für dein Feedback :)', 'Danke!');
+          this.resetForm(form);
+        });
     }
   }
 

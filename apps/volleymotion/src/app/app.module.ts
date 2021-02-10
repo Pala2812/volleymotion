@@ -7,7 +7,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
@@ -21,7 +20,6 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
 import { reducers, metaReducers } from './core/store/reducers';
-import { SnackbarService } from './core/services/snackbar.service';
 import { LayoutModule } from './core/layout/layout.module';
 import {
   NbThemeModule,
@@ -29,6 +27,7 @@ import {
   NbMenuModule,
   NbTimepickerModule,
   NbDatepickerModule,
+  NbToastrModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
@@ -54,7 +53,6 @@ registerLocaleData(de, 'de-DE');
     AngularFireAuthModule,
     environment.production ? AngularFireAnalyticsModule : [],
     AngularFirestoreModule,
-    MatSnackBarModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -71,10 +69,10 @@ registerLocaleData(de, 'de-DE');
     NbSidebarModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbTimepickerModule.forRoot(),
+    NbToastrModule.forRoot(),
     NbThemeModule.forRoot({ name: 'cosmic' }),
   ],
   providers: [
-    SnackbarService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { floatLabel: 'auto' },

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { AuthService } from '../../../services/auth.service';
-import { SnackbarService } from '../../../services/snackbar.service';
 import { AuthActions } from '../../actions';
 import { SignInWithEmailAndPasswordFailure } from '../../actions/auth/auth.actions';
 
@@ -13,7 +13,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private snackbar: SnackbarService
+    private toastService: NbToastrService
   ) {}
 
   createUserWithEMailAndPassword$ = createEffect(() =>
@@ -59,7 +59,7 @@ export class AuthEffects {
           AuthActions.CreateUserWithEmaiAndPasswordFailure,
           SignInWithEmailAndPasswordFailure
         ),
-        tap(({ error }) => this.snackbar.openSnackbar(error?.message, 'error'))
+        tap(({ error }) => this.toastService.danger(error?.message))
       ),
     { dispatch: false }
   );

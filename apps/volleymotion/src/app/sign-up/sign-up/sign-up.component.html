@@ -1,71 +1,47 @@
-<mat-card>
+<nb-layout>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-header>
+                Sign-Up
+            </nb-card-header>
+            <nb-card-body>
+                <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
+                    <div class="row">
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="Vorname" autocomplete="name"
+                                formControlName="firstname">
+                        </nb-form-field>
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="Nachname" autocomplete="family-name"
+                                formControlName="lastname">
+                        </nb-form-field>
+                    </div>
 
-    <mat-card-header>
-        <mat-card-title>Sign-Up</mat-card-title>
-    </mat-card-header>
+                    <nb-form-field>
+                        <input nbInput fullWidth placeholder="E-Mail" autocomplete="email" formControlName="email">
+                    </nb-form-field>
 
-    <mat-card-content>
-        <form class="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
+                    <nb-form-field>
+                        <input nbInput fullWidth placeholder="Password" autocomplete="new-password"
+                            formControlName="password" type="password">
+                    </nb-form-field>
 
-            <div class="row">
-                <mat-form-field>
-                    <input matInput placeholder="Vorname" autocomplete="name" formControlName="firstname">
-                    <mat-error>
-                        Name wird benötigt
-                    </mat-error>
-                </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput placeholder="Nachname" autocomplete="family-name" formControlName="lastname">
-                    <mat-error>
-                        Nachname wird benötigt
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                    <nb-checkbox nbInput formControlName="isAgbAccepted">
+                        Ich habe die AGB und
+                        Datenschutzerklärung gelesen und stimme
+                        dieser zu.
+                    </nb-checkbox>
 
-            <mat-form-field>
-                <input matInput placeholder="E-Mail" autocomplete="email" formControlName="email">
-                <mat-error *ngIf="signUpForm?.controls?.email?.errors?.required">
-                    Dies Feld wird benötigt
-                </mat-error>
-                <mat-error *ngIf="signUpForm?.controls?.email?.errors?.email">
-                    Ungültige E-Mail
-                </mat-error>
-            </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="password" autocomplete="new-password" placeholder="Passwort"
-                    formControlName="password">
-                <mat-error *ngIf="signUpForm?.controls?.password?.errors?.required">
-                    Dieses Feld wird benötigt
-                </mat-error>
-            </mat-form-field>
+                    <nb-checkbox fullWidth nbInput formControlName="isNewsletterAccepted">Ich möchte über Neuigkeiten
+                        informiert werden.</nb-checkbox>
 
-            <mat-form-field>
-                <input matInput type="password" autocomplete="new-password" placeholder="Password wiederholen"
-                    formControlName="passwordMatch" [errorStateMatcher]="passwordMatcher">
-                <mat-error *ngIf="signUpForm?.errors?.mismatch">
-                    Passwörter stimmen nicht überein
-                </mat-error>
-            </mat-form-field>
 
-            <mat-form-field class="no-underline  no-padding-bottom">
-                <input matInput formControlName="isAgbAccepted" hidden>
-                <mat-checkbox (change)="onCheckboxChanged('isAgbAccepted', $event)">Ich habe die AGB und Datenschutzerklärung gelesen und stimme
-                    dieser zu.</mat-checkbox>
-                <mat-error *ngIf="signUpForm?.controls?.isAgbAccepted?.errors">
-                    Bitte stimme der AGB zu
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="no-underline no-padding-bottom">
-                <input matInput formControlName="isNewsletterAccepted" hidden>
-                <mat-checkbox (change)="onCheckboxChanged('isNewsletterAccepted', $event)">Ich möchte Newsletter-Emails
-                    erhalten.</mat-checkbox>
-            </mat-form-field>
-
-            <button class="sign-up-button" mat-flat-button color="primary" type="submit" aria-label="signup"
-                [disabled]="isCreatingUserWithEmailAndPassword$ | async">Sign-Up</button>
-        </form>
-    </mat-card-content>
-</mat-card>
+                    <button nbButton type="submit"
+                        [disabled]="isCreatingUserWithEmailAndPassword$ | async">Sign-Up</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+</nb-layout>

@@ -14,7 +14,6 @@ import {
 } from 'rxjs/operators';
 
 import { Survey, SurveyComment, User } from '../../../models';
-import { SnackbarService } from '../../../services/snackbar.service';
 import { SurveyActions } from '../../actions';
 import { StoreState } from '../../reducers';
 import { AuthSelectors } from '../../selectors';
@@ -24,8 +23,7 @@ export class SurveyEffects {
   constructor(
     private actions$: Actions,
     private store: Store<StoreState>,
-    private fs: AngularFirestore,
-    private snackbar: SnackbarService
+    private fs: AngularFirestore
   ) {}
 
   createSurvey$ = createEffect(() =>
@@ -108,13 +106,7 @@ export class SurveyEffects {
   );
 
   likeSurveySuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(SurveyActions.likeSurveySuccess),
-        tap(() =>
-          this.snackbar.openSnackbar('Danke für deine Unterstützung', 'success')
-        )
-      ),
+    () => this.actions$.pipe(ofType(SurveyActions.likeSurveySuccess)),
     { dispatch: false }
   );
 
@@ -198,13 +190,7 @@ export class SurveyEffects {
   );
 
   reportSurveySuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(SurveyActions.reportSurveySuccess),
-        tap(() =>
-          this.snackbar.openSnackbar('Erfolgreich gemeldet!', 'success')
-        )
-      ),
+    () => this.actions$.pipe(ofType(SurveyActions.reportSurveySuccess)),
     { dispatch: false }
   );
 }
