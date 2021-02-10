@@ -18,10 +18,37 @@
                 <nb-timepicker #timepicker hoursText="Stunde" minutesText="Minuten"></nb-timepicker>
             </nb-form-field>
 
+            <vm-address-input (addressSelected)="onAddressSelected($event)"></vm-address-input>
+
+            <form formGroupName="address" class="form">
+                <div class="row">
+
+                    <nb-form-field>
+                        <input nbInput fullWidth formControlName="street" placeholder="Straße">
+                    </nb-form-field>
+
+                    <nb-form-field>
+                        <input nbInput fullWidth formControlName="streetnumber" placeholder="Straßennummer">
+                    </nb-form-field>
+                </div>
+
+                <div class="row">
+                    <nb-form-field>
+                        <input nbInput fullWidth formControlName="postalcode" placeholder="Postleitzahl">
+                    </nb-form-field>
+
+                    <nb-form-field>
+                        <input nbInput fullWidth formControlName="locality" placeholder="Stadt">
+                    </nb-form-field>
+                </div>
+
+                <nb-form-field>
+                    <input nbInput fullWidth formControlName="administrativeArea" placeholder="Bundesland">
+                </nb-form-field>
+            </form>
+        
             <button nbButton type="submit">Spiel erstellen</button>
         </form>
     </nb-card-body>
 
 </nb-card>
-
-// Ort

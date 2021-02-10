@@ -20,7 +20,7 @@ export const loadMatchesFailure = createAction(
 
 export const createMatch = createAction(
   `${key} Crate Match`,
-  props<{ match: Match }>()
+  props<{ match: Partial<Match> }>()
 );
 
 export const createMatchSuccess = createAction(

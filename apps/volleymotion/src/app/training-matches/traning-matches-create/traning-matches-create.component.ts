@@ -56,20 +56,18 @@ export class TraningMatchesCreateComponent implements OnInit {
       division: new FormControl(team?.division ?? ''),
       address: new FormGroup(
         {
-          street: new FormControl(''),
-          streetnumber: new FormControl(''),
-          postalcode: new FormControl(''),
-          locality: new FormControl(''),
-          administrativeArea: new FormControl(''),
+          street: new FormControl('', [Validators.required]),
+          streetnumber: new FormControl('', [Validators.required]),
+          postalcode: new FormControl('', [Validators.required]),
+          locality: new FormControl('', [Validators.required]),
+          administrativeArea: new FormControl('', [Validators.required]),
         },
-        [Validators.required]
       ),
       _geoloc: new FormGroup(
         {
-          lat: new FormControl(''),
-          lng: new FormControl(''),
+          lat: new FormControl('', [Validators.required]),
+          lng: new FormControl('', [Validators.required]),
         },
-        [Validators.required]
       ),
       description: new FormControl(''),
       contact: new FormGroup({

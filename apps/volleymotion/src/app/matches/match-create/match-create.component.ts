@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -54,7 +53,26 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       opponent: new FormControl(''),
       date: new FormControl(''),
       time: new FormControl(''),
+      address: new FormGroup({
+        street: new FormControl('', [Validators.required]),
+        streetnumber: new FormControl('', [Validators.required]),
+        postalcode: new FormControl('', [Validators.required]),
+        locality: new FormControl('', [Validators.required]),
+        administrativeArea: new FormControl('', [Validators.required]),
+      }),
+      _geoloc: new FormGroup({
+        lat: new FormControl('', [Validators.required]),
+        lng: new FormControl('', [Validators.required]),
+      }),
     });
+  }
+
+  get address() {
+    return this.form.controls.address as FormGroup;
+  }
+
+  get _geoloc() {
+    return this.form.controls._geoloc as FormGroup;
   }
 
   submit(form: FormGroup, season: Season) {
@@ -65,8 +83,9 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     const opponent = form.controls.opponent.value;
     const time = form.controls.time.value;
     const date = form.controls.date.value;
+    const address = form.controls.address.value;
 
-    const match: Match = {
+    const match: Partial<Match> = {
       id,
       seasonId,
       teamId,
@@ -74,10 +93,21 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       opponent,
       time,
       date,
+      address,
     };
 
     console.log(match);
 
     this.store.dispatch(MatchActions.createMatch({ match }));
+  }
+
+  onAddressSelected({ address, geometry }) {
+    Object.keys(address).forEach((key) => {
+      this.address?.controls[key]?.patchValue(address[key]);
+    });
+
+    Object.keys(geometry).forEach((key) => {
+      this._geoloc?.controls[key]?.patchValue(geometry[key]);
+    });
   }
 }
