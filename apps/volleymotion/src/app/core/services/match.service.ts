@@ -21,6 +21,7 @@ export class MatchService {
   }
 
   addOrUpdateMatch(match: Match | Partial<Match>) {
+    console.log(match);
     return from(
       this.fs.collection('matches').doc(match.id).set(match, { merge: true })
     );

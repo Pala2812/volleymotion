@@ -3,7 +3,7 @@
     <nb-card-header>Spiel erstellen</nb-card-header>
 
     <nb-card-body>
-        <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
+        <form [formGroup]="form" class="form" (ngSubmit)="submit(form, season)">
             <nb-form-field>
                 <input nbInput fullWidth placeholder="Gegner" formControlName="opponent">
             </nb-form-field>

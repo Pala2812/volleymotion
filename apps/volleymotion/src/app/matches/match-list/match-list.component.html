@@ -1,3 +1,9 @@
+<nb-card *ngFor="let match of matches$ | async">
+    <nb-card-header>
+        {{match.opponent}} | {{match?.date | timestamp | date: 'dd.MM'}} | {{match?.time | timestamp | date: 'HH:mm'}}
+    </nb-card-header>
+</nb-card>
+
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>
 </button>
