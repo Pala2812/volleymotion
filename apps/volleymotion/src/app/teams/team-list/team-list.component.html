@@ -14,6 +14,11 @@
 
     </nb-card-header>
 </nb-card>
+
+<vm-loading-card *ngIf="isLoadingTeams$ | async" [isLoading$]="isLoadingTeams$" message="Mannschaften werden geladen"></vm-loading-card>
+
+
+
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>
 </button>

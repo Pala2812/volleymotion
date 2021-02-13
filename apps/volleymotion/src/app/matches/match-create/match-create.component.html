@@ -46,7 +46,17 @@
                     <input nbInput fullWidth formControlName="administrativeArea" placeholder="Bundesland">
                 </nb-form-field>
             </form>
-        
+
+            <form class="form geocode-form" formGroupName="_geoloc">
+                <nb-form-field>
+                    <input nbInput fullWidth formControlName="lat" placeholder="Latitude">
+                </nb-form-field>
+
+                <nb-form-field>
+                    <input nbInput fullWidth formControlName="lng" placeholder="Longitude">
+                </nb-form-field>
+            </form>
+
             <button nbButton type="submit">Spiel erstellen</button>
         </form>
     </nb-card-body>

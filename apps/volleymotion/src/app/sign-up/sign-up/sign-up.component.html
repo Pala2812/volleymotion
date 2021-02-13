@@ -1,47 +1,57 @@
 <nb-layout>
     <nb-layout-column>
-        <nb-card>
-            <nb-card-header>
-                Sign-Up
-            </nb-card-header>
-            <nb-card-body>
-                <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
-                    <div class="row">
+        <div class="container">
+
+            <nb-card class="card">
+                <nb-card-header>
+                    Sign-Up
+                </nb-card-header>
+                <nb-card-body>
+                    <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUpWithEmailAndPassword(signUpForm)">
+
                         <nb-form-field>
                             <input nbInput fullWidth placeholder="Vorname" autocomplete="name"
                                 formControlName="firstname">
                         </nb-form-field>
+
                         <nb-form-field>
                             <input nbInput fullWidth placeholder="Nachname" autocomplete="family-name"
                                 formControlName="lastname">
                         </nb-form-field>
-                    </div>
 
-                    <nb-form-field>
-                        <input nbInput fullWidth placeholder="E-Mail" autocomplete="email" formControlName="email">
-                    </nb-form-field>
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="E-Mail" autocomplete="email" formControlName="email">
+                        </nb-form-field>
 
-                    <nb-form-field>
-                        <input nbInput fullWidth placeholder="Password" autocomplete="new-password"
-                            formControlName="password" type="password">
-                    </nb-form-field>
-
-
-                    <nb-checkbox nbInput formControlName="isAgbAccepted">
-                        Ich habe die AGB und
-                        Datenschutzerklärung gelesen und stimme
-                        dieser zu.
-                    </nb-checkbox>
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="Password" autocomplete="new-password"
+                                formControlName="password" [type]="showPassword ? 'text' : 'password'">
+                            <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                                <nb-icon [icon]="showPassword ? 'eye-off-2-outline' : 'eye-outline'"
+                                    [attr.aria-label]="showPassword ? 'hide password' : 'show password'"></nb-icon>
+                            </button>
+                        </nb-form-field>
 
 
-                    <nb-checkbox fullWidth nbInput formControlName="isNewsletterAccepted">Ich möchte über Neuigkeiten
-                        informiert werden.</nb-checkbox>
+                        <nb-checkbox class="no-border" nbInput formControlName="isAgbAccepted" status="ghost">
+                            Ich habe die AGB und
+                            Datenschutzerklärung gelesen und stimme
+                            dieser zu
+                        </nb-checkbox>
 
 
-                    <button nbButton type="submit"
-                        [disabled]="isCreatingUserWithEmailAndPassword$ | async">Sign-Up</button>
-                </form>
-            </nb-card-body>
-        </nb-card>
+                        <nb-checkbox status="ghost" class="no-border" fullWidth nbInput
+                            formControlName="isNewsletterAccepted">Ich möchte über
+                            Neuigkeiten
+                            informiert werden</nb-checkbox>
+
+
+                        <button nbButton type="submit" [nbSpinner]="isCreatingUserWithEmailAndPassword$ | async"
+                            [disabled]="isCreatingUserWithEmailAndPassword$ | async">Sign-Up</button>
+                    </form>
+                </nb-card-body>
+            </nb-card>
+
+        </div>
     </nb-layout-column>
 </nb-layout>

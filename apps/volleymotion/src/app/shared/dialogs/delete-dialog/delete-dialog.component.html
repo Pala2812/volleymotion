@@ -1,0 +1,18 @@
+<nb-card>
+    <nb-card-header>
+        {{title}}
+    </nb-card-header>
+
+    <nb-card-body>
+        <div [innerHTML]="message"></div>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <button nbButton ghost (click)="cancel()">
+            Abbrechen
+        </button>
+        <button nbButton status="danger" (click)="delete()">
+            Löschen
+        </button>
+    </nb-card-footer>
+</nb-card>

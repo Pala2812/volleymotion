@@ -1,16 +1,22 @@
-.form {
-  display: grid;
-  grid-template-rows: auto;
-  grid-row-gap: 1em;
-  padding: 1em;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 3em;
 
-  .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 0.5em;
-  }
+  .card {
+    width: 100%;
+    max-width: 50em;
 
-  .sign-up-button {
-    margin-top: 1rem;
+    .form {
+      display: grid;
+      grid-template-rows: auto;
+      grid-row-gap: 1em;
+
+      .no-border {
+        border-style: none;
+      }
+    }
   }
 }

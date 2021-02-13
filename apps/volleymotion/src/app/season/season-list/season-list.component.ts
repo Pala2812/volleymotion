@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Season } from '@volleymotion/models';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors } from '../../core/store/selectors';
@@ -27,7 +28,11 @@ export class SeasonListComponent implements OnInit {
     this.isLoadingSeasons$ = this.store.pipe(
       select(SeasonSelectors.selectIsLoadingSeasons)
     );
-    this.seasons$ = this.store.pipe(select(SeasonSelectors.selectSeasons));
+
+    this.seasons$ = this.store.pipe(
+      select(SeasonSelectors.selectSeasons),
+      map((seasons) => [...seasons].sort((a, b) => b?.name?.localeCompare(a?.name)))
+    );
 
     this.route.params.subscribe((params) => {
       const teamId = params.id;

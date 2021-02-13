@@ -1,6 +1,18 @@
-.form {
-  display: grid;
-  grid-template-rows: auto;
-  grid-row-gap: 1em;
-  padding: 1em;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 3em;
+
+  .card {
+    width: 100%;
+    max-width: 50em;
+
+    .form {
+      display: grid;
+      grid-template-rows: auto;
+      grid-row-gap: 1em;
+    }
+  }
 }

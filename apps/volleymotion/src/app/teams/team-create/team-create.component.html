@@ -29,7 +29,7 @@
             </nb-option>
         </nb-select>
 
-        <button nbButton type="submit" [disabled]="isCreatingTeam$ | async">
+        <button nbButton type="submit" [nbSpinner]="isCreatingTeam$ | async" [disabled]="isCreatingTeam$ | async">
             {{buttonText}}
         </button>
     </form>

@@ -9,7 +9,6 @@ import { takeUntil } from 'rxjs/operators';
 import { AuthActions } from '../../core/store/actions';
 import { AuthSelectors } from '../../core/store/selectors';
 import { StoreState } from '../../core/store/reducers';
-import { PasswordErrorMatcher } from '../password-error-matcher';
 import { UserPreferences } from '../../core/models/user-preferences.model';
 import { User } from '../../core/models';
 import { NbToastrService } from '@nebular/theme';
@@ -22,7 +21,8 @@ import { NbToastrService } from '@nebular/theme';
 export class SignUpComponent implements OnInit, OnDestroy {
   isCreatingUserWithEmailAndPassword$: Observable<boolean>;
   signUpForm: FormGroup;
-  passwordMatcher = new PasswordErrorMatcher();
+  showPassword = false;
+
   userPreferences: UserPreferences = {
     isAgbAccepted: false,
     isDataPrivacyAccepted: false,
@@ -67,6 +67,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
       isAgbAccepted: new FormControl(false, [Validators.requiredTrue]),
       isNewsletterAccepted: new FormControl(false),
     });
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   signUpWithEmailAndPassword(form: FormGroup) {

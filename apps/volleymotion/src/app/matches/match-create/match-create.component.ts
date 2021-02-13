@@ -40,7 +40,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         ofType(MatchActions.createMatchSuccess),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(() => this.router.navigate(['spiele']));
+      .subscribe(() => this.router.navigate(['spieltage']));
   }
 
   ngOnDestroy(): void {
@@ -76,29 +76,33 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
   }
 
   submit(form: FormGroup, season: Season) {
-    const id = this.matchService.getId();
-    const seasonId = season.id;
-    const teamId = season.teamId;
-    const uid = season.uid;
-    const opponent = form.controls.opponent.value;
-    const time = form.controls.time.value;
-    const date = form.controls.date.value;
-    const address = form.controls.address.value;
+    console.log(form);
+    console.log(season);
+    if (form.valid && season) {
+      const id = this.matchService.getId();
+      const seasonId = season.id;
+      const teamId = season.teamId;
+      const uid = season.uid;
+      const opponent = form.controls.opponent.value;
+      const time = form.controls.time.value;
+      const date = form.controls.date.value;
+      const address = form.controls.address.value;
 
-    const match: Partial<Match> = {
-      id,
-      seasonId,
-      teamId,
-      uid,
-      opponent,
-      time,
-      date,
-      address,
-    };
+      const match: Partial<Match> = {
+        id,
+        seasonId,
+        teamId,
+        uid,
+        opponent,
+        time,
+        date,
+        address,
+      };
 
-    console.log(match);
+      console.log(match);
 
-    this.store.dispatch(MatchActions.createMatch({ match }));
+      this.store.dispatch(MatchActions.createMatch({ match }));
+    }
   }
 
   onAddressSelected({ address, geometry }) {

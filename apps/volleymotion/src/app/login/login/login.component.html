@@ -1,25 +1,30 @@
 <nb-layout>
     <nb-layout-column>
-        <nb-card>
-            <nb-card-header>
-                Login
-            </nb-card-header>
+        <div class="container">
 
-            <nb-card-body>
-                <form (ngSubmit)="login(loginForm)" class="form" [formGroup]="loginForm">
-                    <nb-form-field>
-                        <input nbInput fullWidth placeholder="E-Mail" formControlName="email" autocomplete="email" type="email">
-                    </nb-form-field>
+            <nb-card class="card">
+                <nb-card-header>
+                    Login
+                </nb-card-header>
 
-                    <nb-form-field>
-                        <input nbInput fullWidth placeholder="Passwort" formControlName="password" autocomplete="current-password"
-                            type="password">
-                    </nb-form-field>
-                    
-                    <button nbButton color="primary" type="submit"
-                        [disabled]="isSiginingInWithEmailAndPassword$ | async">Login</button>
-                </form>
-            </nb-card-body>
-        </nb-card>
+                <nb-card-body>
+                    <form (ngSubmit)="login(loginForm)" class="form" [formGroup]="loginForm">
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="E-Mail" formControlName="email" autocomplete="email"
+                                type="email">
+                        </nb-form-field>
+
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="Passwort" formControlName="password"
+                                autocomplete="current-password" type="password">
+                        </nb-form-field>
+
+                        <button [nbSpinner]="isSiginingInWithEmailAndPassword$ | async" class="submit-btn" nbButton
+                            color="primary" type="submit" status="primary"
+                            [disabled]="isSiginingInWithEmailAndPassword$ | async">Login</button>
+                    </form>
+                </nb-card-body>
+            </nb-card>
+        </div>
     </nb-layout-column>
 </nb-layout>

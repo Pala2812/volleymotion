@@ -1,0 +1,7 @@
+<ng-container *ngIf="isLoading$">
+    <nb-card [nbSpinner]="isLoading$ | async">
+        <nb-card-header>
+            {{message}}
+        </nb-card-header>
+    </nb-card>
+</ng-container>
