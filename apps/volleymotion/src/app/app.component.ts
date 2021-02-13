@@ -7,6 +7,7 @@ import {
   AuthActions,
   PlayerActions,
   SeasonActions,
+  TagActions,
   TeamActions,
   UserActions,
 } from './core/store/actions';
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit {
             this.store.dispatch(PlayerActions.loadPlayersByTeamId({ teamId }));
           });
       }
+      this.store.dispatch(TagActions.loadTags());
     });
     this.verifyAndUpdate();
     this.networkStatusService.init();

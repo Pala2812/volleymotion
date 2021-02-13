@@ -9,6 +9,8 @@ import * as fromSeason from './season/season.reducer';
 import * as fromPlayer from './player/player.reducer';
 import * as fromMatch from './match/match.reducer';
 import * as fromTrainingMatch from './training-match/training-match.reducer';
+import * as fromTag from './tag/tag.reducer';
+
 import { AuthActions } from '../actions';
 
 export interface StoreState {
@@ -20,6 +22,7 @@ export interface StoreState {
   [fromPlayer.playerFeatureKey]: fromPlayer.State;
   [fromMatch.matchFeatureKey]: fromMatch.State;
   [fromTrainingMatch.trainingMatchFeatureKey]: fromTrainingMatch.State;
+  [fromTag.tagFeatureKey]: fromTag.State;
 }
 
 export const reducers: ActionReducerMap<StoreState> = {
@@ -31,6 +34,7 @@ export const reducers: ActionReducerMap<StoreState> = {
   [fromPlayer.playerFeatureKey]: fromPlayer.reducer,
   [fromMatch.matchFeatureKey]: fromMatch.reducer,
   [fromTrainingMatch.trainingMatchFeatureKey]: fromTrainingMatch.reducer,
+  [fromTag.tagFeatureKey]: fromTag.reducer,
 };
 
 export const metaReducers: MetaReducer<StoreState>[] = !environment.production

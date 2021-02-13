@@ -6,6 +6,7 @@ import { SeasonEffects } from './season/season.effects';
 import { PlayerEffects } from './player/player.effects';
 import { MatchEffects } from './match/match.effects';
 import { TrainingMatchEffects } from './training-match/training-match.effects';
+import { TagEffects } from './tag/tag.effects';
 
 export const effects: any[] = [
   AuthEffects,
@@ -16,4 +17,5 @@ export const effects: any[] = [
   PlayerEffects,
   MatchEffects,
   TrainingMatchEffects,
+  TagEffects,
 ];
