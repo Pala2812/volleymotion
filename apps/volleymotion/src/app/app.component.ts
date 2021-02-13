@@ -3,7 +3,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
 
-import { AuthActions, UserActions } from './core/store/actions';
+import {
+  AuthActions,
+  SeasonActions,
+  TeamActions,
+  UserActions,
+} from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -22,7 +27,7 @@ export class AppComponent implements OnInit {
     private store: Store<StoreState>,
     private fs: AngularFirestore,
     private swUpdate: SwUpdate,
-    private networkStatusService: NetworkStatusService,
+    private networkStatusService: NetworkStatusService
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +38,15 @@ export class AppComponent implements OnInit {
           .collection('users')
           .doc<User>(userCrendetials.uid)
           .valueChanges()
-          .subscribe((user) =>
-            this.store.dispatch(UserActions.setUser({ user }))
-          );
+          .subscribe(async (user) => {
+            this.store.dispatch(UserActions.setUser({ user }));
+
+            const teamId = await localStorage.getItem('teamId');
+            const seasonId = await localStorage.getItem('seasonId');
+
+            this.store.dispatch(TeamActions.loadTeamById({ id: teamId }));
+            this.store.dispatch(SeasonActions.loadSeasonById({ id: seasonId }));
+          });
       }
     });
     this.verifyAndUpdate();
@@ -45,7 +56,7 @@ export class AppComponent implements OnInit {
   verifyAndUpdate() {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-      /*  const ref = this.snackbar.open(
+        /*  const ref = this.snackbar.open(
           'Eine neue Version ist Verfügbar',
           'Updaten',
           { horizontalPosition: 'left', verticalPosition: 'top' }

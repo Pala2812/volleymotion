@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 })
 export class LoadingCardComponent implements OnInit {
   @Input() isLoading$: Observable<boolean>;
-  @Input() message: string;
 
   constructor() { }
 

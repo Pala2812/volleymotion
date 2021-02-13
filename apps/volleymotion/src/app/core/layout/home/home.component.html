@@ -10,6 +10,16 @@
         <img class="header-brand-logo" src="assets/logo.svg" alt="logo">
         <h1 class="header-brand-name">Volleymotion</h1>
       </a>
+
+      <div class="data-container">
+        <div class="team-container" *ngIf="team$ | async as team">
+          {{team?.club}} {{team?.name}}
+        </div>
+        <div class="season-container" *ngIf="season$ | async as season">
+          {{season?.name}}
+        </div>
+      </div>
+
     </div>
   </nb-layout-header>
 

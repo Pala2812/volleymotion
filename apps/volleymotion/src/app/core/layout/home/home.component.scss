@@ -5,9 +5,10 @@ a {
 
 .header {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr auto;
   grid-column-gap: 1em;
   align-items: center;
+  width: 100%;
 
   .header-brand {
     display: flex;
@@ -22,6 +23,17 @@ a {
       font-size: 2em;
       margin: 0;
       margin-left: 0.3em;
+    }
+  }
+
+  .data-container {
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+    grid-row-gap: .25em;
+
+    .team-container {
+      font-size: 1.1em;
     }
   }
 }
@@ -39,7 +51,7 @@ a {
     transform: translateX(-50%);
 
     nb-icon {
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
     }
   }
 }

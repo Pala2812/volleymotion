@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { SeasonService } from '../../../services/season.service';
 import { SeasonActions } from '../../actions';
@@ -55,5 +55,17 @@ export class SeasonEffects {
         )
       )
     )
+  );
+
+  setSeason = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(SeasonActions.setSeason),
+        filter(season => !!season),
+        tap(({ season }) => {
+          localStorage.setItem('seasonId', season.id);
+        })
+      ),
+    { dispatch: false }
   );
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { TeamService } from '../../../services/team.service';
 import { TeamActions } from '../../actions';
 
@@ -55,5 +55,17 @@ export class TeamEffects {
         )
       )
     )
+  );
+
+  setTeam$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TeamActions.setTeam),
+        filter(season => !!season),
+        tap(({ team }) => {
+          localStorage.setItem('teamId', team.id);
+        })
+      ),
+    { dispatch: false }
   );
 }

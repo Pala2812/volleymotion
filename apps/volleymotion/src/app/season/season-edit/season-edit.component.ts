@@ -32,13 +32,12 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.initForm();
-    // this.isUpdatingSeason$ = this.store.pipe(select(SeasonSelectors.selectIsUpdatingSeason));
+    this.isUpdatingSeason$ = this.store.pipe(select(SeasonSelectors.selectIsUpdatingSeason));
 
     this.route.params.subscribe((params) => {
       const id = params.id;
       this.id = id;
       this.teamId = params.teamId;
-      this.store.dispatch(SeasonActions.setSeason({ season: undefined }));
       this.store.dispatch(SeasonActions.loadSeasonById({ id }));
     });
 

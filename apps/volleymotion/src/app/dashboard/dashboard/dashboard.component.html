@@ -3,18 +3,24 @@
     season: season$ | async
 } as data">
 
-    <nb-card>
-        <nb-card-header>
+    <nb-card class="card">
+        <nb-card-header class="card-header">
             Saisonziel
+            <button class="action-btn" nbButton ghost status="info" [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
         </nb-card-header>
         <nb-card-body>
             {{data?.season?.goal}}
         </nb-card-body>
     </nb-card>
 
-    <nb-card>
-        <nb-card-header>
+    <nb-card class="card">
+        <nb-card-header class="card-header">
             Trainingsfocus
+            <button class="action-btn" nbButton ghost status="info" [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
         </nb-card-header>
         <nb-card-body>
             Aufschlag Annahme Kondition

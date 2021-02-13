@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Season } from '@volleymotion/models';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Season, Team } from '@volleymotion/models';
+import { Observable, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
-import { SeasonSelectors } from '../../core/store/selectors';
+import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-season-list',
@@ -16,7 +16,8 @@ import { SeasonSelectors } from '../../core/store/selectors';
 export class SeasonListComponent implements OnInit {
   isLoadingSeasons$: Observable<boolean>;
   seasons$: Observable<Season[]>;
-  teamId: string;
+  team$: Observable<Team>;
+  unsubscribe$ = new Subject();
 
   constructor(
     private store: Store<StoreState>,
@@ -29,14 +30,17 @@ export class SeasonListComponent implements OnInit {
       select(SeasonSelectors.selectIsLoadingSeasons)
     );
 
+    this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
+
     this.seasons$ = this.store.pipe(
       select(SeasonSelectors.selectSeasons),
-      map((seasons) => [...seasons].sort((a, b) => b?.name?.localeCompare(a?.name)))
+      map((seasons) =>
+        [...seasons].sort((a, b) => b?.name?.localeCompare(a?.name))
+      )
     );
 
-    this.route.params.subscribe((params) => {
-      const teamId = params.id;
-      this.teamId = teamId;
+    this.team$.pipe(filter(team => !!team), takeUntil(this.unsubscribe$)).subscribe((team) => {
+      const teamId = team.id;
       this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));
     });
   }
