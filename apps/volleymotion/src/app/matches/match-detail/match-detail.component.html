@@ -1,1 +1,134 @@
-// Hier kann man nachher die Details eines Matches sehen und bearbeiten
+<div class="container" *ngIf="{
+     match: match$ | async,
+     team: team$ | async} as data">
+
+    <nb-tabset>
+        <nb-tab tabTitle="Übersicht">
+            <nb-card>
+                <nb-card-header>
+                    {{data?.match?.opponent}}
+                </nb-card-header>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Adresse</nb-card-header>
+                <nb-card-body>
+                    <div>
+                        <mat-label>{{data?.match?.address?.street}} {{data?.match?.address?.streetnumber}}</mat-label>
+                    </div>
+                    <div>
+                        <mat-label>{{data?.match?.address?.postalcode}} {{data?.match?.address?.locality}}</mat-label>
+                    </div>
+                    <div>
+                        <mat-label>{{data?.match?.address?.administrativeArea}} {{data?.match?.address?.country}}
+                        </mat-label>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </nb-tab>
+
+        <nb-tab tabTitle="Bearbeiten">
+
+            <nb-card>
+                <nb-card-header>Anwesende Spieler</nb-card-header>
+                <nb-card-body>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let player of players$ | async">
+                            {{player?.firstname}} {{player?.lastname}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Spielverlauf</nb-card-header>
+                <nb-card-body>
+
+                    <div class="team-container">
+
+
+                        <div class="team">
+
+                            <mat-label class="team-label">{{data?.team?.club}}</mat-label>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+
+                        </div>
+
+                        <div class="team">
+                            <mat-label class="team-label">{{data?.match?.opponent}}</mat-label>
+
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                            <nb-form-field>
+                                <input nbInput placeholder="Satzergebnis" type="number">
+                            </nb-form-field>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>
+                    Tags
+                </nb-card-header>
+
+                <nb-card-body>
+
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Spielerbeteiligungen</nb-card-header>
+                <nb-card-body>
+                    <div class="player-participations">
+                        <div class="player-participation" *ngFor="let player of players$ | async">
+                            <mat-label class="player-label">{{player?.firstname}} {{player?.lastname}}</mat-label>
+                            <div class="player-slider-container">
+                                <mat-slider id="hello" class="player-slider" max="100" min="0" step="1"></mat-slider>
+                                <mat-label class="player-slider-label">0%</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Kommentare</nb-card-header>
+                <nb-card-body>
+                    <form class="comment-form" [formGroup]="commentForm">
+                        <nb-form-field>
+                            <input nbInput fullWidth placeholder="Kommentar hinzufügen" formControlName="comment">
+                        </nb-form-field>
+                        <button nbButton type="submit">
+                            <nb-icon icon="plus-outline"></nb-icon>
+                        </button>
+                    </form>
+                </nb-card-body>
+            </nb-card>
+        </nb-tab>
+    </nb-tabset>
+</div>

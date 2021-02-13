@@ -30,4 +30,6 @@ export const reducer = createReducer(
   on(MatchActions.createMatch, (state)=> ({...state, isCreatingMatch: true})),
   on(MatchActions.createMatchSuccess, (state) => ({...state, isCreatingMatch: false})),
   on(MatchActions.createMatchFailure, (state)=> ({...state, isCreatingMatch: false})),
+
+  on(MatchActions.setMatch, (state, {match}) => ({...state, match})),
 );

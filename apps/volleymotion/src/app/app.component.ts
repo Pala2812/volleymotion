@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import {
   AuthActions,
+  PlayerActions,
   SeasonActions,
   TeamActions,
   UserActions,
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
 
             this.store.dispatch(TeamActions.loadTeamById({ id: teamId }));
             this.store.dispatch(SeasonActions.loadSeasonById({ id: seasonId }));
+            this.store.dispatch(PlayerActions.loadPlayersByTeamId({ teamId }));
           });
       }
     });

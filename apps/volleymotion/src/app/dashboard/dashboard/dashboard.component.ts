@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Season, Team } from '@volleymotion/models';
 import { Observable } from 'rxjs';
+import { PlayerActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
 

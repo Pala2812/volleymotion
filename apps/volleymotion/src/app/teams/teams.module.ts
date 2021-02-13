@@ -6,9 +6,10 @@ import { TeamsRoutingModule } from './teams-routing.module';
 import { TeamListComponent } from './team-list/team-list.component';
 import { TeamCreateComponent } from './team-create/team-create.component';
 import { SharedModule } from '../shared/shared.module';
+import { TeamDetailComponent } from './team-detail/team-detail.component';
 
 @NgModule({
-  declarations: [TeamListComponent, TeamCreateComponent],
+  declarations: [TeamListComponent, TeamCreateComponent, TeamDetailComponent],
   imports: [CommonModule, SharedModule, RouterModule, TeamsRoutingModule],
 })
 export class TeamsModule {}

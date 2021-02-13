@@ -1,8 +1,10 @@
-<nb-card *ngFor="let match of matches$ | async">
+<nb-card *ngFor="let match of matches$ | async" [routerLink]="['../detail', match?.id]" (click)="setMatch(match)">
     <nb-card-header>
         {{match.opponent}} | {{match?.date | timestamp | date: 'dd.MM'}} | {{match?.time | timestamp | date: 'HH:mm'}}
     </nb-card-header>
 </nb-card>
+
+<vm-loading-card class="loading-spinner" *ngIf="isLoadingMatches$ | async" [isLoading$]="isLoadingMatches$"></vm-loading-card>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>

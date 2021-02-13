@@ -59,6 +59,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         postalcode: new FormControl('', [Validators.required]),
         locality: new FormControl('', [Validators.required]),
         administrativeArea: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
       }),
       _geoloc: new FormGroup({
         lat: new FormControl('', [Validators.required]),
@@ -98,8 +99,6 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         date,
         address,
       };
-
-      console.log(match);
 
       this.store.dispatch(MatchActions.createMatch({ match }));
     }

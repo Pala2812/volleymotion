@@ -1,4 +1,4 @@
-<nb-card class="team-card" *ngFor="let team of teams$ | async" (click)="selectTeam(team)">
+<nb-card class="team-card" *ngFor="let team of teams$ | async" (click)="selectTeam(team)" [routerLink]="['../detail', team?.id]">
     <nb-card-header>
         {{team?.club}} {{team?.name}}
 

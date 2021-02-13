@@ -31,3 +31,8 @@ export const createMatchFailure = createAction(
   `${key} Create Match Failure`,
   props<{error: any}>()
 );
+
+export const setMatch = createAction(
+  `${key} Set Match`,
+  props<{match: Match}>()
+);
