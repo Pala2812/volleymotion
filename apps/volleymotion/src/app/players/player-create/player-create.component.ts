@@ -4,13 +4,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Player, Team } from '@volleymotion/models';
+import { Player, Tag, Team } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlayerActions } from '../../core/store/actions';
 
 import { StoreState } from '../../core/store/reducers';
-import { TeamSelectors } from '../../core/store/selectors';
+import { TagSelectors, TeamSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-player-create',
@@ -19,6 +19,8 @@ import { TeamSelectors } from '../../core/store/selectors';
 })
 export class PlayerCreateComponent implements OnInit, OnDestroy {
   team$: Observable<Team>;
+  tags$: Observable<Tag[]>;
+  filteredTags: Observable<Tag[]>;
   unsubscribe$ = new Subject();
   form: FormGroup;
   positions = [
@@ -39,6 +41,8 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.initForm();
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
+    this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
+    this.filteredTags = this.store.pipe(select(TagSelectors.selectTags));
 
     this.actions$
       .pipe(
