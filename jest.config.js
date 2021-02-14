@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/apps/functions',
     '<rootDir>/libs/models',
     '<rootDir>/libs/address-input',
+    '<rootDir>/apps/homepage',
   ],
 };

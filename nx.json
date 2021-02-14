@@ -38,6 +38,13 @@
     },
     "address-input": {
       "tags": []
+    },
+    "homepage": {
+      "tags": []
+    },
+    "homepage-e2e": {
+      "tags": [],
+      "implicitDependencies": ["homepage"]
     }
   }
 }
