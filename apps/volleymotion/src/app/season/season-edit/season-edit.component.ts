@@ -1,14 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Season } from '@volleymotion/models';
+import { Season, Tag } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
-import { SeasonSelectors } from '../../core/store/selectors';
+import { SeasonSelectors, TagSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-season-edit',
@@ -21,18 +27,25 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
   season: Season;
   id: string;
   teamId: string;
+  tags$: Observable<Tag[]>;
+  filteredTags$: Observable<Tag[]>;
   unsubscribe$ = new Subject();
 
   constructor(
     private store: Store<StoreState>,
     private route: ActivatedRoute,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.form = this.initForm();
-    this.isUpdatingSeason$ = this.store.pipe(select(SeasonSelectors.selectIsUpdatingSeason));
+    this.isUpdatingSeason$ = this.store.pipe(
+      select(SeasonSelectors.selectIsUpdatingSeason)
+    );
+    this.tags$ = this.store.select(TagSelectors.selectTags);
+    this.filteredTags$ = this.store.select(TagSelectors.selectTags);
 
     this.route.params.subscribe((params) => {
       const id = params.id;
@@ -62,9 +75,9 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
   }
 
   initForm(season?: Season) {
-    return new FormGroup({
-      goal: new FormControl(season?.goal ?? '', [Validators.required]),
-      tags: new FormArray(season?.tags ?? [], []),
+    return this.formBuilder.group({
+      goal: season?.goal ?? '',
+      tags: this.formBuilder.array(season?.tags ?? []),
     });
   }
 
@@ -73,14 +86,34 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
   }
 
   get tags() {
-    return this.form.controls.tags;
+    return this.form.controls.tags as FormArray;
+  }
+
+  onTagClicked(event: any) {
+    const tag = event.option.value;
+    (this.form.controls.tags as FormArray).push(new FormControl(tag));
+  }
+
+  removeTag(index: number, event: Event) {
+    (this.form.controls.tags as FormArray).removeAt(index);
+    event.stopImmediatePropagation();
+  }
+
+  onInputChanged(event: any) {
+    const filter = event?.value;
+    this.filteredTags$ = this.tags$.pipe(
+      map((tags) =>
+        [...tags].filter((tag) => tag.name.toLowerCase().includes(event.value))
+      )
+    );
   }
 
   submit(form: FormGroup) {
     console.log(this.season);
     if (form.valid) {
       const goal = form.controls.goal.value;
-      const season = { ...this.season, goal };
+      const tags = form.controls.tags.value;
+      const season = { ...this.season, goal, tags };
       this.store.dispatch(SeasonActions.updateSeason({ season }));
     }
   }

@@ -31,7 +31,8 @@
     "help": "nx help",
     "firebase:serve": "concurrently --kill-others \"yarn run build functions --watch\" \"firebase serve --only functions\"",
     "firebase:shell": "concurrently --kill-others \"yarn run build functions --watch\" \"firebase functions:shell\" --raw",
-    "firebase:deploy": "firebase deploy"
+    "firebase:deploy": "firebase deploy",
+    "create-ivy-entry-points": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
   "dependencies": {

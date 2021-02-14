@@ -23,7 +23,11 @@
             </button>
         </nb-card-header>
         <nb-card-body>
-            Aufschlag Annahme Kondition
+          <mat-chip-list class="tag-list">
+              <mat-chip *ngFor="let tag of data?.season?.tags">
+                  {{tag?.name}}
+              </mat-chip>
+          </mat-chip-list>
         </nb-card-body>
     </nb-card>
 

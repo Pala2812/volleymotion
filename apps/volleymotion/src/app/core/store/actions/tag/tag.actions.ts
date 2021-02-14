@@ -16,7 +16,7 @@ export const loadTagsFailure = createAction(
 );
 
 export const createTag = createAction(
-  `${key} Create Tag Success`,
+  `${key} Create Tag`,
   props<{ tag: Tag }>()
 );
 

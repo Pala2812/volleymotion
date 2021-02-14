@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   imports: [
     MatInputModule,
@@ -25,6 +26,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatCheckboxModule,
     MatChipsModule,
     MatSliderModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatInputModule,
@@ -39,6 +41,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatCheckboxModule,
     MatChipsModule,
     MatSliderModule,
+    MatAutocompleteModule,
   ],
 })
 export class AngularMaterialModule {}

@@ -12,6 +12,7 @@ import { NebularModule } from './nebular/nebular.module';
 import { environment } from '../../environments/environment';
 import { LoadingCardComponent } from './components/loading-card/loading-card.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { TagInputComponent } from './components/tag-input/tag-input.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
     TimestampPipe,
     LoadingCardComponent,
     DeleteDialogComponent,
+    TagInputComponent,
   ],
   imports: [
     CommonModule,
