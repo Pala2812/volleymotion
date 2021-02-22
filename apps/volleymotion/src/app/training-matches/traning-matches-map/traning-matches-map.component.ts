@@ -17,6 +17,7 @@ import { TrainingMatchFilterComponent } from '../training-match-filter/training-
   styleUrls: ['./traning-matches-map.component.scss'],
 })
 export class TraningMatchesMapComponent implements OnInit, OnDestroy {
+  isLoading$: Observable<boolean>;
   latitude = 51.164305;
   longitude = 10.4541205;
   traningMatches$: Observable<TrainingMatch[]>;
@@ -52,6 +53,10 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
       )
     );
 
+    this.isLoading$ = this.store.pipe(
+      select(TrainingMatchSelectors.selectIsLoadingTrainingMatches)
+    );
+
     this.traningMatches$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((matches) => this.filteredMatches$.next(matches));
@@ -71,6 +76,10 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
     const ref = this.dialog.open(TrainingMatchFilterComponent);
 
     ref.onClose.subscribe((res) => {
+      if (!res) {
+        return;
+      }
+      
       if (res === 'reset') {
         console.log('reset');
         this.traningMatches$.pipe(take(1)).subscribe((matches) => {

@@ -66,8 +66,10 @@ export class HomeComponent implements OnInit {
       this.sidebarState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
-  logout() {
+  async logout() {
     this.store.dispatch(AuthActions.signOut());
-    this.router.navigate(['sign-up'])
+    this.router.navigate(['login']);
+    await localStorage.removeItem('teamId');
+    await localStorage.removeItem('seasonId');
   }
 }

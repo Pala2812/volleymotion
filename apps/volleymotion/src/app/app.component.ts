@@ -41,8 +41,8 @@ export class AppComponent implements OnInit {
           .doc<User>(userCrendetials.uid)
           .valueChanges()
           .subscribe(async (user) => {
+            console.log(user);
             this.store.dispatch(UserActions.setUser({ user }));
-
             const teamId = await localStorage.getItem('teamId');
             const seasonId = await localStorage.getItem('seasonId');
 

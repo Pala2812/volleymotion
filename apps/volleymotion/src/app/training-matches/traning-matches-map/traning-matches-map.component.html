@@ -3,6 +3,8 @@
     [latitude]="traningMatch?._geoloc?.lat" [longitude]="traningMatch?._geoloc?.lng" (markerClick)="viewDetails(traningMatch)"></agm-marker>
 </agm-map>
 
+<nb-spinner class="spinner" *ngIf="isLoading$ | async"></nb-spinner>
+
 <button mat-fab class="add-btn" [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>
 </button>

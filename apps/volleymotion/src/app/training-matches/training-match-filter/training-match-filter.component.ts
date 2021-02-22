@@ -50,7 +50,6 @@ export class TrainingMatchFilterComponent implements OnInit {
         delete filters[key];
       }
     });
-    console.log(filters);
     this.dialogRef.close(filters);
   }
 
