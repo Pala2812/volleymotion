@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+
+  nb-card {
+    nb-card-body {
+      nb-select {
+        padding: 0.5em 0;
+      }
+    }
+
+    nb-card-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

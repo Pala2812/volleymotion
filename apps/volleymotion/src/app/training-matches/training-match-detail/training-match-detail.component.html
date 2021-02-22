@@ -1,1 +1,33 @@
-<p>training-match-detail works!</p>
+<nb-card class="training-match-card">
+  <nb-card-header>
+    {{ trainingMatch?.club }} {{ trainingMatch?.name }}<br />
+    {{ trainingMatch?.teamType }} {{ trainingMatch?.division }}
+  </nb-card-header>
+
+  <nb-card-body class="training-match-card-body">
+    <h6>Beschreibung</h6>
+    <p class="training-match-description">
+      {{ trainingMatch?.description }}
+    </p>
+  </nb-card-body>
+  <nb-card-body>
+    <h6>Kontakt</h6>
+    <div>{{ trainingMatch?.contact?.email }}</div>
+    <div>{{ trainingMatch?.contact?.telefon }}</div>
+  </nb-card-body>
+  <nb-card-body>
+    <h6>Adresse</h6>
+    <div>
+      {{ trainingMatch?.address?.street }}
+      {{ trainingMatch?.address?.streetnumber }}
+    </div>
+    <div>
+      {{ trainingMatch?.address?.postalcode }}
+      {{ trainingMatch?.address?.locality }}
+    </div>
+    <div>
+      {{ trainingMatch?.address?.country }}
+      {{ trainingMatch?.address?.administrativeArea }}
+    </div>
+  </nb-card-body>
+</nb-card>

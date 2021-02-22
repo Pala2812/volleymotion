@@ -1,5 +1,4 @@
 @import 'themes';
-
 @import '~@nebular/theme/styles/globals';
 
 @include nb-install() {
@@ -81,4 +80,10 @@ nb-sidebar.left {
 
 .gm-svpc {
   display: none;
+}
+
+textarea {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 }

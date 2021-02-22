@@ -7,15 +7,17 @@ import { TraningMatchesMapComponent } from './traning-matches-map/traning-matche
 import { SharedModule } from '../shared/shared.module';
 import { TrainingMatchesRoutingModule } from './training-matches-routing.module';
 import { TrainingMatchDetailComponent } from './training-match-detail/training-match-detail.component';
+import { TrainingMatchFilterComponent } from './training-match-filter/training-match-filter.component';
 
 @NgModule({
-  declarations: [TraningMatchesCreateComponent, TraningMatchesMapComponent, TrainingMatchDetailComponent],
+  declarations: [TraningMatchesCreateComponent, TraningMatchesMapComponent, TrainingMatchDetailComponent, TrainingMatchFilterComponent],
   imports: [
     CommonModule,
     AddressInputModule,
     SharedModule,
     TrainingMatchesRoutingModule,
   ],
+  entryComponents: [TrainingMatchDetailComponent, TrainingMatchFilterComponent],
   exports: [TrainingMatchesRoutingModule],
 })
 export class TrainingMatchesModule {}
