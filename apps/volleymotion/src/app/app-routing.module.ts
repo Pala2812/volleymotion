@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from './core/guards/auth.guard';
 import { SeasonGuard } from './core/guards/season.guard';
 import { TeamGuard } from './core/guards/team.guard';

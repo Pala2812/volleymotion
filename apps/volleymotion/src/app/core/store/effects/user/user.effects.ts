@@ -6,6 +6,7 @@ import { from, of } from 'rxjs';
 import {
   catchError,
   concatMap,
+  filter,
   map,
   tap,
   withLatestFrom,
@@ -29,7 +30,9 @@ export class UserEffects {
       ofType(UserActions.UpdateUser),
       withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
       concatMap((params) =>
-        from(this.fs.doc<User>(`users/${params[1]}`).update(params[0].user)).pipe(
+        from(
+          this.fs.doc<User>(`users/${params[1]}`).update(params[0].user)
+        ).pipe(
           map(() => UserActions.UpdateUserSuccess({ user: params[0].user })),
           catchError((error) => {
             console.log(error);
@@ -38,5 +41,15 @@ export class UserEffects {
         )
       )
     )
+  );
+
+  setUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActions.setUser),
+        filter((user) => !!user),
+        tap(({ user }) => localStorage.setItem('user', JSON.stringify(user)))
+      ),
+    { dispatch: false }
   );
 }

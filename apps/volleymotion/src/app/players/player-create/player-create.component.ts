@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -62,7 +62,20 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
+      strenghts: new FormArray([]),
+      weaknesses: new FormArray([]),
+      improvements: new FormArray([]),
     });
+  }
+
+  get strenghts() {
+    return this.form.controls.strenghts as FormArray;
+  }
+
+  onStrengthTagSelected(tag: Tag) {
+    const control = new FormControl(tag);
+    console.log(control)
+    this.strenghts.push(control);
   }
 
   submit(form: FormGroup, team: Team) {

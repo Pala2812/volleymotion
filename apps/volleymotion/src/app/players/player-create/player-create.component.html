@@ -30,9 +30,16 @@
         </nb-card-header>
 
         <nb-card-body>
+
+            <mat-chip-list>
+                <mat-chip *ngFor="let control of strenghts">
+                    {{control?.value | json}}
+                </mat-chip>
+            </mat-chip-list>
+
             <nb-form-field>
                 <input nbInput [matAutocomplete]="strengthTags" fullWidth placeholder="Tag eingeben">
-                <mat-autocomplete #strengthTags>
+                <mat-autocomplete #strengthTags (optionSelected)="onStrengthTagSelected($event)">
                     <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
                         {{tag?.name}}
                     </mat-option>

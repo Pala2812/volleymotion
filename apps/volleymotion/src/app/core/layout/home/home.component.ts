@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
   async logout() {
     this.store.dispatch(AuthActions.signOut());
     this.router.navigate(['login']);
-    await localStorage.removeItem('teamId');
-    await localStorage.removeItem('seasonId');
+    await localStorage.removeItem('team');
+    await localStorage.removeItem('season');
   }
 }

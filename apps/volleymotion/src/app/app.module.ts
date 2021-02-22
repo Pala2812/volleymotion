@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import de from '@angular/common/locales/de';
 import { registerLocaleData } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
@@ -33,8 +33,16 @@ import {
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
+import { AppInitService } from './core/services/app-init.service';
 
 registerLocaleData(de, 'de-DE');
+
+export function initializeApp(appInitService: AppInitService) {
+  return (): Promise<any> => { 
+    return appInitService.init();
+  }
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -86,6 +94,12 @@ registerLocaleData(de, 'de-DE');
       useValue: 'de-DE',
     },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppInitService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

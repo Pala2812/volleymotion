@@ -63,7 +63,7 @@ export class SeasonEffects {
         ofType(SeasonActions.setSeason),
         filter(season => !!season),
         tap(({ season }) => {
-          localStorage.setItem('seasonId', season.id);
+          localStorage.setItem('season', JSON.stringify(season));
         })
       ),
     { dispatch: false }

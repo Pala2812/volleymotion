@@ -63,7 +63,7 @@ export class TeamEffects {
         ofType(TeamActions.setTeam),
         filter(season => !!season),
         tap(({ team }) => {
-          localStorage.setItem('teamId', team.id);
+          localStorage.setItem('team', JSON.stringify(team));
         })
       ),
     { dispatch: false }

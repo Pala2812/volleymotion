@@ -16,6 +16,7 @@ import { NetworkStatusService } from './core/services/network-status.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { User } from './core/models';
+import { Season, Team } from '@volleymotion/models';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -33,26 +34,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.auth.user.subscribe((userCrendetials) => {
-      if (userCrendetials) {
-        this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
-        this.fs
-          .collection('users')
-          .doc<User>(userCrendetials.uid)
-          .valueChanges()
-          .subscribe(async (user) => {
-            console.log(user);
-            this.store.dispatch(UserActions.setUser({ user }));
-            const teamId = await localStorage.getItem('teamId');
-            const seasonId = await localStorage.getItem('seasonId');
-
-            this.store.dispatch(TeamActions.loadTeamById({ id: teamId }));
-            this.store.dispatch(SeasonActions.loadSeasonById({ id: seasonId }));
-            this.store.dispatch(PlayerActions.loadPlayersByTeamId({ teamId }));
-          });
-      }
-      this.store.dispatch(TagActions.loadTags());
-    });
+    this.store.dispatch(TagActions.loadTags());
     this.verifyAndUpdate();
     this.networkStatusService.init();
   }
