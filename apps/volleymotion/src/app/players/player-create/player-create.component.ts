@@ -4,13 +4,13 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Player, Tag, Team } from '@volleymotion/models';
+import { Player, Season, Tag, Team } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlayerActions } from '../../core/store/actions';
 
 import { StoreState } from '../../core/store/reducers';
-import { TagSelectors, TeamSelectors } from '../../core/store/selectors';
+import { SeasonSelectors, TagSelectors, TeamSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-player-create',
@@ -19,6 +19,7 @@ import { TagSelectors, TeamSelectors } from '../../core/store/selectors';
 })
 export class PlayerCreateComponent implements OnInit, OnDestroy {
   team$: Observable<Team>;
+  season$: Observable<Season>;
   tags$: Observable<Tag[]>;
   filteredTags: Observable<Tag[]>;
   unsubscribe$ = new Subject();
@@ -41,6 +42,7 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.initForm();
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
+    this.season$ = this.store.pipe(select(SeasonSelectors.selectSeason));
     this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
     this.filteredTags = this.store.pipe(select(TagSelectors.selectTags));
 
@@ -72,17 +74,35 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
     return this.form.controls.strenghts as FormArray;
   }
 
+  get weaknesses() {
+    return this.form.controls.weaknesses as FormArray;
+  }
+
+  get improvements() {
+    return this.form.controls.improvements as FormArray;
+  }
+
   onStrengthTagSelected(tag: Tag) {
     const control = new FormControl(tag);
-    console.log(control)
     this.strenghts.push(control);
   }
 
-  submit(form: FormGroup, team: Team) {
-    if (form.valid && team) {
+  onWeaknessesSelected(tag: Tag) {
+    const control = new FormControl(tag);
+    this.weaknesses.push(control);
+  }
+
+  onImprovementTagSelected(tag: Tag) {
+    const control = new FormControl(tag);
+    this.improvements.push(control);
+  }
+
+  submit(form: FormGroup, team: Team, season: Season) {
+    if (form.valid && team && season) {
       const id = this.fs.createId();
       const uid = team.uid;
       const teamId = team.id;
+      const seasonId = season.id;
       const firstname = this.form.controls.firstname.value;
       const lastname = this.form.controls.lastname.value;
       const position = this.form.controls.position.value;
@@ -91,6 +111,7 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
         id,
         uid,
         teamId,
+        seasonId,
         firstname,
         lastname,
         position,

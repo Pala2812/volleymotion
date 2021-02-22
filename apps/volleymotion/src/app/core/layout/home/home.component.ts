@@ -71,5 +71,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['login']);
     await localStorage.removeItem('team');
     await localStorage.removeItem('season');
+    await localStorage.removeItem('user');
   }
 }

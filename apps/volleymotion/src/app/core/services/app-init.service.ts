@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { Season, Team } from '@volleymotion/models';
-import { resolve } from 'dns';
 import { take } from 'rxjs/operators';
 import { User } from '../models';
 import {
@@ -56,6 +55,6 @@ export class AppInitService {
 
     this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
     this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-    this.store.dispatch(PlayerActions.loadPlayersByTeamId({ teamId: team?.id }));
+    this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
   }
 }

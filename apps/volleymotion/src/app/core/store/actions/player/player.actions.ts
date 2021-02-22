@@ -3,17 +3,17 @@ import { Player } from '@volleymotion/models';
 
 const key = '[Player]';
 
-export const loadPlayersByTeamId = createAction(
+export const loadPlayers = createAction(
   `${key} Load Players By Team Id`,
-  props<{ teamId: string }>()
+  props<{ teamId: string, seasonId: string }>()
 );
 
-export const loadPlayersByTeamIdSuccess = createAction(
+export const loadPlayersSuccess = createAction(
   '[Player] Load Players By Team Id Success',
   props<{ players: Player[] }>()
 );
 
-export const loadPlayersByTeamIdFailure = createAction(
+export const loadPlayersFailure = createAction(
   '[Player] Load Players By Team Id Failure',
   props<{ error: any }>()
 );

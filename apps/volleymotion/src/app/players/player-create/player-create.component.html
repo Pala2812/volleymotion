@@ -1,87 +1,117 @@
 <ng-container *ngIf="team$ | async as team">
+  <ng-container *ngIf="season$ | async as season">
     <nb-card>
-        <nb-card-header>
-            Spielerdaten
-        </nb-card-header>
+      <nb-card-header>
+        Spielerdaten
+      </nb-card-header>
 
-        <nb-card-body>
-            <form [formGroup]="form" class="form" (ngSubmit)="submit(form, team)">
+      <nb-card-body>
+        <form [formGroup]="form" class="form" (ngSubmit)="submit(form, team)">
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              placeholder="Vorname"
+              formControlName="firstname"
+            />
+          </nb-form-field>
 
-                <nb-form-field>
-                    <input nbInput fullWidth placeholder="Vorname" formControlName="firstname">
-                </nb-form-field>
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              placeholder="Nachname"
+              formControlName="lastname"
+            />
+          </nb-form-field>
 
-                <nb-form-field>
-                    <input nbInput fullWidth placeholder="Nachname" formControlName="lastname">
-                </nb-form-field>
-
-                <nb-select fullWidth placeholder="Position auswählen" formControlName="position">
-                    <nb-option *ngFor="let position of positions" [value]="position">
-                        {{position}}
-                    </nb-option>
-                </nb-select>
-            </form>
-        </nb-card-body>
+          <nb-select
+            fullWidth
+            placeholder="Position auswählen"
+            formControlName="position"
+          >
+            <nb-option *ngFor="let position of positions" [value]="position">
+              {{ position }}
+            </nb-option>
+          </nb-select>
+        </form>
+      </nb-card-body>
     </nb-card>
 
     <nb-card>
-        <nb-card-header>
-            Stärken
-        </nb-card-header>
+      <nb-card-header>
+        Stärken
+      </nb-card-header>
 
-        <nb-card-body>
-
-            <mat-chip-list>
-                <mat-chip *ngFor="let control of strenghts">
-                    {{control?.value | json}}
-                </mat-chip>
-            </mat-chip-list>
-
-            <nb-form-field>
-                <input nbInput [matAutocomplete]="strengthTags" fullWidth placeholder="Tag eingeben">
-                <mat-autocomplete #strengthTags (optionSelected)="onStrengthTagSelected($event)">
-                    <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                        {{tag?.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </nb-form-field>
-        </nb-card-body>
-    </nb-card>
-
-
-    <nb-card>
-        <nb-card-header>
-            Schwächen
-        </nb-card-header>
-        <nb-card-body>
-            <nb-form-field>
-                <nb-form-field>
-                    <input nbInput [matAutocomplete]="weaknessTags" fullWidth placeholder="Tag eingeben">
-                    <mat-autocomplete #weaknessTags>
-                        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                            {{tag?.name}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </nb-form-field>
-            </nb-form-field>
-        </nb-card-body>
+      <nb-card-body>
+        <nb-form-field>
+          <input
+            nbInput
+            [matAutocomplete]="strengthTags"
+            fullWidth
+            placeholder="Tag eingeben"
+          />
+          <mat-autocomplete
+            #strengthTags
+            (optionSelected)="onStrengthTagSelected($event)"
+          >
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{ tag?.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </nb-form-field>
+      </nb-card-body>
     </nb-card>
 
     <nb-card>
-        <nb-card-header>
-            Verbesserungwunsch
-        </nb-card-header>
-        <nb-card-body>
-            <nb-form-field>
-                <input nbInput [matAutocomplete]="improveTags" fullWidth placeholder="Tag eingeben">
-                <mat-autocomplete #improveTags>
-                    <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                        {{tag?.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </nb-form-field>
-        </nb-card-body>
+      <nb-card-header>
+        Schwächen
+      </nb-card-header>
+      <nb-card-body>
+        <nb-form-field>
+          <nb-form-field>
+            <input
+              nbInput
+              [matAutocomplete]="weaknessTags"
+              fullWidth
+              placeholder="Tag eingeben"
+            />
+            <mat-autocomplete #weaknessTags  (optionSelected)="onWeaknessesSelected($event)">
+              <mat-option
+                *ngFor="let tag of filteredTags | async"
+                [value]="tag"
+              >
+                {{ tag?.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </nb-form-field>
+        </nb-form-field>
+      </nb-card-body>
     </nb-card>
 
-    <button nbButton fullWidth type="submit" (click)="submit(form, team)">Spieler erstellen</button>
+    <nb-card>
+      <nb-card-header>
+        Verbesserungwunsch
+      </nb-card-header>
+      <nb-card-body>
+        <nb-form-field>
+          <input
+            nbInput
+            [matAutocomplete]="improveTags"
+            fullWidth
+            placeholder="Tag eingeben"
+          />
+          <mat-autocomplete #improveTags>
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag"  (optionSelected)="onImprovementTagSelected($event)">
+              {{ tag?.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </nb-form-field>
+      </nb-card-body>
+    </nb-card>
+
+    <button nbButton fullWidth type="submit" (click)="submit(form, team, season)">
+      Spieler erstellen
+    </button>
+  </ng-container>
 </ng-container>

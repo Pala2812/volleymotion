@@ -25,7 +25,7 @@ export const reducer = createReducer(initialState,
   on(PlayerActions.createPlayerSuccess, (state) => ({...state, isCreatingPlayer: false})),
   on(PlayerActions.createPlayerFailure, (state) => ({...state, isCreatingPlayer: false})),
 
-  on(PlayerActions.loadPlayersByTeamId, (state) => ({...state, isLoadingPlayers: true})),
-  on(PlayerActions.loadPlayersByTeamIdSuccess, (state, {players})=> ({...state, players, isLoadingPlayers: false})),
-  on(PlayerActions.loadPlayersByTeamIdFailure, (state) => ({...state, isLoadingPlayers: false}))
+  on(PlayerActions.loadPlayers, (state) => ({...state, isLoadingPlayers: true})),
+  on(PlayerActions.loadPlayersSuccess, (state, {players})=> ({...state, players, isLoadingPlayers: false})),
+  on(PlayerActions.loadPlayersFailure, (state) => ({...state, isLoadingPlayers: false}))
 );

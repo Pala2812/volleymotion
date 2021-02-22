@@ -29,14 +29,14 @@ export class PlayerEffects {
 
   loadPlayersByTeamId$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActions.loadPlayersByTeamId),
-      switchMap(({ teamId }) =>
-        this.playerService.loadPlayersByTeamId(teamId).pipe(
+      ofType(PlayerActions.loadPlayers),
+      switchMap(({ teamId, seasonId }) =>
+        this.playerService.loadPlayers(teamId, seasonId).pipe(
           map((players) =>
-            PlayerActions.loadPlayersByTeamIdSuccess({ players })
+            PlayerActions.loadPlayersSuccess({ players })
           ),
           catchError((error) =>
-            of(PlayerActions.loadPlayersByTeamIdFailure({ error }))
+            of(PlayerActions.loadPlayersFailure({ error }))
           )
         )
       )

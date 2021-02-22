@@ -15,11 +15,13 @@ export class PlayerService {
     );
   }
 
-  loadPlayersByTeamId(teamId: string) {
+  loadPlayers(teamId: string, seasonId: string) {
+    console.log(teamId, seasonId);
     return from(
       this.fs
         .collection('players')
         .ref.where('teamId', '==', teamId)
+        .where('seasonId', '==', seasonId)
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Player))
     );
