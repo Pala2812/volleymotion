@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { SeasonGuard } from './core/guards/season.guard';
+import { TeamGuard } from './core/guards/team.guard';
 import { HomeComponent } from './core/layout/home/home.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
@@ -23,20 +25,24 @@ const routes: Routes = [
       },
       {
         path: 'saisons',
+        canActivate: [TeamGuard],
         loadChildren: () =>
           import('./season/season.module').then((m) => m.SeasonModule),
       },
       {
         path: 'training',
+        canActivate: [TeamGuard, SeasonGuard],
         loadChildren: () =>
           import('./training/training.module').then((m) => m.TrainingModule),
       },
       {
         path: 'spieltage',
+        canActivate: [TeamGuard, SeasonGuard],
         loadChildren: () =>
           import('./matches/matches.module').then((m) => m.MatchesModule),
       },
       {
+        canActivate: [TeamGuard, SeasonGuard],
         path: 'spieler',
         loadChildren: () =>
           import('./players/players.module').then((m) => m.PlayersModule),
