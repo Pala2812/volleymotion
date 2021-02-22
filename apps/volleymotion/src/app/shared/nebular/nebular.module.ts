@@ -15,6 +15,7 @@ import {
   NbToastrModule,
   NbSpinnerModule,
   NbTabsetModule,
+  NbPopoverModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -34,6 +35,7 @@ import {
     NbToastrModule,
     NbSpinnerModule,
     NbTabsetModule,
+    NbPopoverModule,
   ],
   exports: [
     NbInputModule,
@@ -51,6 +53,7 @@ import {
     NbToastrModule,
     NbSpinnerModule,
     NbTabsetModule,
+    NbPopoverModule,
   ],
 })
 export class NebularModule {}

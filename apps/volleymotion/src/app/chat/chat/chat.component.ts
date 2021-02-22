@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { ChatMessage } from '@volleymotion/models';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { finalize, map, take } from 'rxjs/operators';
 
 import { StoreState } from '../../core/store/reducers';
 import { UserSelectors } from '../../core/store/selectors';
@@ -14,6 +14,7 @@ import { ChatService } from '../shared/services/chat.service';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  isLoading$ = new Subject<boolean>();
   messages$: Observable<ChatMessage[]>;
 
   constructor(
@@ -22,12 +23,23 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.messages$ = this.chatService.getMessages();
+    this.messages$ = this.chatService.getMessages().pipe(
+      map((messages) => {
+        return messages.sort(
+          (a, b) => (a?.createdAt as any)?.toMillis() -  (b?.createdAt as any)?.toMillis()
+        );
+      })
+    );
   }
 
   sendMessage(event: any) {
+    this.isLoading$.next(true);
     this.store
-      .pipe(select(UserSelectors.selectUser), take(1))
+      .pipe(
+        select(UserSelectors.selectUser),
+        finalize(() => this.isLoading$.next(false)),
+        take(1)
+      )
       .subscribe((userObj) => {
         const { firstname, lastname, uid } = userObj;
         const user = { firstname, lastname, uid };

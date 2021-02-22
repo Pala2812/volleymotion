@@ -1,13 +1,45 @@
-<nb-chat title="Trainer chat" noMessagesPlaceholder="Noch keine Mitteilungen">
+<div class="chat-container">
+  <nb-chat title="Trainer chat" noMessagesPlaceholder="Noch keine Mitteilungen" [nbSpinner]="(messages$ | async)?.length <= 0" [scrollBottom]="true">
 
-    <nb-chat-message *ngFor="let message of messages$ | async" 
-                      [message]="message.message" 
-                      [sender]="message.user.firstname" 
-                      [date]="message.createdAt | timestamp">
+    <nb-chat-message
+      *ngFor="let message of messages$ | async"
+      type="text"
+      [message]="message.message"
+      [sender]="message.user.firstname"
+      [date]="message.createdAt | timestamp">
     </nb-chat-message>
 
-    <nb-chat-form messagePlaceholder="Nachricht eingeben" (send)="sendMessage($event)" [dropFiles]="false">
-    </nb-chat-form>
-</nb-chat>
+    <nb-chat-form
+      messagePlaceholder="Nachricht eingeben"
+      (send)="sendMessage($event)"
+      [dropFiles]="false"
+    ></nb-chat-form>
+  </nb-chat>
 
-// info button
+  <button
+    nbButton
+    ghost
+    status="info"
+    class="info-btn"
+    [disabled]="isLoading$ | async"
+    [nbSpinner]="isLoading$ | async"
+    [nbPopover]="infoRef"
+    nbPopoverPlacement="left"
+  >
+    <nb-icon icon="info-outline"></nb-icon>
+  </button>
+
+  <ng-template #infoRef  class="chat-info-container">
+    <div class="chat-info-container" style="padding: 1em; max-width: 30em;">
+      <p>
+        Der Trainerchat ermöglicht es Nachrichten an alle Nutzer dieser App zu
+        schicken. Falls ihr zu einen Theme kurzfristig eine Frage habt, könnt ihr diese hier reinschreiben.
+      </p>
+      
+      <small>
+        Die Funktionalität der Push-Benachrichtung und ungelesene Nachrichten
+        werden zu einen späteren Zeitpunkt bereitgestellt.
+      </small>
+    </div>
+  </ng-template>
+</div>

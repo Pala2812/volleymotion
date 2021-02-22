@@ -3,5 +3,17 @@
   flex-direction: column;
   min-height: 100%;
 
+  .chat-container {
+    position: relative;
 
+    .info-btn {
+      position: absolute;
+      top: 8px;
+      right: 1em;
+    }
+
+    .chat-info-container {
+      padding: 2em;
+    }
+  }
 }
