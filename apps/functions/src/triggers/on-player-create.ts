@@ -11,6 +11,7 @@ export const onPlayerCreate = functions
     const seasonDoc = await firestore()
       .collection(`seasons`)
       .where('teamId', '==', player.teamId)
+      .where('seasonId', '==', player.seasonId)
       .get()
       .then((docs) => docs.docs[0]);
 
