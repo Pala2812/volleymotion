@@ -14,6 +14,11 @@ export const onPlayerDelete = functions
       .get()
       .then((docs) => docs.docs[0]);
 
+    const auditDoc = await firestore()
+      .collection('audits')
+      .doc(player?.seasonId)
+      .get();
+
     const decrement = firestore.FieldValue.increment(-1);
 
     const season: Partial<Season> = {
@@ -23,5 +28,11 @@ export const onPlayerDelete = functions
       },
     };
 
+    const positions = {
+      [player?.position]: decrement,
+      total: decrement,
+    };
+
     await seasonDoc.ref.set(season, { merge: true });
+    await auditDoc.ref.set(positions, { merge: true });
   });

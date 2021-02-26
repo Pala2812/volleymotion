@@ -15,6 +15,11 @@ export const onPlayerCreate = functions
       .get()
       .then((docs) => docs.docs[0]);
 
+    const auditDoc = await firestore()
+      .collection('audits')
+      .doc(player?.seasonId)
+      .get();
+
     const increment = firestore.FieldValue.increment(1);
 
     const season: Partial<Season> = {
@@ -24,5 +29,11 @@ export const onPlayerCreate = functions
       },
     };
 
+    const positions = {
+      [player?.position]: increment,
+      total: increment,
+    };
+
     await seasonDoc.ref.set(season, { merge: true });
+    await auditDoc.ref.set(positions, { merge: true });
   });

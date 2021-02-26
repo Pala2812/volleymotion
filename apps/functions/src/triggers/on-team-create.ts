@@ -16,8 +16,22 @@ export const onTeamCreate = functions
     const batch = firestore().batch();
     batch.create(currentSeason.doc, currentSeason.season);
     batch.create(nextSeason.doc, nextSeason.season);
+    
+    const auditDoc = await firestore()
+    .collection('audits')
+    .doc('teams')
+    .get();
+
+    const increment = firestore.FieldValue.increment(1);
+
+    const audit = {
+      [team?.teamType]: increment,
+      [team?.sportType]: increment,
+      [team?.division]: increment,
+    }
 
     await batch.commit().catch((error) => functions.logger.error(error));
+    await auditDoc.ref.set(audit, {merge: true});
   });
 
 const createSeason = (team: Team, name: string) => {

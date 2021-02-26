@@ -14,7 +14,19 @@ export const onTeamDelete = functions
       .get()
       .then((docs) => docs.docs);
 
+    const auditDoc = await firestore().collection('audits').doc('teams').get();
+
+    const decrement = firestore.FieldValue.increment(-1);
+
+    const audit = {
+      [team?.teamType]: decrement,
+      [team?.sportType]: decrement,
+      [team?.division]: decrement,
+    };
+
     for (const doc of docs) {
       await doc.ref.delete();
     }
+    
+    await auditDoc.ref.set(audit, { merge: true });
   });
