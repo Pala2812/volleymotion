@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, UrlTree } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -11,7 +12,7 @@ import { SeasonSelectors } from '../store/selectors';
   providedIn: 'root',
 })
 export class SeasonGuard implements CanActivate {
-  private constructor(private store: Store<StoreState>) {}
+  private constructor(private store: Store<StoreState>, private toastService: NbToastrService, private router: Router) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.store.pipe(
@@ -19,7 +20,8 @@ export class SeasonGuard implements CanActivate {
       map((season) => !!season),
       tap((isSeasonSelected) => {
         if (!isSeasonSelected) {
-          alert('Bitte wählen Sie eine Mannschaft und eine Saison aus');
+          this.toastService.info('Bitte wählen Sie eine Mannschaft aus', 'Mannschaft auswählen');
+          this.router.navigate(['/saisons']);
         }
       }),
       take(1)

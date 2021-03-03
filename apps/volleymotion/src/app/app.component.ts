@@ -33,13 +33,13 @@ export class AppComponent implements OnInit {
     private swUpdate: SwUpdate,
     private initService: AppInitService,
     private networkStatusService: NetworkStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     try {
-    this.initService.init();
-    this.initService.loadFromCache();
-    } catch {}
+      this.initService.init();
+    } catch { }
+
     this.store.dispatch(TagActions.loadTags());
     this.verifyAndUpdate();
     this.networkStatusService.init();

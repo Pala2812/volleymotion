@@ -38,7 +38,7 @@ import { AppInitService } from './core/services/app-init.service';
 registerLocaleData(de, 'de-DE');
 
 export function initializeApp(appInitService: AppInitService) {
-  return (): Promise<any> => { 
+  return (): Promise<any> => {
     return appInitService.init();
   }
 }
@@ -80,7 +80,7 @@ export function initializeApp(appInitService: AppInitService) {
     NbDatepickerModule.forRoot(),
     NbDateFnsDateModule.forRoot({ format: 'dd.MM.yyyy' }),
     NbTimepickerModule.forRoot(),
-    NbToastrModule.forRoot(),
+    NbToastrModule.forRoot({ preventDuplicates: true, duration: 2000 }),
     NbDialogModule.forRoot(),
     NbThemeModule.forRoot({ name: 'cosmic' }),
   ],
@@ -103,4 +103,4 @@ export function initializeApp(appInitService: AppInitService) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

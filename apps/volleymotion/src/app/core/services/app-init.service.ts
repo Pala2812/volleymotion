@@ -24,14 +24,13 @@ export class AppInitService {
     private store: Store<StoreState>
   ) { }
 
-  init() {
+  async init() {
     return this.auth.user
       .pipe(take(1))
       .toPromise()
       .then(async (userCrendetials) => {
-        if (userCrendetials) {
+        if (userCrendetials?.uid) {
           this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
-          await this.loadFromCache();
 
           return this.fs
             .collection('users')
@@ -54,9 +53,9 @@ export class AppInitService {
       this.store.dispatch(SeasonActions.setSeason({ season }));
       this.store.dispatch(UserActions.setUser({ user }));
 
-      this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
-      this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-      this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+      team ?? this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
+      season ?? this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
+      (user && team && season) ?? this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
     } catch { }
   }
 }
