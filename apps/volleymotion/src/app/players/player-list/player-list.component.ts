@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Player, Season, Team } from '@volleymotion/models';
@@ -24,12 +25,10 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   season$: Observable<Season>;
   unsubscribe$ = new Subject();
 
-  constructor(private store: Store<StoreState>, private actions$: Actions) {}
+  constructor(private store: Store<StoreState>, private router: Router, private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.isLoadingPlayers$ = this.store.pipe(
-      select(PlayerSelectors.selectPlayers)
-    );
+    this.isLoadingPlayers$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
     this.season$ = this.store.pipe(select(SeasonSelectors.selectSeason));
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
@@ -52,14 +51,26 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   loadPlayers() {
     combineLatest([this.team$, this.season$]).pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => {
-        const team = res[0];
-        const season = res[1];
-        PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id })
+        if (res[0] && res[1]) {
+          const team = res[0];
+          const season = res[1];
+          this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+        }
       });
   }
 
   deletePlayer(player: Player, event: Event) {
     this.store.dispatch(PlayerActions.deletePlayer({ player }));
     event.stopImmediatePropagation();
+  }
+
+  selectPlayer(player: Player) {
+    this.store.dispatch(PlayerActions.setPlayer({ player }));
+    this.router.navigate(['spieler/detail', player?.id]);
+  }
+
+  editPlayer(player: Player) {
+    this.store.dispatch(PlayerActions.setPlayer({player}));
+    this.router.navigate(['spieler/bearbeiten', player?.id]);
   }
 }

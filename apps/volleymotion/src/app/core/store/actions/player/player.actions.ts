@@ -41,3 +41,22 @@ export const deletePlayerFailure = createAction(
   `${key} Delete Player Failure`,
   props<{ error }>()
 );
+
+export const updatePlayer = createAction(
+  `${key} Update Player`,
+  props<{player: Player}>()
+);
+
+export const updatePlayerSuccess = createAction(
+  `${key} Update Player Success`,
+);
+
+export const updatePlayerFailure = createAction(
+  `${key} Update Player Failure`,
+  props<{error: any}>()
+);
+
+export const setPlayer = createAction(
+  `${key} Set Player`,
+  props<{ player: Player }>()
+);

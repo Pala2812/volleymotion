@@ -49,4 +49,8 @@ export class SeasonListComponent implements OnInit {
     this.store.dispatch(SeasonActions.setSeason({ season }));
     this.router.navigate(['']);
   }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
 }

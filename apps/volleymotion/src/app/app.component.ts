@@ -17,6 +17,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { User } from './core/models';
 import { Season, Team } from '@volleymotion/models';
+import { AppInitService } from './core/services/app-init.service';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -30,13 +31,30 @@ export class AppComponent implements OnInit {
     private store: Store<StoreState>,
     private fs: AngularFirestore,
     private swUpdate: SwUpdate,
+    private initService: AppInitService,
     private networkStatusService: NetworkStatusService
   ) {}
 
   ngOnInit(): void {
+    this.initService.init();
+    this.initService.loadFromCache();
     this.store.dispatch(TagActions.loadTags());
     this.verifyAndUpdate();
     this.networkStatusService.init();
+
+    this.auth.user.subscribe(async (userCrendetials) => {
+      console.log(userCrendetials);
+      if (userCrendetials?.uid) {
+        this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
+        return this.fs
+          .collection('users')
+          .doc<User>(userCrendetials.uid)
+          .valueChanges()
+          .subscribe(async (user) => {
+            this.store.dispatch(UserActions.setUser({ user }));
+          });
+      }
+    });
   }
 
   verifyAndUpdate() {

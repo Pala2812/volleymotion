@@ -27,6 +27,20 @@ export class PlayerEffects {
     )
   );
 
+  updatePlayer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PlayerActions.updatePlayer),
+      switchMap(({ player }) =>
+        this.playerService.addOrUpdatePlayer(player).pipe(
+          map(() => PlayerActions.updatePlayerSuccess()),
+          catchError((error) =>
+            of(PlayerActions.updatePlayerFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
   loadPlayersByTeamId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PlayerActions.loadPlayers),

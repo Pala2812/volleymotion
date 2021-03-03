@@ -1,5 +1,5 @@
 <div class="chat-container">
-  <nb-chat title="Trainer chat" noMessagesPlaceholder="Noch keine Mitteilungen" [nbSpinner]="(messages$ | async)?.length <= 0" [scrollBottom]="true">
+  <nb-chat title="Trainer chat" noMessagesPlaceholder="Noch keine Mitteilungen" [nbSpinner]="(messages$ | async) === undefined" [scrollBottom]="true">
 
     <nb-chat-message
       *ngFor="let message of messages$ | async"

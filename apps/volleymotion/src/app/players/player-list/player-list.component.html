@@ -1,9 +1,9 @@
-<nb-card class="player-card" *ngFor="let player of players$ | async" [routerLink]="['../detail', player?.id]">
+<nb-card class="player-card" *ngFor="let player of players$ | async" (click)="selectPlayer(player)">
     <nb-card-header>
         {{player?.firstname}} {{player?.lastname}} {{player?.position}}
 
         <div class="player-card-actions">
-            <button class="edit-btn" nbButton ghost status="info" [routerLink]="['../bearbeiten', player?.id]">
+            <button class="edit-btn" nbButton ghost status="info" (click)="editPlayer(player)">
                 <nb-icon icon="edit-outline"></nb-icon>
             </button>
     

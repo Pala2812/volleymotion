@@ -44,8 +44,14 @@
       </nb-card-header>
 
       <nb-card-body>
-        <nb-form-field>
+        <mat-chip-list>
+          <mat-chip *ngFor="let strength of strengths.controls">
+            {{ strength?.value?.name }}
+          </mat-chip>
+        </mat-chip-list>
+        <nb-form-field class="form-field">
           <input
+            #strengthInput
             nbInput
             [matAutocomplete]="strengthTags"
             fullWidth
@@ -53,7 +59,11 @@
           />
           <mat-autocomplete
             #strengthTags
-            (optionSelected)="onStrengthTagSelected($event)"
+            (optionSelected)="
+              onStrengthTagSelected($event);
+              strengthInput.value = '';
+              strengthInput.blur()
+            "
           >
             <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
               {{ tag?.name }}
@@ -68,23 +78,31 @@
         Schwächen
       </nb-card-header>
       <nb-card-body>
-        <nb-form-field>
-          <nb-form-field>
-            <input
-              nbInput
-              [matAutocomplete]="weaknessTags"
-              fullWidth
-              placeholder="Tag eingeben"
-            />
-            <mat-autocomplete #weaknessTags  (optionSelected)="onWeaknessesSelected($event)">
-              <mat-option
-                *ngFor="let tag of filteredTags | async"
-                [value]="tag"
-              >
-                {{ tag?.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </nb-form-field>
+        <mat-chip-list>
+          <mat-chip *ngFor="let weakness of weaknesses.controls">
+            {{ weakness?.value?.name }}
+          </mat-chip>
+        </mat-chip-list>
+        <nb-form-field class="form-field">
+          <input
+            #weaknessInput
+            nbInput
+            [matAutocomplete]="weaknessTags"
+            fullWidth
+            placeholder="Tag eingeben"
+          />
+          <mat-autocomplete
+            #weaknessTags
+            (optionSelected)="
+              onWeaknessesSelected($event);
+              weaknessInput.value = '';
+              weaknessInput.blur()
+            "
+          >
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{ tag?.name }}
+            </mat-option>
+          </mat-autocomplete>
         </nb-form-field>
       </nb-card-body>
     </nb-card>
@@ -94,15 +112,28 @@
         Verbesserungwunsch
       </nb-card-header>
       <nb-card-body>
-        <nb-form-field>
+        <mat-chip-list>
+          <mat-chip *ngFor="let improvement of improvements.controls">
+            {{ improvement?.value?.name }}
+          </mat-chip>
+        </mat-chip-list>
+        <nb-form-field class="form-field">
           <input
+            #improvementInput
             nbInput
             [matAutocomplete]="improveTags"
             fullWidth
             placeholder="Tag eingeben"
           />
-          <mat-autocomplete #improveTags>
-            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag"  (optionSelected)="onImprovementTagSelected($event)">
+          <mat-autocomplete
+            #improveTags
+            (optionSelected)="
+              onImprovementSelected($event);
+              improvementInput.value = '';
+              improvementInput.blur()
+            "
+          >
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
               {{ tag?.name }}
             </mat-option>
           </mat-autocomplete>
@@ -110,8 +141,26 @@
       </nb-card-body>
     </nb-card>
 
-    <button nbButton fullWidth type="submit" (click)="submit(form, team, season)">
+    <button
+      *ngIf="(player$ | async) === undefined"
+      nbButton
+      fullWidth
+      type="submit"
+      [disabled]="isCreatingPlayer$ | async"
+      (click)="submit(form, team, season)"
+    >
       Spieler erstellen
+    </button>
+
+    <button
+      *ngIf="player$ | async as player"
+      nbButton
+      fullWidth
+      type="submit"
+      [disabled]="isUpdatingPlayer$ | async"
+      (click)="submit(form, team, season, player)"
+    >
+      Spieler aktualisieren
     </button>
   </ng-container>
 </ng-container>

@@ -8,7 +8,7 @@ export interface Player {
     firstname: string;
     lastname: string;
     position: string;
-    strongIn: Tag[];
-    weakIn: Tag[];
-    improveIn: Tag[];
+    strengths: Tag[];
+    weaknesses: Tag[];
+    improvements: Tag[];
 }

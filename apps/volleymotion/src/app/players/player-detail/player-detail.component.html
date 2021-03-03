@@ -1,34 +1,82 @@
-<nb-tabset>
-    <nb-tab tabTitle="Übersicht">
-        <nb-card>
-            <nb-card-header>
-                Spielerdaten
-            </nb-card-header>
-        </nb-card>
+<nb-tabset *ngIf="player$ | async as player">
+  <nb-tab tabTitle="Übersicht">
+    <nb-card>
+      <nb-card-header>
+        Spielerdaten
+      </nb-card-header>
+      <nb-card-body>
+        {{ player?.firstname }} {{ player?.lastname }}
+        <div>
+          {{ player?.position }}
+        </div>
+      </nb-card-body>
+    </nb-card>
 
-        <nb-card>
-            <nb-card-header>Stärken</nb-card-header>
-        </nb-card>
+    <nb-card>
+      <nb-card-header>Stärken</nb-card-header>
+      <nb-card-body>
+        <mat-chip-list>
+          <mat-chip *ngFor="let strength of player?.strengths">
+            {{ strength?.name }}
+          </mat-chip>
+        </mat-chip-list>
+      </nb-card-body>
+    </nb-card>
 
-        <nb-card>
-            <nb-card-header>Schwächen</nb-card-header>
-        </nb-card>
+    <nb-card>
+      <nb-card-header>Schwächen</nb-card-header>
+      <nb-card-body>
+        <mat-chip-list>
+          <mat-chip *ngFor="let weakness of player?.weaknesses">
+            {{ weakness?.name }}
+          </mat-chip>
+        </mat-chip-list>
+      </nb-card-body>
+    </nb-card>
 
-        <nb-card>
-            <nb-card-header>Verbesserungswunsch</nb-card-header>
-        </nb-card>
-    </nb-tab>
+    <nb-card>
+      <nb-card-header>Verbesserungswunsch</nb-card-header>
+      <nb-card-body>
+        <mat-chip-list>
+          <mat-chip *ngFor="let improvement of player?.improvements">
+            {{ improvement?.name }}
+          </mat-chip>
+        </mat-chip-list>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
 
-    <nb-tab tabTitle="Analyse">
+  <nb-tab tabTitle="Analyse">
+    <div class="chart-container">
+      <nb-card class="chart-card">
+        <nb-card-header>Trainingsbeteiligung</nb-card-header>
+        <nb-card-body class="chart-card-body">
+          <google-chart
+            type="PieChart"
+            [data]="trainData"
+            [options]="options"
+          ></google-chart>
+        </nb-card-body>
+      </nb-card>
 
-    </nb-tab>
+      <nb-card class="chart-card">
+        <nb-card-header>Spielbeteiligung</nb-card-header>
+        <nb-card-body class="chart-card-body">
+          <google-chart
+            type="PieChart"
+            [data]="trainData"
+            [options]="options"
+          ></google-chart>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-tab>
 
-    <nb-tab tabTitle="Übungen">
-        <nb-card  status="danger">
-            <nb-card-header>
-                Suche und Speichere Übungen für diesen Spieler
-            </nb-card-header>
-        </nb-card>
-    </nb-tab>
-
+  <nb-tab tabTitle="Übungen">
+    <nb-card status="danger">
+      <nb-card-header>
+        Suche und Speichere Übungen für diesen Spieler
+      </nb-card-header>
+    </nb-card>
+  </nb-tab>
 </nb-tabset>

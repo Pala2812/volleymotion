@@ -4,7 +4,7 @@
 
             <div class="season-card-actions">
                 <button class="edit-btn" nbButton ghost status="info"
-                    [routerLink]="['../bearbeiten', season.id, team.id]">
+                    [routerLink]="['bearbeiten', season.id, team.id]" (click)="stopPropagation($event)">
                     <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
