@@ -17,6 +17,7 @@ import { AuthSelectors } from '../../core/store/selectors';
 export class LoginComponent implements OnInit, OnDestroy {
   isSiginingInWithEmailAndPassword$: Observable<boolean>;
   loginForm: FormGroup;
+  showPassword = false;
 
   private unsubscribe$ = new Subject();
 
@@ -52,6 +53,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   login(form: FormGroup) {

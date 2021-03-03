@@ -50,6 +50,12 @@
                             [disabled]="isCreatingUserWithEmailAndPassword$ | async">Sign-Up</button>
                     </form>
                 </nb-card-body>
+
+                <nb-card-footer class="card-footer">
+                    <span>
+                      Du hast bereits einen Account? <a [routerLink]="['/login']">Login</a>
+                    </span>
+                  </nb-card-footer>
             </nb-card>
 
         </div>

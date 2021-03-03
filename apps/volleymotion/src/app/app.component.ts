@@ -36,14 +36,15 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    try {
     this.initService.init();
     this.initService.loadFromCache();
+    } catch {}
     this.store.dispatch(TagActions.loadTags());
     this.verifyAndUpdate();
     this.networkStatusService.init();
 
     this.auth.user.subscribe(async (userCrendetials) => {
-      console.log(userCrendetials);
       if (userCrendetials?.uid) {
         this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
         return this.fs

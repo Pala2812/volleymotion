@@ -81,6 +81,10 @@ const routes: Routes = [
       import('./sign-up/sign-up.module').then((m) => m.SignUpModule),
   },
   {
+    path: 'reset-password',
+    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+  },
+  {
     path: 'impressum',
     loadChildren: () =>
       import('./impressum/impressum.module').then((m) => m.ImpressumModule),
@@ -97,4 +101,4 @@ const routes: Routes = [
   imports: [DashboardModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

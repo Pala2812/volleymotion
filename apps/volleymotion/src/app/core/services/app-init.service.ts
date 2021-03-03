@@ -22,7 +22,7 @@ export class AppInitService {
     private fs: AngularFirestore,
     private auth: AngularFireAuth,
     private store: Store<StoreState>
-  ) {}
+  ) { }
 
   init() {
     return this.auth.user
@@ -45,16 +45,18 @@ export class AppInitService {
   }
 
   async loadFromCache() {
-    const team = JSON.parse(await localStorage.getItem('team')) as Team;
-    const season = JSON.parse(await localStorage.getItem('season')) as Season;
-    const user = JSON.parse(await localStorage.getItem('user')) as User;
+    try {
+      const team = JSON.parse(await localStorage.getItem('team')) as Team;
+      const season = JSON.parse(await localStorage.getItem('season')) as Season;
+      const user = JSON.parse(await localStorage.getItem('user')) as User;
 
-    this.store.dispatch(TeamActions.setTeam({ team }));
-    this.store.dispatch(SeasonActions.setSeason({ season }));
-    this.store.dispatch(UserActions.setUser({ user }));
+      this.store.dispatch(TeamActions.setTeam({ team }));
+      this.store.dispatch(SeasonActions.setSeason({ season }));
+      this.store.dispatch(UserActions.setUser({ user }));
 
-    this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
-    this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-    this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+      this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
+      this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
+      this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+    } catch { }
   }
 }

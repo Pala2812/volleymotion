@@ -1,30 +1,67 @@
 <nb-layout>
-    <nb-layout-column>
-        <div class="container">
+  <nb-layout-column>
+    <div class="container">
+      <nb-card class="card">
+        <nb-card-header>
+          Login
+        </nb-card-header>
 
-            <nb-card class="card">
-                <nb-card-header>
-                    Login
-                </nb-card-header>
+        <nb-card-body>
+          <form
+            (ngSubmit)="login(loginForm)"
+            class="form"
+            [formGroup]="loginForm"
+          >
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                placeholder="E-Mail"
+                formControlName="email"
+                autocomplete="email"
+                type="email"
+              />
+            </nb-form-field>
 
-                <nb-card-body>
-                    <form (ngSubmit)="login(loginForm)" class="form" [formGroup]="loginForm">
-                        <nb-form-field>
-                            <input nbInput fullWidth placeholder="E-Mail" formControlName="email" autocomplete="email"
-                                type="email">
-                        </nb-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                placeholder="Passwort"
+                formControlName="password"
+                autocomplete="current-password"
+                [type]="showPassword ? 'text' : 'password'"
+              />
+              <button nbSuffix nbButton ghost type="button" (click)="toggleShowPassword()">
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+                         pack="eva"
+                         [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                </nb-icon>
+              </button>
+            </nb-form-field>
 
-                        <nb-form-field>
-                            <input nbInput fullWidth placeholder="Passwort" formControlName="password"
-                                autocomplete="current-password" type="password">
-                        </nb-form-field>
+            <button
+              [nbSpinner]="isSiginingInWithEmailAndPassword$ | async"
+              class="submit-btn"
+              nbButton
+              color="primary"
+              type="submit"
+              status="primary"
+              [disabled]="isSiginingInWithEmailAndPassword$ | async"
+            >
+              Login
+            </button>
 
-                        <button [nbSpinner]="isSiginingInWithEmailAndPassword$ | async" class="submit-btn" nbButton
-                            color="primary" type="submit" status="primary"
-                            [disabled]="isSiginingInWithEmailAndPassword$ | async">Login</button>
-                    </form>
-                </nb-card-body>
-            </nb-card>
-        </div>
-    </nb-layout-column>
+            <a [routerLink]="['reset-password']">Passwort vergessen?</a>
+          </form>
+        </nb-card-body>
+
+        <nb-card-footer class="card-footer">
+          <span>
+            Du hast noch keinen Account? <a [routerLink]="['/sign-up']">Sign-Up</a>
+          </span>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </nb-layout-column>
 </nb-layout>
