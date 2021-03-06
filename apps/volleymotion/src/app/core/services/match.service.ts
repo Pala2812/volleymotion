@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Match } from '@volleymotion/models';
+import { Match, MatchComment } from '@volleymotion/models';
 import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchService {
-  constructor(private fs: AngularFirestore) {}
+  constructor(private fs: AngularFirestore) { }
 
   loadMatches(teamId: string, seasonId: string) {
     return from(
@@ -21,7 +22,6 @@ export class MatchService {
   }
 
   addOrUpdateMatch(match: Match | Partial<Match>) {
-    console.log(match);
     return from(
       this.fs.collection('matches').doc(match.id).set(match, { merge: true })
     );
@@ -29,6 +29,19 @@ export class MatchService {
 
   deleteMatch(match: Match) {
     return from(this.fs.collection('matches').doc(match.id).delete());
+  }
+
+  addCommentToMatch(match: Match, matchComment: MatchComment) {
+    return from(this.fs.collection('matches').doc(match.id).collection('comments').doc(matchComment.id).set(matchComment));
+  }
+
+  deleteMatchComment(matchComment: MatchComment) {
+    return from(this.fs.doc(`matches/${matchComment?.matchId}/comments/${matchComment?.id}`).delete());
+  }
+  
+  loadMatchComments(match: Match) {
+    return this.fs.collection('matches').doc(match?.id).collection<MatchComment>('comments').valueChanges()
+      .pipe(map((comments) => comments?.sort((a, b) => b?.createdAt?.toMillis() - a?.createdAt?.toMillis())));
   }
 
   getId() {

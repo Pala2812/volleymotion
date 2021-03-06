@@ -16,6 +16,16 @@ export const selectIsLoadingMatches = createSelector(
   (state) => state.isLoadingMatches
 );
 
+export const selectIsAddingCommentToMatches = createSelector(
+  selectMatchFeature,
+  (state) => state.isAddingCommentToMatch,
+);
+
+export const selectIsLoadingMatchComments = createSelector(
+  selectMatchFeature,
+  (state) => state.isLoadingMatchComments
+);
+
 export const selectMatches = createSelector(
   selectMatchFeature,
   (state) => state.matches
@@ -24,4 +34,9 @@ export const selectMatches = createSelector(
 export const selectMatch = createSelector(
   selectMatchFeature,
   (state) => state.match
+);
+
+export const selectMatchComments = createSelector(
+  selectMatchFeature,
+  (state) => state.matchComments
 );
