@@ -15,5 +15,6 @@ export const onMatchCreate = functions
       lost: 0,
       total: 0,
     };
+
     await snap.ref.set(match, { merge: true });
   });

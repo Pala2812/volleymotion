@@ -20,16 +20,29 @@ export class ChatComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private store: Store<StoreState>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.messages$ = this.chatService.getMessages().pipe(
       map((messages) => {
-        return messages.sort(
-          (a, b) => (a?.createdAt as any)?.toMillis() -  (b?.createdAt as any)?.toMillis()
-        );
-      })
+        return messages.sort(this.sortByDate);
+      }),
+      map((messages) => {
+        let uid = messages[0]?.user?.uid;
+        let isResponse = false;
+        return messages.map(message => {
+          message.isReply = isResponse;
+          if (uid !== message?.user?.uid) {
+            isResponse = !isResponse;
+          }
+          return message;
+        });
+      }),
     );
+  }
+
+  sortByDate(message1: ChatMessage, message2: ChatMessage) {
+    return (message2?.createdAt as any)?.toMillis() - (message1?.createdAt as any)?.toMillis();
   }
 
   sendMessage(event: any) {

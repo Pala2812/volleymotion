@@ -24,7 +24,7 @@
   </nb-layout-header>
 
 
-  <nb-sidebar [state]="sidebarState" class="sidebar">
+  <nb-sidebar fixed [state]="sidebarState" class="sidebar">
     <nb-menu [items]="items$ | async"></nb-menu>
 
     <button nbButton ghost status="primary" class="logout-btn" (click)="logout()">

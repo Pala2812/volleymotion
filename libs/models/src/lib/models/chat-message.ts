@@ -9,4 +9,5 @@ export interface ChatMessage {
     lastname: string;
   };
   message: string;
+  isReply?: boolean;
 }

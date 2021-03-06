@@ -6,6 +6,7 @@
       type="text"
       [message]="message.message"
       [sender]="message.user.firstname"
+      [reply]="message.isReply"
       [date]="message.createdAt | timestamp">
     </nb-chat-message>
 

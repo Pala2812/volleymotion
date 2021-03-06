@@ -19,14 +19,31 @@ export const onTeamDelete = functions
     const decrement = firestore.FieldValue.increment(-1);
 
     const audit = {
-      [team?.teamType]: decrement,
-      [team?.sportType]: decrement,
-      [team?.division]: decrement,
-    };
+      total: {
+        [team?.teamType]: decrement,
+        [team?.sportType]: decrement,
+        [team?.division]: decrement,
+      },
+      [team?.sportType]: {
+        [team?.division]: {
+          [team?.teamType]: decrement,
+        }
+      },
+      [team?.division]: {
+        [team?.sportType]: {
+          [team?.teamType]: decrement,
+        }
+      },
+      [team?.teamType]: {
+        [team?.sportType]: {
+          [team?.division]: decrement,
+        }
+      }
+    }
 
     for (const doc of docs) {
       await doc.ref.delete();
     }
-    
+
     await auditDoc.ref.set(audit, { merge: true });
   });

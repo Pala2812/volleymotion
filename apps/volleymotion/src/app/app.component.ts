@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     try {
       this.initService.init();
+      this.initService.loadFromCache();
     } catch { }
 
     this.store.dispatch(TagActions.loadTags());
