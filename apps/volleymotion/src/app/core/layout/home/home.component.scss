@@ -30,7 +30,7 @@ a {
     text-align: center;
     display: grid;
     grid-template-rows: auto;
-    grid-row-gap: .25em;
+    grid-row-gap: 0.25em;
 
     .team-container {
       font-size: 1.1em;
@@ -52,6 +52,14 @@ a {
 
     nb-icon {
       margin-bottom: 0.5em;
+    }
+  }
+}
+
+@media all and (max-width: 425px) {
+  .header {
+    .header-brand {
+      display: none;
     }
   }
 }

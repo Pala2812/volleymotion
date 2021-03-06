@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 0.5em;
+  place-items: center;
+  text-align: center;
 
   .team {
     .team-label {
@@ -39,7 +41,6 @@
       grid-template-columns: 1fr auto;
       grid-column-gap: 0.5em;
       align-items: center;
-      max-width: 50em;
 
       .player-slider {
         width: 100%;
