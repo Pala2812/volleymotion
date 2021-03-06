@@ -14,6 +14,7 @@ import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
 export class DashboardComponent implements OnInit {
   team$: Observable<Team>;
   season$: Observable<Season>;
+
   data = [
     ['Ausstehend', 11],
     ['gewonnen', 2],
@@ -25,19 +26,19 @@ export class DashboardComponent implements OnInit {
     ['Abwesend', 2],
   ];
 
+
   options = {
     backgroundColor: 'transparent',
-    width: window.screen.availWidth * .2,
-    height: window.screen.availWidth * .2,
+
     chartArea: {
       top: 0,
       left: 0,
       right: 0,
-      bottom: 50,
+      bottom: 40,
     },
     legend: { position: 'bottom', textStyle: { color: '#fff', fontSize: 14 } },
   };
-  constructor(private store: Store<StoreState>) {}
+  constructor(private store: Store<StoreState>) { }
 
   ngOnInit(): void {
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
