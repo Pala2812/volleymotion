@@ -1,0 +1,23 @@
+<nb-tabset>
+  <nb-tab tabTitle="Mannschaften">
+    <nb-card *ngFor="let audit of teams$ | async">
+      <nb-card-header>
+        {{ audit?.title }}
+      </nb-card-header>
+      <nb-card-body>
+        {{ audit?.content | json }}
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+
+  <nb-tab tabTitle="Tags">
+    <nb-card *ngFor="let tag of tags$ | async">
+      <nb-card-header>
+        {{ tag?.title }}
+      </nb-card-header>
+      <nb-card-body>
+        {{ tag?.content | json }}
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+</nb-tabset>

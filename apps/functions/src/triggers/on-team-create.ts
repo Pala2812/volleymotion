@@ -31,20 +31,10 @@ export const onTeamCreate = functions
         [team?.division]: increment,
       },
       [team?.sportType]: {
-        [team?.division]: {
-          [team?.teamType]: increment,
+        [team?.teamType]: {
+          [team?.division]: increment
         }
       },
-      [team?.division]: {
-        [team?.sportType]: {
-          [team?.teamType]: increment,
-        }
-      },
-      [team?.teamType]: {
-        [team?.sportType]: {
-          [team?.division]: increment,
-        }
-      }
     }
 
     await batch.commit().catch((error) => functions.logger.error(error));

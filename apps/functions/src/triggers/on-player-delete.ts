@@ -44,30 +44,6 @@ export const onPlayerDelete = functions
       };
 
       const positions = {
-        [team?.division]: {
-          [team?.sportType]: {
-            [team?.teamType]: {
-              [player?.position]: decrement,
-            }
-          }
-        },
-
-        [team?.division]: {
-          [team?.teamType]: {
-            [team?.sportType]: {
-              [player?.position]: decrement,
-            }
-          }
-        },
-
-        [team?.sportType]: {
-          [team?.division]: {
-            [team?.teamType]: {
-              [player?.position]: decrement,
-            }
-          }
-        },
-
         [team?.sportType]: {
           [team?.teamType]: {
             [team?.division]: {
@@ -75,23 +51,9 @@ export const onPlayerDelete = functions
             }
           }
         },
-
-        [team?.teamType]: {
-          [team?.division]: {
-            [team?.sportType]: {
-              [player?.position]: decrement,
-            }
-          }
+        positions: {
+          [player?.position]: decrement,
         },
-
-        [team?.teamType]: {
-          [team?.sportType]: {
-            [team?.division]: {
-              [player.position]: decrement,
-            }
-          }
-        },
-        [player?.position]: decrement,
         total: decrement,
       };
 

@@ -43,30 +43,6 @@ export const onPlayerCreate = functions
       };
 
       const positions = {
-        [team?.division]: {
-          [team?.sportType]: {
-            [team?.teamType]: {
-              [player?.position]: increment,
-            }
-          }
-        },
-
-        [team?.division]: {
-          [team?.teamType]: {
-            [team?.sportType]: {
-              [player?.position]: increment,
-            }
-          }
-        },
-
-        [team?.sportType]: {
-          [team?.division]: {
-            [team?.teamType]: {
-              [player?.position]: increment,
-            }
-          }
-        },
-
         [team?.sportType]: {
           [team?.teamType]: {
             [team?.division]: {
@@ -74,23 +50,9 @@ export const onPlayerCreate = functions
             }
           }
         },
-
-        [team?.teamType]: {
-          [team?.division]: {
-            [team?.sportType]: {
-              [player?.position]: increment,
-            }
-          }
+        positions: {
+          [player?.position]: increment,
         },
-
-        [team?.teamType]: {
-          [team?.sportType]: {
-            [team?.division]: {
-              [player.position]: increment,
-            }
-          }
-        },
-        [player?.position]: increment,
         total: increment,
       };
 

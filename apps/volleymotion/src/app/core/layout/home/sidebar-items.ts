@@ -36,4 +36,5 @@ export const fullItems = [
     { title: 'Chat', link: 'chat', icon: 'paper-plane-outline' },
     { title: 'Tags', link: 'tags', icon: 'hash-outline' },
     { title: 'Feedback', link: 'feedback', icon: 'star-outline' },
+ // { title: 'Analyse', link: 'analyse', icon: 'bar-chart-outline' },
 ];

@@ -67,6 +67,10 @@ const routes: Routes = [
       {
         path: 'feedback',
         loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
+      },
+      {
+        path: 'analyse',
+        loadChildren: () => import('./analyse/analyse.module').then(m => m.AnalyseModule)
       }
     ],
   },

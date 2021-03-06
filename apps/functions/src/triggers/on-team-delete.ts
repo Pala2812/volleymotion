@@ -25,20 +25,10 @@ export const onTeamDelete = functions
         [team?.division]: decrement,
       },
       [team?.sportType]: {
-        [team?.division]: {
-          [team?.teamType]: decrement,
+        [team?.teamType]: {
+          [team?.division]: decrement
         }
       },
-      [team?.division]: {
-        [team?.sportType]: {
-          [team?.teamType]: decrement,
-        }
-      },
-      [team?.teamType]: {
-        [team?.sportType]: {
-          [team?.division]: decrement,
-        }
-      }
     }
 
     for (const doc of docs) {
