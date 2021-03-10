@@ -54,6 +54,19 @@ a {
       margin-bottom: 0.5em;
     }
   }
+
+  .install-btn {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.router-outlet-container {
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
 }
 
 @media all and (max-width: 425px) {

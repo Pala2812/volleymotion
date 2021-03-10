@@ -24,8 +24,12 @@
   </nb-layout-header>
 
 
-  <nb-sidebar fixed [state]="sidebarState" class="sidebar">
+  <nb-sidebar #sidebar fixed [state]="sidebarState" class="sidebar">
     <nb-menu [items]="items$ | async"></nb-menu>
+
+    <button nbButton ghost status="info" class="install-btn" (click)="showInstallDialog()" *ngIf="deferredPrompt">
+      Zum Startbildschirm hinzufügen
+    </button>
 
     <button nbButton ghost status="primary" class="logout-btn" (click)="logout()">
       <nb-icon icon="log-out-outline"></nb-icon>
@@ -35,7 +39,9 @@
   </nb-sidebar>
 
   <nb-layout-column>
-    <router-outlet></router-outlet>
+    <div class="router-outlet-container" (click)="sidebar.collapse()">
+      <router-outlet></router-outlet>
+    </div>
   </nb-layout-column>
 
   <nb-layout-footer fixed>

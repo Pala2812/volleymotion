@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   season$: Observable<Season>;
   team$: Observable<Team>;
   items$ = new BehaviorSubject<any[]>([]);
+  deferredPrompt;
+
   private unsubscribe$ = new Subject();
 
   constructor(
@@ -43,6 +45,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initItems();
   }
 
+  getInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+    });
+  }
+
   initItems(): void {
     combineLatest([this.team$, this.season$]).pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       const [team, season] = params;
@@ -56,6 +65,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.sidebarState =
       this.sidebarState === 'collapsed' ? 'expanded' : 'collapsed';
+  }
+
+  showInstallDialog() {
+    
   }
 
   async logout() {
