@@ -1,10 +1,12 @@
+import { Tag } from "./tag";
+
 export interface Season {
   id: string;
   teamId: string;
   uid: string;
   name: string;
   goal: string;
-  tags: [];
+  tags: Tag[];
   matches: {
     won: number;
     lost: number;
@@ -15,6 +17,6 @@ export interface Season {
     max: number;
   };
   team: {
-    
+
   }
 }

@@ -8,7 +8,7 @@
 
         <nb-form-field *ngFor="let control of tags.controls; let index">
             <input fullWidth nbInput disabled [value]="control?.value?.name">
-            <button nbSuffix nbButton ghost status="danger" (click)="removeTag(index, $event)">
+            <button nbSuffix nbButton ghost status="danger" type="button" (click)="removeTag(index, $event)">
                 <nb-icon icon="trash-outline" ghost></nb-icon>
             </button>
         </nb-form-field>

@@ -8,6 +8,7 @@ import { onTeamCreate } from './triggers/on-team-create';
 import { onTeamDelete } from './triggers/on-team-delete';
 import { onPlayerCreate } from './triggers/on-player-create';
 import { onPlayerDelete } from './triggers/on-player-delete';
+import { onSeasonEdit } from './triggers/on-season-edit';
 
 admin.initializeApp();
 
@@ -18,3 +19,4 @@ exports.onTeamCreate = onTeamCreate;
 exports.onTeamDelete = onTeamDelete;
 exports.onPlayerCreate = onPlayerCreate;
 exports.onPlayerDelete = onPlayerDelete;
+exports.onSeasonEdit = onSeasonEdit;
