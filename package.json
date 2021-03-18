@@ -35,6 +35,11 @@
     "create-ivy-entry-points": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run format:write && num run lint:affected && npm run build:affected"
+    }
+  },
   "dependencies": {
     "@agm/core": "^1.1.0",
     "@angular/animations": "^10.1.0",
@@ -95,6 +100,7 @@
     "eslint": "7.10.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-cypress": "^2.10.3",
+    "husky": "^5.1.3",
     "jest": "26.2.2",
     "jest-preset-angular": "8.3.1",
     "prettier": "2.0.4",
