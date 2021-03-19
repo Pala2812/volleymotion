@@ -11,8 +11,9 @@ import { MatchActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, PlayerSelectors, TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import firebase from 'firebase/app';
-import { take } from 'rxjs/operators';
+import { filter, mergeMapTo, take } from 'rxjs/operators';
 import { loadMatchComments } from '../../core/store/actions/match/match.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'vm-match-detail',
@@ -28,7 +29,7 @@ export class MatchDetailComponent implements OnInit {
   isAddingCommentToMatch$: Observable<boolean>;
   commentForm: FormGroup;
 
-  constructor(private store: Store<StoreState>, private fs: AngularFirestore) { }
+  constructor(private store: Store<StoreState>, private fs: AngularFirestore, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.match$ = this.store.pipe(select(MatchSelectors.selectMatch));
@@ -37,8 +38,17 @@ export class MatchDetailComponent implements OnInit {
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
     this.isAddingCommentToMatch$ = this.store.pipe(select(MatchSelectors.selectIsAddingCommentToMatches));
     this.matchComments$ = this.store.pipe(select(MatchSelectors.selectMatchComments));
-    this.match$.pipe(take(1)).subscribe(match => this.store.dispatch(loadMatchComments({ match })));
+    this.match$.pipe(filter(match => !!match), take(1)).subscribe(match => this.store.dispatch(loadMatchComments({ match })));
     this.commentForm = this.initCommentForm();
+    this.loadMatchIfUndefined();
+  }
+
+  loadMatchIfUndefined() {
+    this.match$.pipe(filter(match => !match), mergeMapTo(this.route.params), take(1))
+      .subscribe(params => {
+        const { id } = params;
+        this.store.dispatch(MatchActions.loadMatchById({ id }));
+      });
   }
 
   initCommentForm(): FormGroup {

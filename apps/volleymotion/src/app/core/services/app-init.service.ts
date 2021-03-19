@@ -52,10 +52,9 @@ export class AppInitService {
       this.store.dispatch(TeamActions.setTeam({ team }));
       this.store.dispatch(SeasonActions.setSeason({ season }));
       this.store.dispatch(UserActions.setUser({ user }));
-
-      team ?? this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
-      season ?? this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-      (user && team && season) ?? this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+      this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
+      this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
+      this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
     } catch { }
   }
 }

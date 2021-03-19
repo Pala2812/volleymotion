@@ -79,3 +79,18 @@ export const deleteMatchCommentFailure = createAction(
   `${key} delete Match Comment Failure`,
   props<{ error: any }>()
 );
+
+export const loadMatchById = createAction(
+  `${key} load Match By Id`,
+  props<{ id: string }>(),
+);
+
+export const loadMatchByIdSuccess = createAction(
+  `${key} load Match By Id Success`,
+  props<{ match: Match }>(),
+);
+
+export const loadMatchByIdFailure = createAction(
+  `${key} load Match By Id Failure`,
+  props<{ error: any }>(),
+);

@@ -57,7 +57,7 @@ export class PlayerDetailComponent implements OnInit {
     this.isLoadingPlayerComments$ = this.store.pipe(select(PlayerSelectors.isLoadingPlayerComments));
     this.playerComments$ = this.store.pipe(select(PlayerSelectors.playerComments));
     this.commentForm = this.initCommentForm();
-    this.loadPlayerIfEmpty();
+    this.loadPlayerIfUndefined();
     this.loadPlayerComments();
   }
 
@@ -65,7 +65,7 @@ export class PlayerDetailComponent implements OnInit {
     this.player$.pipe(filter(player => !!player), take(1)).subscribe((player) => this.store.dispatch(PlayerActions.loadPlayerComments({ player })));
   }
 
-  loadPlayerIfEmpty() {
+  loadPlayerIfUndefined() {
     this.player$.pipe(filter(player => !player), mergeMapTo(this.route.params), take(1))
       .subscribe(params => {
         const { id } = params;

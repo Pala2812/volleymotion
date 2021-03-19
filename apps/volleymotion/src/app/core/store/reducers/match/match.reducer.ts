@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
 import { Match, MatchComment } from '@volleymotion/models';
 import { MatchActions } from '../../actions';
@@ -5,6 +6,7 @@ import { MatchActions } from '../../actions';
 export const matchFeatureKey = 'match';
 
 export interface State {
+  isLoadingMatch: boolean;
   isCreatingMatch: boolean;
   isLoadingMatches: boolean;
   isAddingCommentToMatch: boolean;
@@ -15,6 +17,7 @@ export interface State {
 }
 
 export const initialState: State = {
+  isLoadingMatch: false,
   isCreatingMatch: false,
   isLoadingMatches: false,
   isAddingCommentToMatch: false,
@@ -66,5 +69,9 @@ export const reducer = createReducer(
   on(MatchActions.loadMatchComments, (state) => ({ ...state, isLoadingMatchComments: true })),
   on(MatchActions.loadMatchCommentsSuccess, (state, { matchComments }) => ({ ...state, matchComments, isLoadingMatchComments: false })),
   on(MatchActions.loadMatchCommentsFailure, (state) => ({ ...state, isLoadingMatchComments: false })),
-  on(MatchActions.setMatch, (state, { match }) => ({ ...state, match }))
+  on(MatchActions.setMatch, (state, { match }) => ({ ...state, match })),
+
+  on(MatchActions.loadMatchById, (state) => ({ ...state, isLoadingMatch: true })),
+  on(MatchActions.loadMatchByIdSuccess, (state, { match }) => ({ ...state, match, isLoadingMatch: false })),
+  on(MatchActions.loadMatchByIdFailure, (state) => ({ ...state, isLoadingMatch: false }))
 );

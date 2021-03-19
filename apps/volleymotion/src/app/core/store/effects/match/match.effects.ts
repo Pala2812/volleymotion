@@ -56,4 +56,12 @@ export class MatchEffects {
       )
     )
   );
+
+  loadMatchById$ = createEffect(() => this.actions$.pipe(
+    ofType(MatchActions.loadMatchById),
+    switchMap(({ id }) => this.matchService.loadMatchById(id).pipe(
+      map((match) => MatchActions.loadMatchByIdSuccess({ match })),
+      catchError(error => of(MatchActions.loadMatchByIdFailure({ error }))),
+    ))
+  ));
 }

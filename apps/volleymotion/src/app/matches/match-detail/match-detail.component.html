@@ -1,11 +1,8 @@
-<div
-  class="container"
-  *ngIf="{
+<div class="container" *ngIf="{
     match: match$ | async,
     team: team$ | async,
     user: user$ | async
-  } as data"
->
+  } as data">
   <nb-tabset>
     <nb-tab tabTitle="Übersicht">
       <nb-card>
@@ -18,23 +15,38 @@
         <nb-card-header>Adresse</nb-card-header>
         <nb-card-body>
           <div>
-            <mat-label
-              >{{ data?.match?.address?.street }}
-              {{ data?.match?.address?.streetnumber }}</mat-label
-            >
+            <mat-label>{{ data?.match?.address?.street }}
+              {{ data?.match?.address?.streetnumber }}</mat-label>
           </div>
           <div>
-            <mat-label
-              >{{ data?.match?.address?.postalcode }}
-              {{ data?.match?.address?.locality }}</mat-label
-            >
+            <mat-label>{{ data?.match?.address?.postalcode }}
+              {{ data?.match?.address?.locality }}</mat-label>
           </div>
           <div>
-            <mat-label
-              >{{ data?.match?.address?.administrativeArea }}
+            <mat-label>{{ data?.match?.address?.administrativeArea }}
               {{ data?.match?.address?.country }}
             </mat-label>
           </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>Kommentare</nb-card-header>
+        <nb-card-body>
+          <vm-match-comment-item [matchComment]="comment" (deleteMatchComment)="onMatchCommentDelete($event)"
+            *ngFor="let comment of matchComments$ | async"></vm-match-comment-item>
+
+        </nb-card-body>
+        <nb-card-body>
+          <form class="comment-form" [formGroup]="commentForm"
+            (ngSubmit)="addComment(commentForm, data?.match, data?.user)">
+            <nb-form-field>
+              <input nbInput fullWidth placeholder="Kommentar hinzufügen" formControlName="comment" />
+            </nb-form-field>
+            <button nbButton type="submit" [disabled]="isAddingCommentToMatch$ | async">
+              <nb-icon icon="plus-outline"></nb-icon>
+            </button>
+          </form>
         </nb-card-body>
       </nb-card>
     </nb-tab>
@@ -77,7 +89,7 @@
             <div class="team">
               <mat-label class="team-label">{{
                 data?.match?.opponent
-              }}</mat-label>
+                }}</mat-label>
 
               <nb-form-field>
                 <input nbInput placeholder="Satzergebnis" type="number" />
@@ -111,60 +123,14 @@
         <nb-card-header>Spielerbeteiligungen</nb-card-header>
         <nb-card-body>
           <div class="player-participations">
-            <div
-              class="player-participation"
-              *ngFor="let player of players$ | async"
-            >
-              <mat-label class="player-label"
-                >{{ player?.firstname }} {{ player?.lastname }}</mat-label
-              >
+            <div class="player-participation" *ngFor="let player of players$ | async">
+              <mat-label class="player-label">{{ player?.firstname }} {{ player?.lastname }}</mat-label>
               <div class="player-slider-container">
-                <mat-slider
-                  id="hello"
-                  class="player-slider"
-                  max="100"
-                  min="0"
-                  step="1"
-                ></mat-slider>
-                <mat-label class="player-slider-label">0%</mat-label>
+                <mat-slider id="hello" class="player-slider" max="100" min="0" step="1" #slider></mat-slider>
+                <mat-label class="player-slider-label">{{slider.value}}%</mat-label>
               </div>
             </div>
           </div>
-        </nb-card-body>
-      </nb-card>
-
-      <nb-card>
-        <nb-card-header>Kommentare</nb-card-header>
-        <nb-card-body>
-          <vm-match-comment-item
-            [matchComment]="comment"
-            (deleteMatchComment)="onMatchCommentDelete($event)"
-            *ngFor="let comment of matchComments$ | async"
-          ></vm-match-comment-item>
-         
-        </nb-card-body>
-        <nb-card-body>
-          <form
-            class="comment-form"
-            [formGroup]="commentForm"
-            (ngSubmit)="addComment(commentForm, data?.match, data?.user)"
-          >
-            <nb-form-field>
-              <input
-                nbInput
-                fullWidth
-                placeholder="Kommentar hinzufügen"
-                formControlName="comment"
-              />
-            </nb-form-field>
-            <button
-              nbButton
-              type="submit"
-              [disabled]="isAddingCommentToMatch$ | async"
-            >
-              <nb-icon icon="plus-outline"></nb-icon>
-            </button>
-          </form>
         </nb-card-body>
       </nb-card>
     </nb-tab>

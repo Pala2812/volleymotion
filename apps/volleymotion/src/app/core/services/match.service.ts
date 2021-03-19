@@ -38,10 +38,14 @@ export class MatchService {
   deleteMatchComment(matchComment: MatchComment) {
     return from(this.fs.doc(`matches/${matchComment?.matchId}/comments/${matchComment?.id}`).delete());
   }
-  
+
   loadMatchComments(match: Match) {
     return this.fs.collection('matches').doc(match?.id).collection<MatchComment>('comments').valueChanges()
       .pipe(map((comments) => comments?.sort((a, b) => b?.createdAt?.toMillis() - a?.createdAt?.toMillis())));
+  }
+
+  loadMatchById(id: string) {
+    return this.fs.collection('matches').doc<Match>(id).valueChanges();
   }
 
   getId() {
