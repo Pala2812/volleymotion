@@ -11,3 +11,9 @@
     }
   }
 }
+
+.comment-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 0.5em;
+}

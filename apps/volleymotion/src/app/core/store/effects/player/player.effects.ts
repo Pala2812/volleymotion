@@ -11,7 +11,7 @@ export class PlayerEffects {
   constructor(
     private actions$: Actions,
     private playerService: PlayerService
-  ) {}
+  ) { }
 
   createPlayer$ = createEffect(() =>
     this.actions$.pipe(
@@ -59,9 +59,42 @@ export class PlayerEffects {
 
   deletePlayer$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.deletePlayer),
-    switchMap(({player}) => this.playerService.deletePlayer(player).pipe(
+    switchMap(({ player }) => this.playerService.deletePlayer(player).pipe(
       map(() => PlayerActions.deletePlayerSuccess()),
-      catchError(error => of(PlayerActions.deletePlayerFailure({error})))
+      catchError(error => of(PlayerActions.deletePlayerFailure({ error })))
+    ))
+  ));
+
+  addCommentToPlayer$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.addCommentToPlayer),
+    switchMap(({ playerComment }) => this.playerService.addCommentToPlayer(playerComment).pipe(
+      map(() => PlayerActions.addCommentToPlayerSuccess()),
+      catchError(error => of(PlayerActions.addCommentToPlayerFailure({ error })))
+    ))
+  ));
+
+  loadPlayerComments$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.loadPlayerComments),
+    switchMap(({ player }) => this.playerService.loadPlayerComments(player).pipe(
+      map((playerComments) => PlayerActions.loadPlayerCommentsSuccess({ playerComments })),
+      catchError((error) => of(PlayerActions.loadPlayerCommentsFailure({ error })))
+    ))
+  ));
+
+  deletePlayerComment$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.deletePlayerComment),
+    switchMap(({ playerComment }) => this.playerService.deletePlayerComment(playerComment).pipe(
+      map(() => PlayerActions.deletePlayerCommentSuccess()),
+      catchError((error) => of(PlayerActions.deletePlayerCommentFailure({ error })))
+    ))
+  ));
+
+
+  loadPlayerById$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.loadPlayerById),
+    switchMap(({ id }) => this.playerService.loadPlayerById(id).pipe(
+      map((player) => PlayerActions.loadPlayerByIdSuccess({ player })),
+      catchError((error) => of(PlayerActions.loadPlayerByIdFailure({ error })))
     ))
   ))
 }

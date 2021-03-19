@@ -1,0 +1,13 @@
+:host {
+    display: block;
+    padding-bottom: 0.5em;
+    
+    .match-comment-item-container {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-column-gap: 1em;
+      align-items: center;
+      padding-bottom: 0.5em;
+    }
+  }
+  

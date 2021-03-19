@@ -25,7 +25,27 @@ export const selectIsLoadingPlayers = createSelector(
   (state) => state.isLoadingPlayers
 );
 
+export const selectIsLoadingPlayer = createSelector(
+  selectPlayerFeature,
+  (state) => state.isLoadingPlayer
+);
+
 export const selectPlayer = createSelector(
   selectPlayerFeature,
   (state) => state.player
+);
+
+export const isAddingCommentToPlayer = createSelector(
+  selectPlayerFeature,
+  (state) => state.isAddingCommentToPlayer
+);
+
+export const isLoadingPlayerComments = createSelector(
+  selectPlayerFeature,
+  (state) => state.isLoadingPlayerComments
+);
+
+export const playerComments = createSelector(
+  selectPlayerFeature,
+  (state) => state.playerComments,
 );

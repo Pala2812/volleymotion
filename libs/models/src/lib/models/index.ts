@@ -14,3 +14,4 @@ export * from './contact';
 export * from './user';
 export * from './types';
 export * from './match-comment';
+export * from './player-comment';

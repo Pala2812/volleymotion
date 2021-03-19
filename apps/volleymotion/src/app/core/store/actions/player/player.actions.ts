@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Player } from '@volleymotion/models';
+import { Player, PlayerComment } from '@volleymotion/models';
+import { PlayerCommentComponent } from 'apps/volleymotion/src/app/players/shared/components/player-comment/player-comment.component';
 
 const key = '[Player]';
 
@@ -44,7 +45,7 @@ export const deletePlayerFailure = createAction(
 
 export const updatePlayer = createAction(
   `${key} Update Player`,
-  props<{player: Player}>()
+  props<{ player: Player }>()
 );
 
 export const updatePlayerSuccess = createAction(
@@ -53,10 +54,68 @@ export const updatePlayerSuccess = createAction(
 
 export const updatePlayerFailure = createAction(
   `${key} Update Player Failure`,
-  props<{error: any}>()
+  props<{ error: any }>()
 );
 
 export const setPlayer = createAction(
   `${key} Set Player`,
   props<{ player: Player }>()
+);
+
+export const addCommentToPlayer = createAction(
+  `${key} Add Comment To Player`,
+  props<{ playerComment: PlayerComment | Partial<PlayerComment> }>()
+);
+
+export const addCommentToPlayerSuccess = createAction(
+  `${key} Add Comment To Player Success`,
+);
+
+export const addCommentToPlayerFailure = createAction(
+  `${key} Add Comment To Player Failure`,
+  props<{ error: any }>()
+);
+
+export const loadPlayerComments = createAction(
+  `${key} load Player Comments`,
+  props<{ player: Player }>(),
+);
+
+export const loadPlayerCommentsSuccess = createAction(
+  `${key} load Player Comments Success`,
+  props<{ playerComments: PlayerComment[] }>(),
+);
+
+export const loadPlayerCommentsFailure = createAction(
+  `${key} load Player Comments Failure`,
+  props<{ error: any }>(),
+);
+
+export const deletePlayerComment = createAction(
+  `${key} delete Player Comment`,
+  props<{ playerComment: PlayerComment }>(),
+);
+
+export const deletePlayerCommentSuccess = createAction(
+  `${key} delete Player Comment Success`,
+);
+
+export const deletePlayerCommentFailure = createAction(
+  `${key} delete Player Comment Failure`,
+  props<{ error: any }>(),
+);
+
+export const loadPlayerById = createAction(
+  `${key} load Player By Id`,
+  props<{ id: string }>(),
+);
+
+export const loadPlayerByIdSuccess = createAction(
+  `${key} load Player By Id Success`,
+  props<{ player: Player }>(),
+);
+
+export const loadPlayerByIdFailure = createAction(
+  `${key} load Player By Id Failure`,
+  props<{ error: any }>()
 );
