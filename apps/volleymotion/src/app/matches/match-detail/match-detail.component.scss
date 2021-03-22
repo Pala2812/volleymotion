@@ -5,12 +5,14 @@
   place-items: center;
   text-align: center;
 
-  .team {
-    .team-label {
-      display: block;
-      font-size: 1.25em;
-      margin-bottom: 0.5em;
-    }
+  .team-label {
+    display: block;
+    font-size: 1.25em;
+    margin-bottom: 0.5em;
+  }
+
+  nb-form-field {
+    margin-bottom: 3px;
   }
 
   .form {
@@ -47,4 +49,16 @@
       }
     }
   }
+}
+
+.mat-chip-list {
+  .mat-chip {
+    &.is-active {
+      background-color: rgb(120, 238, 120);
+    }
+  }
+}
+
+.submit-btn {
+  width: 100%;
 }

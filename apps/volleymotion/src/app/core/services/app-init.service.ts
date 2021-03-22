@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { User } from '../models';
 import {
   AuthActions,
+  MatchActions,
   PlayerActions,
   SeasonActions,
   TeamActions,
@@ -52,9 +53,11 @@ export class AppInitService {
       this.store.dispatch(TeamActions.setTeam({ team }));
       this.store.dispatch(SeasonActions.setSeason({ season }));
       this.store.dispatch(UserActions.setUser({ user }));
+
       this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
       this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-      this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
+      this.store.dispatch(PlayerActions.loadPlayers({ teamId: season?.teamId, seasonId: season?.id }));
+      this.store.dispatch(MatchActions.loadMatches({ teamId: season.teamId, seasonId: season?.id }));
     } catch { }
   }
 }

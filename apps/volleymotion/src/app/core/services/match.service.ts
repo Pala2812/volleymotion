@@ -48,6 +48,10 @@ export class MatchService {
     return this.fs.collection('matches').doc<Match>(id).valueChanges();
   }
 
+  addMatchDetail() {
+    
+  }
+
   getId() {
     return this.fs.createId();
   }

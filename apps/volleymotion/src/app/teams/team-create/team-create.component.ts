@@ -10,7 +10,7 @@ import { TeamActions } from '../../core/store/actions';
 import { Observable, Subject } from 'rxjs';
 import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: 'vm-team-create',
@@ -50,7 +50,7 @@ export class TeamCreateComponent implements OnInit {
     private actions$: Actions,
     private route: ActivatedRoute,
     private fs: AngularFirestore
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -68,12 +68,11 @@ export class TeamCreateComponent implements OnInit {
     this.store
       .pipe(
         select(TeamSelectors.selectTeam),
-        filter((team) => !!team),
+        withLatestFrom(this.route.params),
+        filter((params) => !!params[0] && params[1].id),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(
-        (team) => ((this.form = this.initForm(team)), console.log(team))
-      );
+      .subscribe((params) => this.form = this.initForm(params[0]));
 
     this.store
       .pipe(
@@ -135,7 +134,7 @@ export class TeamCreateComponent implements OnInit {
         teamType,
         division,
       };
-    
+
       const action = TeamActions.createTeam({ team });
       this.store.dispatch(action);
     }

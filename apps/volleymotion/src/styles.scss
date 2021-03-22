@@ -24,6 +24,10 @@ body {
   box-sizing: border-box;
 }
 
+.border-red {
+  border: 1px solid red;
+}
+
 .mat-form-field.no-underline {
   &.no-padding-bottom {
     .mat-form-field-wrapper {
@@ -86,4 +90,19 @@ textarea {
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+}
+
+.card {
+  position: relative;
+
+  .card-header {
+    position: relative;
+
+    .action-btn {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
 }

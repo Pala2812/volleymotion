@@ -3,21 +3,6 @@
   flex-direction: column;
   min-height: 100%;
 
-  .card {
-    position: relative;
-
-    .card-header {
-      position: relative;
-
-      .action-btn {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(-50%, -50%);
-      }
-    }
-  }
-
   .tag-list {
     display: flex;
     justify-content: center;
@@ -25,17 +10,25 @@
 
   .charts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-template-rows: auto;
     grid-gap: 1em;
     width: 100%;
 
     .chart-card {
+      &.border-red {
+        border: 1px solid red;
+      }
+
       .chart-card-body {
         display: flex;
         justify-content: center;
         align-items: center;
       }
+    }
+
+    @media all and (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr;
     }
   }
 

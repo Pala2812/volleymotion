@@ -15,3 +15,6 @@ export * from './user';
 export * from './types';
 export * from './match-comment';
 export * from './player-comment';
+export * from './player-participation';
+export * from './match-set';
+export * from './charts/match-participation-chart';

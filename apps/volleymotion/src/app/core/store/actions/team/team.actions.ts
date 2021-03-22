@@ -60,3 +60,7 @@ export const deleteTeamFailure = createAction(
   `${key} Delete Team Failure`,
   props<{ error: Error }>()
 );
+
+export const resetTeam = createAction(
+  `${key} reset Team`,
+);

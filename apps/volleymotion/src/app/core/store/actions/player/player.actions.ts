@@ -119,3 +119,7 @@ export const loadPlayerByIdFailure = createAction(
   `${key} load Player By Id Failure`,
   props<{ error: any }>()
 );
+
+export const resetPlayer = createAction(
+  `${key} reset Player`,
+);

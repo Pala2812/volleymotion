@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Season, Team } from '@volleymotion/models';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { SeasonActions } from '../../core/store/actions';
+import { interval, Observable, Subject, timer } from 'rxjs';
+import { filter, map, mergeMap, mergeMapTo, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { MatchActions, PlayerActions, SeasonActions, TeamActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
 
@@ -23,7 +23,7 @@ export class SeasonListComponent implements OnInit {
     private store: Store<StoreState>,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoadingSeasons$ = this.store.pipe(
@@ -39,6 +39,18 @@ export class SeasonListComponent implements OnInit {
       )
     );
 
+    /*
+    this.seasons$.pipe(
+      filter(seasons => !seasons),
+      switchMap(() => interval(3000)),
+      mergeMapTo(this.route.params),
+      take(1)
+    ).subscribe(params => {
+      const { id } = params;
+      this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId: id }));
+    });
+    */
+
     this.team$.pipe(filter(team => !!team), takeUntil(this.unsubscribe$)).subscribe((team) => {
       const teamId = team.id;
       this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));
@@ -46,6 +58,9 @@ export class SeasonListComponent implements OnInit {
   }
 
   selectSeason(season: Season) {
+    this.store.dispatch(PlayerActions.resetPlayer());
+    this.store.dispatch(MatchActions.resetMatch());
+
     this.store.dispatch(SeasonActions.setSeason({ season }));
     this.router.navigate(['']);
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators';
@@ -7,7 +8,7 @@ import { MatchActions } from '../../actions';
 
 @Injectable()
 export class MatchEffects {
-  constructor(private actions$: Actions, private matchService: MatchService) { }
+  constructor(private actions$: Actions, private toast: NbToastrService, private matchService: MatchService) { }
 
   createMatch$ = createEffect(() =>
     this.actions$.pipe(
@@ -20,6 +21,34 @@ export class MatchEffects {
       )
     )
   );
+
+  deleteMatch$ = createEffect(() => this.actions$.pipe(
+    ofType(MatchActions.deleteMatch),
+    switchMap(({ match }) => this.matchService.deleteMatch(match).pipe(
+      map(() => MatchActions.deleteMatchSuccess()),
+      catchError(error => of(MatchActions.deleteMatchFailure({ error })))
+    ))
+  ));
+
+  deleteMatchSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(MatchActions.deleteMatchSuccess),
+    tap(() => {
+      this.toast.success('Spieltag wurde gelöscht', 'Spieltag löschen');
+    })
+  ), { dispatch: false });
+
+  updateMatch$ = createEffect(() => this.actions$.pipe(
+    ofType(MatchActions.updateMatch),
+    switchMap(({ match }) => this.matchService.addOrUpdateMatch(match).pipe(
+      map(() => MatchActions.updateMatchSuccess()),
+      catchError((error) => of(MatchActions.updateMatchFailure({ error })))
+    ))
+  ));
+
+  updateMatchSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(MatchActions.updateMatchSuccess),
+    tap(() => this.toast.success('Spieltag wurde aktualisiert', 'Spieltag updaten'))
+  ), { dispatch: false });
 
   addCommentToMatch$ = createEffect(() => this.actions$.pipe(
     ofType(MatchActions.addCommentToMatch),

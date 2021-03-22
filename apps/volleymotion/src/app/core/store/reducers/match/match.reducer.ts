@@ -73,5 +73,7 @@ export const reducer = createReducer(
 
   on(MatchActions.loadMatchById, (state) => ({ ...state, isLoadingMatch: true })),
   on(MatchActions.loadMatchByIdSuccess, (state, { match }) => ({ ...state, match, isLoadingMatch: false })),
-  on(MatchActions.loadMatchByIdFailure, (state) => ({ ...state, isLoadingMatch: false }))
+  on(MatchActions.loadMatchByIdFailure, (state) => ({ ...state, isLoadingMatch: false })),
+
+  on(MatchActions.resetMatch, () => initialState)
 );

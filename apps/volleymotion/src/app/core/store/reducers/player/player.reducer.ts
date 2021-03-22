@@ -52,4 +52,6 @@ export const reducer = createReducer(initialState,
   on(PlayerActions.loadPlayerById, (state) => ({ ...state, isLoadingPlayer: true })),
   on(PlayerActions.loadPlayerByIdSuccess, (state, { player }) => ({ ...state, player, isLoadingPlayer: false })),
   on(PlayerActions.loadPlayerByIdFailure, (state) => ({ ...state, isLoadingPlayer: false })),
+
+  on(PlayerActions.resetPlayer, () => initialState)
 );

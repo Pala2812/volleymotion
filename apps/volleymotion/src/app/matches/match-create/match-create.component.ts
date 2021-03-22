@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match, Season } from '@volleymotion/models';
+import { MatchSet } from 'libs/models/src/lib/models/match-set';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatchService } from '../../core/services/match.service';
@@ -26,7 +27,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     private matchService: MatchService,
     private actions$: Actions,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.initForm();

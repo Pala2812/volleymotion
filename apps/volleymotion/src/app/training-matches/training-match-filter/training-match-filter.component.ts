@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { fil } from 'date-fns/locale';
@@ -9,6 +9,7 @@ import { fil } from 'date-fns/locale';
   styleUrls: ['./training-match-filter.component.scss'],
 })
 export class TrainingMatchFilterComponent implements OnInit {
+  filters: { teamType: string, division: string, sportType: string };
   divisions = [
     '1. Bundesliga',
     '2. Bundensliga',
@@ -29,17 +30,17 @@ export class TrainingMatchFilterComponent implements OnInit {
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
   form: FormGroup;
 
-  constructor(private dialogRef: NbDialogRef<TrainingMatchFilterComponent>) {}
+  constructor(private dialogRef: NbDialogRef<TrainingMatchFilterComponent>) { }
 
   ngOnInit(): void {
-    this.form = this.initForm();
+    this.form = this.initForm(this.filters);
   }
 
-  initForm() {
+  initForm(filters: any) {
     return new FormGroup({
-      sportType: new FormControl(''),
-      teamType: new FormControl(''),
-      division: new FormControl(''),
+      sportType: new FormControl(filters?.sportType ?? ''),
+      teamType: new FormControl(filters?.teamType ?? ''),
+      division: new FormControl(filters?.division ?? ''),
     });
   }
 

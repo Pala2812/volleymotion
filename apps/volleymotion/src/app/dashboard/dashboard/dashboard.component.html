@@ -2,63 +2,118 @@
     team: team$ | async,
     season: season$ | async
 } as data">
+    <nb-tabset>
 
-    <nb-card class="card">
-        <nb-card-header class="card-header">
-            Saisonziel
-            <button class="action-btn" nbButton ghost status="info" [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </nb-card-header>
-        <nb-card-body>
-            {{data?.season?.goal}}
-        </nb-card-body>
-    </nb-card>
+        <nb-tab tabTitle="Übersicht">
+            <nb-card class="card">
+                <nb-card-header class="card-header">
+                    Saisonziel
+                    <button class="action-btn" nbButton ghost status="info"
+                        [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
+                        [queryParams]="{redirectUrl: 'dashboard'}">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                    </button>
+                </nb-card-header>
+                <nb-card-body>
+                    {{data?.season?.goal}}
+                </nb-card-body>
+            </nb-card>
 
-    <nb-card class="card">
-        <nb-card-header class="card-header">
-            Trainingsfocus
-            <button class="action-btn" nbButton ghost status="info" [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </nb-card-header>
-        <nb-card-body>
-          <mat-chip-list class="tag-list">
-              <mat-chip *ngFor="let tag of data?.season?.tags">
-                  {{tag?.name}}
-              </mat-chip>
-          </mat-chip-list>
-        </nb-card-body>
-    </nb-card>
+            <nb-card class="card">
+                <nb-card-header class="card-header">
+                    Trainingsfocus
+                    <button class="action-btn" nbButton ghost status="info"
+                        [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
+                        [queryParams]="{redirectUrl: 'dashboard'}">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                    </button>
+                </nb-card-header>
+                <nb-card-body>
+                    <mat-chip-list class="tag-list">
+                        <mat-chip *ngFor="let tag of data?.season?.tags">
+                            {{tag?.name}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </nb-card-body>
+            </nb-card>
+        </nb-tab>
 
-</div>
+        <nb-tab tabTitle="Analyse">
 
-<div class="charts">
-    <nb-card class="chart-card">
-        <nb-card-header>Spiele</nb-card-header>
-        <nb-card-body class="chart-card-body">
-            <google-chart type="PieChart" [data]="data" [options]="options"></google-chart>
-        </nb-card-body>
-    </nb-card>
+            <div class="charts">
+                <nb-card class="chart-card">
+                    <nb-card-header>Spiele
+                    </nb-card-header>
+                    <nb-card-body class="chart-card-body">
+                        <google-chart *ngIf="(matches$ | async)?.length; else noMatches" [dynamicResize]="true"
+                            type="PieChart" [data]="matchParticipationChart$ | async" [options]="options">
+                        </google-chart>
+                        <ng-template #noMatches>Noch keine Spiele eingetragen</ng-template>
+                    </nb-card-body>
+                </nb-card>
 
-    <nb-card class="chart-card">
-        <nb-card-header>Trainingsbeteiligung</nb-card-header>
-        <nb-card-body class="chart-card-body">
-            <google-chart type="PieChart" [data]="trainData" [options]="options"></google-chart>
-        </nb-card-body>
-    </nb-card>
+                <nb-card class="chart-card">
+                    <nb-card-header>Spielbeteiligung</nb-card-header>
+                    <nb-card-body class="chart-card-body">
+                        <google-chart *ngIf="(matches$ | async)?.length; else noMatches" [dynamicResize]="true"
+                            type="PieChart" [data]="participations$ | async" [options]="options"></google-chart>
+                    </nb-card-body>
+                </nb-card>
 
-    <nb-card class="chart-card">
-        <nb-card-header>Spielbeteiligung</nb-card-header>
-        <nb-card-body class="chart-card-body">
-            <google-chart type="PieChart" [data]="trainData" [options]="options"></google-chart>
-        </nb-card-body>
-    </nb-card>
+                <nb-card class="chart-card">
+                    <nb-card-header>Spielanwesenheit</nb-card-header>
+                    <nb-card-body class="chart-card-body">
+                        <google-chart *ngIf="(attendance$ | async)?.length; else noMatches" [dynamicResize]="true"
+                            type="PieChart" [data]="attendance$ | async" [options]="options"></google-chart>
+                    </nb-card-body>
+                </nb-card>
 
-    <nb-card class="chart-card">
-        <nb-card-header>Trainingsfocus</nb-card-header>
-        <nb-card-body class="chart-card-body">
-            <google-chart type="PieChart" [data]="data" [options]="options"></google-chart>
-        </nb-card-body>
-    </nb-card>
+                <nb-card class="chart-card border-red">
+                    <nb-card-header>Trainingsbeteiligung</nb-card-header>
+                    <nb-card-body class="chart-card-body">
+                        <google-chart [dynamicResize]="true" type="PieChart" [data]="trainData" [options]="options">
+                        </google-chart>
+                    </nb-card-body>
+                </nb-card>
+
+                <nb-card class="chart-card border-red">
+                    <nb-card-header>Trainingsfocus</nb-card-header>
+                    <nb-card-body class="chart-card-body">
+                        <google-chart [dynamicResize]="true" type="PieChart" [data]="trainFocusData"
+                            [options]="options">
+                        </google-chart>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </nb-tab>
+
+        <nb-tab tabTitle="Tags">
+            <nb-card>
+                <nb-card-header>Stärken deiner Mannschaft</nb-card-header>
+                <nb-card-body>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let strength of strengths$ | async">{{strength?.name}}</mat-chip>
+                    </mat-chip-list>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Schwächen deiner Mannschaft</nb-card-header>
+                <nb-card-body>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let weakness of weaknesses$ | async">{{weakness?.name}}</mat-chip>
+                    </mat-chip-list>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+                <nb-card-header>Verbesserungswünsche deiner Mannschaft</nb-card-header>
+                <nb-card-body>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let improvement of improvements$ | async">{{improvement?.name}}</mat-chip>
+                    </mat-chip-list>
+                </nb-card-body>
+            </nb-card>
+        </nb-tab>
+    </nb-tabset>
 </div>

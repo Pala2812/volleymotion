@@ -3,16 +3,12 @@
     team: team$ | async,
     user: user$ | async
   } as data">
-  <nb-tabset>
+  <nb-tabset #tabSet>
     <nb-tab tabTitle="Übersicht">
       <nb-card>
         <nb-card-header>
           {{ data?.match?.opponent }}
         </nb-card-header>
-      </nb-card>
-
-      <nb-card>
-        <nb-card-header>Adresse</nb-card-header>
         <nb-card-body>
           <div>
             <mat-label>{{ data?.match?.address?.street }}
@@ -28,6 +24,25 @@
             </mat-label>
           </div>
         </nb-card-body>
+        <!-- 
+        <nb-card-footer>
+          <button nbButton ghost>
+            <nb-icon staus="success" icon="navigation-2-outline"></nb-icon>
+          </button>
+        </nb-card-footer>
+        -->
+      </nb-card>
+
+      <nb-card *ngIf="data?.match?.playerParticipations?.length">
+        <nb-card-header>Anwesende Spieler</nb-card-header>
+        <nb-card-body>
+          <mat-chip-list>
+            <mat-chip [selected]="playerParticipation.didParticipate"
+              *ngFor="let playerParticipation of playerParticipations">
+              {{ playerParticipation?.firstname }} {{ playerParticipation?.lastname }}
+            </mat-chip>
+          </mat-chip-list>
+        </nb-card-body>
       </nb-card>
 
       <nb-card>
@@ -35,7 +50,6 @@
         <nb-card-body>
           <vm-match-comment-item [matchComment]="comment" (deleteMatchComment)="onMatchCommentDelete($event)"
             *ngFor="let comment of matchComments$ | async"></vm-match-comment-item>
-
         </nb-card-body>
         <nb-card-body>
           <form class="comment-form" [formGroup]="commentForm"
@@ -51,88 +65,61 @@
       </nb-card>
     </nb-tab>
 
-    <nb-tab tabTitle="Bearbeiten">
+    <nb-tab tabTitle="Bearbeiten" *ngIf="match$ | async as match">
+      <nb-card>
+        <nb-card-header>Spielverlauf</nb-card-header>
+        <nb-card-body>
+          <div class="team-container">
+
+            <mat-label class="team-label">{{ data?.team?.club }}</mat-label>
+            <mat-label class="team-label">{{ data?.match?.opponent }}</mat-label>
+
+            <ng-container *ngFor="let matchSet of match?.result?.sets let index = index" class="team-container">
+              <nb-form-field>
+                <input [(ngModel)]="matchSet.homeTeam" nbInput placeholder="Satzergebnis" type="number" />
+              </nb-form-field>
+              <nb-form-field>
+                <input [(ngModel)]="matchSet.opponent" nbInput placeholder="Satzergebnis" type="number" />
+              </nb-form-field>
+            </ng-container>
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+
       <nb-card>
         <nb-card-header>Anwesende Spieler</nb-card-header>
         <nb-card-body>
-          <mat-chip-list>
-            <mat-chip *ngFor="let player of players$ | async">
-              {{ player?.firstname }} {{ player?.lastname }}
+          <mat-chip-list [multiple]="true">
+            <mat-chip [selected]="playerParticipation.didParticipate"
+              *ngFor="let playerParticipation of playerParticipations"
+              (click)="playerParticipation.didParticipate = !playerParticipation?.didParticipate">
+              {{ playerParticipation?.firstname }} {{ playerParticipation?.lastname }}
             </mat-chip>
           </mat-chip-list>
         </nb-card-body>
       </nb-card>
 
       <nb-card>
-        <nb-card-header>Spielverlauf</nb-card-header>
-        <nb-card-body>
-          <div class="team-container">
-            <div class="team">
-              <mat-label class="team-label">{{ data?.team?.club }}</mat-label>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-            </div>
-
-            <div class="team">
-              <mat-label class="team-label">{{
-                data?.match?.opponent
-                }}</mat-label>
-
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-              <nb-form-field>
-                <input nbInput placeholder="Satzergebnis" type="number" />
-              </nb-form-field>
-            </div>
-          </div>
-        </nb-card-body>
-      </nb-card>
-
-      <nb-card>
-        <nb-card-header>
-          Tags
-        </nb-card-header>
-
-        <nb-card-body> </nb-card-body>
-      </nb-card>
-
-      <nb-card>
         <nb-card-header>Spielerbeteiligungen</nb-card-header>
         <nb-card-body>
           <div class="player-participations">
-            <div class="player-participation" *ngFor="let player of players$ | async">
-              <mat-label class="player-label">{{ player?.firstname }} {{ player?.lastname }}</mat-label>
+            <div class="player-participation" *ngFor="let playerParticipation of playerParticipations">
+              <mat-label class="player-label">{{ playerParticipation?.firstname }} {{ playerParticipation?.lastname }}
+              </mat-label>
               <div class="player-slider-container">
-                <mat-slider id="hello" class="player-slider" max="100" min="0" step="1" #slider></mat-slider>
+                <mat-slider id="hello" class="player-slider" max="100" min="0" step="1"
+                  [disabled]="!playerParticipation.didParticipate" [(ngModel)]="playerParticipation.percentage" #slider>
+                </mat-slider>
                 <mat-label class="player-slider-label">{{slider.value}}%</mat-label>
               </div>
             </div>
           </div>
         </nb-card-body>
       </nb-card>
+
+      <button nbButton class="submit-btn" (click)="saveMatch(match, playerParticipations)">Speichern</button>
+
     </nb-tab>
   </nb-tabset>
 </div>

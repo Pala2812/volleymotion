@@ -8,7 +8,7 @@ import { map, take, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AngularFireAuth, private router: Router) {}
+  constructor(private auth: AngularFireAuth, private router: Router) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.auth.user.pipe(

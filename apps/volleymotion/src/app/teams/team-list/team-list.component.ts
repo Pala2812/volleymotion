@@ -6,7 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { Team } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';
-import { TeamActions } from '../../core/store/actions';
+import { MatchActions, PlayerActions, SeasonActions, TeamActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import { DeleteDialogComponent } from '../../shared/dialogs/delete-dialog/delete-dialog.component';
@@ -26,7 +26,7 @@ export class TeamListComponent implements OnInit, OnDestroy {
     private actions$: Actions,
     private router: Router,
     private dialogService: NbDialogService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoadingTeams$ = this.store.pipe(
@@ -63,6 +63,7 @@ export class TeamListComponent implements OnInit, OnDestroy {
   }
 
   selectTeam(team: Team) {
+    this.store.dispatch(SeasonActions.setSeason({ season: undefined }));
     this.store.dispatch(TeamActions.setTeam({ team }));
     this.router.navigate(['saisons', team.id]);
   }

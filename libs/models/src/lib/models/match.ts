@@ -1,5 +1,7 @@
 import * as firebase from 'firebase/app';
 import { Address } from './address';
+import { MatchSet } from './match-set';
+import { PlayerParticipation } from './player-participation';
 
 export interface Match {
   id: string;
@@ -11,12 +13,12 @@ export interface Match {
   time: firebase.default.firestore.Timestamp;
   address: Address;
   status: 'Ausstehend' | 'Gewonnen' | 'Verloren';
-  participatingPlayers: [];
-  tags: [];
-  comments: [];
-  sets: {
-    won: number;
-    lost: number;
-    total: number;
+  playerParticipations: PlayerParticipation[];
+  result: {
+    sets: MatchSet[];
+    setsWon: number;
+    setsLost: number;
+    scoredPoints: number;
+    collectedPoints: number;
   };
 }

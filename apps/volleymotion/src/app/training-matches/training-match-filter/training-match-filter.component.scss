@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vh;
 
   nb-card {
     nb-card-body {
@@ -12,8 +11,10 @@
     }
 
     nb-card-footer {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: flex-end;
+      gap: 0 1rem;
     }
   }
 }

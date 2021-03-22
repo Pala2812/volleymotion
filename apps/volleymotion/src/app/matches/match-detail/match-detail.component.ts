@@ -1,38 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { select } from '@ngrx/store';
 import { Store } from '@ngrx/store';
-import { Match, MatchComment, Player, Team } from '@volleymotion/models';
-import { Observable } from 'rxjs';
+import { Match, MatchComment, Player, PlayerParticipation, Team } from '@volleymotion/models';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import firebase from 'firebase/app';
+import { Actions, ofType } from '@ngrx/effects';
 
 import { User } from '../../core/models';
 import { MatchActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, PlayerSelectors, TeamSelectors, UserSelectors } from '../../core/store/selectors';
-import firebase from 'firebase/app';
-import { filter, mergeMapTo, take } from 'rxjs/operators';
+import { filter, map, mergeMapTo, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { loadMatchComments } from '../../core/store/actions/match/match.actions';
-import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'vm-match-detail',
   templateUrl: './match-detail.component.html',
   styleUrls: ['./match-detail.component.scss']
 })
-export class MatchDetailComponent implements OnInit {
+export class MatchDetailComponent implements OnInit, OnDestroy {
   match$: Observable<Match>;
   matchComments$: Observable<MatchComment[]>;
   team$: Observable<Team>;
   user$: Observable<User>;
   players$: Observable<Player[]>;
   isAddingCommentToMatch$: Observable<boolean>;
+  matchForm: FormGroup;
   commentForm: FormGroup;
+  playerParticipations: PlayerParticipation[];
 
-  constructor(private store: Store<StoreState>, private fs: AngularFirestore, private route: ActivatedRoute) { }
+  private unsubscribe$ = new Subject();
+
+  constructor(private store: Store<StoreState>,
+    private fs: AngularFirestore,
+    private route: ActivatedRoute,
+    private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.match$ = this.store.pipe(select(MatchSelectors.selectMatch));
+    this.match$ = this.store.pipe(
+      select(MatchSelectors.selectMatch),
+      map(match => {
+        if (match) {
+          return JSON.parse(JSON.stringify(match));
+        }
+        return match;
+      }));
+
     this.user$ = this.store.pipe(select(UserSelectors.selectUser));
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
@@ -41,6 +56,49 @@ export class MatchDetailComponent implements OnInit {
     this.match$.pipe(filter(match => !!match), take(1)).subscribe(match => this.store.dispatch(loadMatchComments({ match })));
     this.commentForm = this.initCommentForm();
     this.loadMatchIfUndefined();
+    this.players$.subscribe(console.log);
+
+    combineLatest([this.players$, this.match$]).pipe(
+      takeUntil(this.unsubscribe$))
+      .subscribe(params => {
+        const [players, match] = params;
+        console.log(params);
+        this.playerParticipations = players.map(player => {
+          const { id, firstname, lastname } = player;
+          const playerParticipation: PlayerParticipation = {
+            id,
+            firstname,
+            lastname,
+            percentage: 0,
+            didParticipate: false,
+          }
+          return playerParticipation;
+        });
+
+        match?.playerParticipations?.forEach(playerParticipation => {
+          this.playerParticipations?.forEach(participation => {
+            if (playerParticipation?.id === participation?.id) {
+              participation.didParticipate = playerParticipation?.didParticipate;
+              participation.percentage = playerParticipation?.percentage;
+            }
+          })
+        });
+        console.log(match);
+      });
+
+    this.actions$.pipe(
+      ofType(MatchActions.updateMatchSuccess),
+      mergeMapTo(this.route.params),
+      takeUntil(this.unsubscribe$))
+      .subscribe((params) => {
+        this.store.dispatch(MatchActions.loadMatchById({ id: params.id }));
+      });
+  }
+
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   loadMatchIfUndefined() {
@@ -81,5 +139,13 @@ export class MatchDetailComponent implements OnInit {
 
   onMatchCommentDelete(matchComment: MatchComment) {
     this.store.dispatch(MatchActions.deleteMatchComment({ matchComment }));
+  }
+
+  saveMatch(matchObj: Match, playerParticipations: PlayerParticipation[]) {
+    console.log(matchObj, playerParticipations);
+    if (matchObj && playerParticipations) {
+      const match = { ...matchObj, playerParticipations };
+      this.store.dispatch(MatchActions.updateMatch({ match }));
+    }
   }
 }

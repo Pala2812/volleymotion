@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
 import { TrainingMatch } from '@volleymotion/models';
+import { object } from 'firebase-functions/lib/providers/storage';
 import { off } from 'process';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
@@ -23,11 +24,12 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
   traningMatches$: Observable<TrainingMatch[]>;
   filteredMatches$ = new BehaviorSubject<TrainingMatch[]>([]);
   unsubscribe$ = new Subject();
+  filters: { division: string; teamType: string; sportType: string };
 
   constructor(
     private store: Store<StoreState>,
     private dialog: NbDialogService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
@@ -73,30 +75,41 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
   }
 
   showFilter() {
-    const ref = this.dialog.open(TrainingMatchFilterComponent);
+    const ref = this.dialog.open(TrainingMatchFilterComponent, { context: { filters: this.filters } });
 
     ref.onClose.subscribe((res) => {
       if (!res) {
         return;
       }
-      
+
       if (res === 'reset') {
-        console.log('reset');
         this.traningMatches$.pipe(take(1)).subscribe((matches) => {
-          console.log(matches);
           this.filteredMatches$.next(matches);
         });
       }
 
       if (!res?.length && Object?.keys(res)?.length) {
+        this.filters = res;
         this.traningMatches$.pipe(take(1)).subscribe((matches) => {
           let filteredMatches = [];
-          Object.keys(res).forEach((key) => {
-            const filtered = matches.filter((match) => {
-              return match[key] === res[key];
-            });
-            filteredMatches = filteredMatches.concat(filtered);
+          const filtered = matches.filter((match) => {
+            if (res?.teamType && res?.division && res?.sportType) {
+              return match['teamType'] === res['teamType'] && match['division'] === res['division'] && match['sportType'] === res['sportType'];
+            }
+
+            if (res?.teamType && res?.sportType) {
+              return match['teamType'] === res['teamType'] && match['sportType'] === res['sportType'];
+            }
+
+            if (res?.teamType && res?.division) {
+              return match['teamType'] === res['teamType'] && match['division'] === res['division'];
+            }
+
+            if (res?.sportType && res?.division) {
+              return match['sportType'] === res['sportType'] && match['division'] === res['division'];
+            }
           });
+          filteredMatches = filteredMatches.concat(filtered);
           this.filteredMatches$.next(filteredMatches);
         });
       }

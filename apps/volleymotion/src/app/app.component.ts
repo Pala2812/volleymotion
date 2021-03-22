@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import {
   AuthActions,
+  MatchActions,
+  PlayerActions,
+  SeasonActions,
   TagActions,
+  TeamActions,
   UserActions,
 } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
@@ -14,6 +18,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { User } from './core/models';
 import { AppInitService } from './core/services/app-init.service';
+import { SeasonSelectors, TeamSelectors } from './core/store/selectors';
+import { distinctUntilChanged, filter, takeUntil, throttleTime } from 'rxjs/operators';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -53,6 +59,17 @@ export class AppComponent implements OnInit {
           });
       }
     });
+
+    this.store.pipe(
+      select(SeasonSelectors.selectSeason),
+      filter(season => !!season),
+      throttleTime(500))
+      .subscribe(season => {
+        this.store.dispatch(TeamActions.loadTeamById({ id: season?.teamId }));
+        this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
+        this.store.dispatch(PlayerActions.loadPlayers({ teamId: season?.teamId, seasonId: season?.id }));
+        this.store.dispatch(MatchActions.loadMatches({ teamId: season.teamId, seasonId: season?.id }));
+      });
   }
 
   verifyAndUpdate() {

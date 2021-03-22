@@ -1,6 +1,11 @@
-<nb-card *ngFor="let match of matches$ | async" [routerLink]="['../detail', match?.id]" (click)="setMatch(match)">
-    <nb-card-header>
+<nb-card class="card" *ngFor="let match of matches$ | async" [routerLink]="['../detail', match?.id]"
+    [class.did-win]="match.status === 'Gewonnen'"
+    [class.did-loose]="match.status === 'Verloren'"  (click)="setMatch(match)">
+    <nb-card-header class="card-header">
         {{match.opponent}} | {{match?.date | timestamp | date: 'dd.MM'}} | {{match?.time | timestamp | date: 'HH:mm'}}
+        <button class="action-btn" nbButton ghost status="danger" (click)="deleteMatch(match, $event)">
+            <nb-icon icon="trash-outline"></nb-icon>
+        </button>
     </nb-card-header>
 </nb-card>
 

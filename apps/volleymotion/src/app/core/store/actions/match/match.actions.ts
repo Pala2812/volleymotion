@@ -18,6 +18,20 @@ export const loadMatchesFailure = createAction(
   props<{ error: any }>()
 );
 
+export const updateMatch = createAction(
+  `${key} Update Match`,
+  props<{ match: Match }>(),
+);
+
+export const updateMatchSuccess = createAction(
+  `${key} Update Match Success`,
+);
+
+export const updateMatchFailure = createAction(
+  `${key} Update Match Failure`,
+  props<{ error: any }>(),
+);
+
 export const createMatch = createAction(
   `${key} Crate Match`,
   props<{ match: Partial<Match> }>()
@@ -93,4 +107,22 @@ export const loadMatchByIdSuccess = createAction(
 export const loadMatchByIdFailure = createAction(
   `${key} load Match By Id Failure`,
   props<{ error: any }>(),
+);
+
+export const deleteMatch = createAction(
+  `${key} delete Match`,
+  props<{ match: Match }>(),
+);
+
+export const deleteMatchSuccess = createAction(
+  `${key} delete Match Success`,
+);
+
+export const deleteMatchFailure = createAction(
+  `${key} delete Match Failure`,
+  props<{ error: any }>(),
+);
+
+export const resetMatch = createAction(
+  `${key} reset Match`,
 );

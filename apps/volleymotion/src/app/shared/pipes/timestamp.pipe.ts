@@ -5,6 +5,6 @@ import * as firebase from 'firebase/app';
 })
 export class TimestampPipe implements PipeTransform {
   transform(value: firebase.default.firestore.Timestamp): unknown {
-    return value?.toDate();
+    return new Date(value.seconds);
   }
 }

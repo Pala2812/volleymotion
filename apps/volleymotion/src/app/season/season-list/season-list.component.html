@@ -3,8 +3,8 @@
         <nb-card-header>Saison {{season?.name}}
 
             <div class="season-card-actions">
-                <button class="edit-btn" nbButton ghost status="info"
-                    [routerLink]="['bearbeiten', season.id, team.id]" (click)="stopPropagation($event)">
+                <button class="edit-btn" nbButton ghost status="info" [routerLink]="['bearbeiten', season.id, team.id]"
+                    (click)="stopPropagation($event)">
                     <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
@@ -13,8 +13,7 @@
     </nb-card>
 </ng-container>
 
-<vm-loading-card class="loading-indicator" [isLoading$]="isLoadingSeasons$" *ngIf="isLoadingSeasons$ | async">
-</vm-loading-card>
+<vm-loading-card class="loading-indicator" [isLoading$]="isLoadingSeasons$" *ngIf="!(seasons$ | async).length"></vm-loading-card>
 
 <ng-template #noTeam>
     <ng-container *ngIf="(isLoadingSeasons$ | async) === false">

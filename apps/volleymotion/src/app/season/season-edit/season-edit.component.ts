@@ -11,7 +11,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Season, Tag } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors, TagSelectors } from '../../core/store/selectors';
@@ -37,7 +37,7 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
     private actions$: Actions,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -64,9 +64,15 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(
         ofType(SeasonActions.updateSeasonSuccess),
+        withLatestFrom(this.route.queryParams),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(() => this.router.navigate([`saisons/${this.teamId}`]));
+      .subscribe((params) => {
+        const redirectUrl = params[1]?.redirectUrl;
+        const url = redirectUrl ?? `saisons/${this.teamId}`;
+        console.log(url);
+        this.router.navigate([url]);
+      });
   }
 
   ngOnDestroy(): void {
@@ -109,7 +115,6 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
   }
 
   submit(form: FormGroup) {
-    console.log(this.season);
     if (form.valid) {
       const goal = form.controls.goal.value;
       const tags = form.controls.tags.value;

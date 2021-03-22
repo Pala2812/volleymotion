@@ -3,6 +3,16 @@
   flex-direction: column;
   min-height: 100%;
 
+  nb-card {
+    &.did-win {
+      background-color: rgb(1, 65, 45);
+    }
+
+    &.did-loose {
+      background-color: rgb(58, 2, 36);
+    }
+  }
+
   .add-btn {
     position: absolute;
     bottom: 2rem;
