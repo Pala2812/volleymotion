@@ -29,6 +29,7 @@ import {
   NbDatepickerModule,
   NbToastrModule,
   NbDialogModule,
+  NbLayoutModule,
 } from '@nebular/theme';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -48,7 +49,6 @@ export function initializeApp(appInitService: AppInitService) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictActionImmutability: true,
@@ -74,6 +74,7 @@ export function initializeApp(appInitService: AppInitService) {
       enabled: environment.production,
     }),
     NbEvaIconsModule,
+    NbLayoutModule,
     AngularMaterialModule,
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -81,8 +82,9 @@ export function initializeApp(appInitService: AppInitService) {
     NbDateFnsDateModule.forRoot({ format: 'dd.MM.yyyy' }),
     NbTimepickerModule.forRoot(),
     NbToastrModule.forRoot({ preventDuplicates: true, duration: 2000 }),
-    NbDialogModule.forRoot(),
     NbThemeModule.forRoot({ name: 'cosmic' }),
+    NbDialogModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [
     {
