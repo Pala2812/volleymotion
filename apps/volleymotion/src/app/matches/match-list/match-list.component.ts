@@ -3,7 +3,8 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+
 import { MatchActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, SeasonSelectors } from '../../core/store/selectors';
@@ -26,7 +27,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
     this.isLoadingMatches$ = this.store.pipe(select(MatchSelectors.selectIsLoadingMatches));
     this.loadMatches();
     this.actions$.pipe(ofType(MatchActions.deleteMatchSuccess), takeUntil(this.unsubscribe$))
-      .subscribe(this.loadMatches);
+      .subscribe(() => this.loadMatches());
   }
 
   ngOnDestroy(): void {

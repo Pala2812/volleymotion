@@ -2,6 +2,11 @@
   position: relative;
   padding-right: 6rem;
 
+  .player-card-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .player-card-actions {
     position: absolute;
     top: 50%;

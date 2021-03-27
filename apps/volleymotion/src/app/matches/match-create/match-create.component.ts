@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match, Season } from '@volleymotion/models';
-import { MatchSet } from 'libs/models/src/lib/models/match-set';
+import * as firebase from 'firebase/app';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatchService } from '../../core/services/match.service';
@@ -85,12 +85,14 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       const uid = season.uid;
       const opponent = form.controls.opponent.value;
       let time = new Date(form.controls.time.value);
-      let date = new Date(form.controls.date.value) as any;
+      let matchDate = new Date(form.controls.date.value);
       const address = form.controls.address.value;
-     
-      date.setHours(time.getHours());
-      date.setMinutes(time.getMinutes());
 
+      matchDate.setHours(time.getHours());
+      matchDate.setMinutes(time.getMinutes());
+
+      let date = firebase.default.firestore.Timestamp.fromDate(matchDate);
+      
       const match: Partial<Match> = {
         id,
         seasonId,

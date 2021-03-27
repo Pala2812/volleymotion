@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Match, MatchComment } from '@volleymotion/models';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class MatchService {
   constructor(private fs: AngularFirestore) { }
 
-  loadMatches(teamId: string, seasonId: string) {
+  loadMatches(teamId: string, seasonId: string): Observable<Match[]> {
     return from(
       this.fs
         .collection<Match>('matches')
@@ -19,7 +19,9 @@ export class MatchService {
         .where('seasonId', '==', seasonId)
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Match))
-        .then(matches => matches.sort((a,b) => a?.date?.toMillis() - b?.date?.toMillis()))
+        .then(matches => {
+          return matches.sort((a, b) => a?.date.toDate().getTime() - b?.date?.toDate().getTime())
+        })
     );
   }
 
@@ -51,7 +53,7 @@ export class MatchService {
   }
 
   addMatchDetail() {
-    
+
   }
 
   getId() {

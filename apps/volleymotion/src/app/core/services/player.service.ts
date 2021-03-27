@@ -22,12 +22,15 @@ export class PlayerService {
       this.fs
         .collection('players')
         .ref
-        .orderBy('position', 'asc')
         .where('teamId', '==', teamId)
         .where('seasonId', '==', seasonId)
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Player))
-        .then(players => players.sort((a, b) => a?.position?.localeCompare(b?.position)))
+        .then(players => {
+          return players.sort((a, b) => {
+            return a?.position?.localeCompare(b?.position);
+          })
+        })
     );
   }
 
