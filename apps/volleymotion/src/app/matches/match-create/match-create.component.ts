@@ -78,17 +78,18 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
   }
 
   submit(form: FormGroup, season: Season) {
-    console.log(form);
-    console.log(season);
     if (form.valid && season) {
       const id = this.matchService.getId();
       const seasonId = season.id;
       const teamId = season.teamId;
       const uid = season.uid;
       const opponent = form.controls.opponent.value;
-      const time = form.controls.time.value;
-      const date = form.controls.date.value;
+      let time = new Date(form.controls.time.value);
+      let date = new Date(form.controls.date.value) as any;
       const address = form.controls.address.value;
+     
+      date.setHours(time.getHours());
+      date.setMinutes(time.getMinutes());
 
       const match: Partial<Match> = {
         id,
@@ -96,9 +97,8 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         teamId,
         uid,
         opponent,
-        time,
-        date,
         address,
+        date,
       };
 
       this.store.dispatch(MatchActions.createMatch({ match }));

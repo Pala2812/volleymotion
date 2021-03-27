@@ -14,10 +14,12 @@ export class MatchService {
     return from(
       this.fs
         .collection<Match>('matches')
-        .ref.where('teamId', '==', teamId)
+        .ref
+        .where('teamId', '==', teamId)
         .where('seasonId', '==', seasonId)
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Match))
+        .then(matches => matches.sort((a,b) => a?.date?.toMillis() - b?.date?.toMillis()))
     );
   }
 

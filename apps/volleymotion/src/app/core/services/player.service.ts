@@ -21,10 +21,13 @@ export class PlayerService {
     return from(
       this.fs
         .collection('players')
-        .ref.where('teamId', '==', teamId)
+        .ref
+        .orderBy('position', 'asc')
+        .where('teamId', '==', teamId)
         .where('seasonId', '==', seasonId)
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Player))
+        .then(players => players.sort((a, b) => a?.position?.localeCompare(b?.position)))
     );
   }
 

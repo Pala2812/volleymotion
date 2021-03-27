@@ -3,7 +3,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match } from '@volleymotion/models';
 import { Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { MatchActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, SeasonSelectors } from '../../core/store/selectors';

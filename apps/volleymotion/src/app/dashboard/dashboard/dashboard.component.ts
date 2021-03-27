@@ -143,7 +143,6 @@ export class DashboardComponent implements OnInit {
       Object.keys(result).forEach(key => {
         data.push([result[key].name, result[key].attendance]);
       });
-      console.log(data);
       return data;
     }));
 

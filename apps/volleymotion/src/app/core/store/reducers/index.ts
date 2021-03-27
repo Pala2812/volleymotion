@@ -44,7 +44,6 @@ export const metaReducers: MetaReducer<StoreState>[] = !environment.production
 export function logoutClearState(reducer) {
   return function (state, action) {
     if (action.type === AuthActions.signOut().type) {
-      console.log('reset');
       state = undefined;
     }
     return reducer(state, action);

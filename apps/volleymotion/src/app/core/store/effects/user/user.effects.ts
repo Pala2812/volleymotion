@@ -35,7 +35,6 @@ export class UserEffects {
         ).pipe(
           map(() => UserActions.UpdateUserSuccess({ user: params[0].user })),
           catchError((error) => {
-            console.log(error);
             return of(UserActions.UpdateUserFailure({ error }));
           })
         )

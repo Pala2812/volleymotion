@@ -4,6 +4,12 @@
   min-height: 100%;
 
   nb-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5rem;
+    }
+
     &.did-win {
       background-color: rgb(1, 65, 45);
     }

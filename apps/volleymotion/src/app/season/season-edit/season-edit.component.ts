@@ -70,7 +70,6 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         const redirectUrl = params[1]?.redirectUrl;
         const url = redirectUrl ?? `saisons/${this.teamId}`;
-        console.log(url);
         this.router.navigate([url]);
       });
   }

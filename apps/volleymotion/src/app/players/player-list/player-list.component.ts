@@ -70,7 +70,7 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   }
 
   editPlayer(player: Player) {
-    this.store.dispatch(PlayerActions.setPlayer({player}));
+    this.store.dispatch(PlayerActions.setPlayer({ player }));
     this.router.navigate(['spieler/bearbeiten', player?.id]);
   }
 }

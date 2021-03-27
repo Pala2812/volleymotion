@@ -151,7 +151,6 @@ export class TraningMatchesCreateComponent implements OnInit {
         description,
       };
 
-      console.log(trainingMatch);
       
       this.store.dispatch(
         TraningMatchActions.createTrainingMatch({ trainingMatch })

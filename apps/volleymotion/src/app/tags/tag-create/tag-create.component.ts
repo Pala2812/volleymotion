@@ -32,7 +32,6 @@ export class TagCreateComponent implements OnInit {
   }
 
   submit(form: FormGroup) {
-    console.log(this.router.url);
     if (form.valid) {
       const id = this.tagProposalService.getId();
       const tagProposal = { ...form.value, id };

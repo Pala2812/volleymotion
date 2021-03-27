@@ -56,13 +56,11 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     this.match$.pipe(filter(match => !!match), take(1)).subscribe(match => this.store.dispatch(loadMatchComments({ match })));
     this.commentForm = this.initCommentForm();
     this.loadMatchIfUndefined();
-    this.players$.subscribe(console.log);
 
     combineLatest([this.players$, this.match$]).pipe(
       takeUntil(this.unsubscribe$))
       .subscribe(params => {
         const [players, match] = params;
-        console.log(params);
         this.playerParticipations = players.map(player => {
           const { id, firstname, lastname } = player;
           const playerParticipation: PlayerParticipation = {
@@ -83,7 +81,6 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
             }
           })
         });
-        console.log(match);
       });
 
     this.actions$.pipe(
@@ -142,7 +139,6 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   }
 
   saveMatch(matchObj: Match, playerParticipations: PlayerParticipation[]) {
-    console.log(matchObj, playerParticipations);
     if (matchObj && playerParticipations) {
       const match = { ...matchObj, playerParticipations };
       this.store.dispatch(MatchActions.updateMatch({ match }));

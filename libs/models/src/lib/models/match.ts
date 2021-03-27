@@ -10,7 +10,6 @@ export interface Match {
   seasonId: string;
   opponent: string;
   date: firebase.default.firestore.Timestamp;
-  time: firebase.default.firestore.Timestamp;
   address: Address;
   status: 'Ausstehend' | 'Gewonnen' | 'Verloren';
   playerParticipations: PlayerParticipation[];
