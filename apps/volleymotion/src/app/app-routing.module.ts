@@ -17,40 +17,42 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
-        canActivate: [TeamGuard, SeasonGuard],
+        canActivate: [AuthGuard, TeamGuard, SeasonGuard],
         component: DashboardComponent,
       },
       {
         path: 'mannschaften',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./teams/teams.module').then((m) => m.TeamsModule),
       },
       {
         path: 'saisons',
-        canActivate: [TeamGuard],
+        canActivate: [AuthGuard, TeamGuard],
         loadChildren: () =>
           import('./season/season.module').then((m) => m.SeasonModule),
       },
       {
         path: 'training',
-        canActivate: [TeamGuard, SeasonGuard],
+        canActivate: [AuthGuard, TeamGuard, SeasonGuard],
         loadChildren: () =>
           import('./training/training.module').then((m) => m.TrainingModule),
       },
       {
         path: 'spieltage',
-        canActivate: [TeamGuard, SeasonGuard],
+        canActivate: [AuthGuard, TeamGuard, SeasonGuard],
         loadChildren: () =>
           import('./matches/matches.module').then((m) => m.MatchesModule),
       },
       {
-        canActivate: [TeamGuard, SeasonGuard],
+        canActivate: [AuthGuard, TeamGuard, SeasonGuard],
         path: 'spieler',
         loadChildren: () =>
           import('./players/players.module').then((m) => m.PlayersModule),
       },
       {
         path: 'trainingsspiele',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./training-matches/training-matches.module').then(
             (m) => m.TrainingMatchesModule
@@ -58,19 +60,23 @@ const routes: Routes = [
       },
       {
         path: 'chat',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./chat/chat.module').then((m) => m.ChatModule),
       },
       {
         path: 'tags',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./tags/tags.module').then(m => m.TagsModule)
       },
       {
         path: 'feedback',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
       },
       {
         path: 'analyse',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./analyse/analyse.module').then(m => m.AnalyseModule)
       }
     ],

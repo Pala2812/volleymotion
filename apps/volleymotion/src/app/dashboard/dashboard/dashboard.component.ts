@@ -3,9 +3,10 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { select, Store } from '@ngrx/store';
 import { Match, Player, Season, Tag, Team } from '@volleymotion/models';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, PlayerSelectors, SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
+import { MatchActions, PlayerActions, SeasonActions } from '../../core/store/actions';
 
 @Component({
   selector: 'vm-dashboard',
@@ -74,6 +75,13 @@ export class DashboardComponent implements OnInit {
     this.season$ = this.store.pipe(select(SeasonSelectors.selectSeason));
     this.matches$ = this.store.pipe(select(MatchSelectors.selectMatches));
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
+
+    this.season$.pipe(filter(season => !!season), take(1)).subscribe(season => {
+      const { teamId, id } = season;
+      this.store.dispatch(SeasonActions.loadSeasonById({ id }));
+      this.store.dispatch(MatchActions.loadMatches({ teamId, seasonId: id }));
+      this.store.dispatch(PlayerActions.loadPlayers({ teamId, seasonId: id }));
+    })
 
     this.matchParticipationChart$ = this.matches$.pipe(map(matches => {
       const pending = matches?.filter(match => match.status === 'Ausstehend').length;

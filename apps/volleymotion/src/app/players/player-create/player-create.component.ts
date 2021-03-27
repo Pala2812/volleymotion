@@ -29,11 +29,11 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
   form: FormGroup;
   positions = [
-    'Außenangreifer',
-    'Diagonalangreifer',
-    'Mittelblocker',
-    'Zuspieler',
-    'Libero',
+    'Außenangreifer*in',
+    'Diagonalangreifer*in',
+    'Mittelblocker*in',
+    'Zuspieler*in',
+    'Libero | Libera',
   ];
 
   constructor(
