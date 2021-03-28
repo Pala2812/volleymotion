@@ -51,9 +51,9 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
 
   initForm() {
     return new FormGroup({
-      opponent: new FormControl(''),
-      date: new FormControl(''),
-      time: new FormControl(''),
+      opponent: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      time: new FormControl('', [Validators.required]),
       address: new FormGroup({
         street: new FormControl('', [Validators.required]),
         streetnumber: new FormControl('', [Validators.required]),
@@ -92,7 +92,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       matchDate.setMinutes(time.getMinutes());
 
       let date = firebase.default.firestore.Timestamp.fromDate(matchDate);
-      
+      console.log(date);
       const match: Partial<Match> = {
         id,
         seasonId,

@@ -36,6 +36,16 @@
                     </mat-chip-list>
                 </nb-card-body>
             </nb-card>
+
+            <nb-card *ngIf="!(players$ | async)?.length">
+                <nb-card-header>Spieler anlegen</nb-card-header>
+                <nb-card-body>Lege deine <a [routerLink]="['/spieler']">Mannschaft</a> an!</nb-card-body>
+            </nb-card>
+
+            <nb-card *ngIf="!(matches$ | async)?.length">
+                <nb-card-header>Spieltag anlegen</nb-card-header>
+                <nb-card-body>Lege deine <a [href]="['/spieltage']">Spieltage</a> an!</nb-card-body>
+            </nb-card>
         </nb-tab>
 
         <nb-tab tabTitle="Analyse">

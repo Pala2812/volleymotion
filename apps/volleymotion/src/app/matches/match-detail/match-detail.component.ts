@@ -42,9 +42,11 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     this.match$ = this.store.pipe(
       select(MatchSelectors.selectMatch),
       map(match => {
+        console.log(match);
         if (match) {
           return JSON.parse(JSON.stringify(match));
         }
+        console.log(match);
         return match;
       }));
 
@@ -139,6 +141,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   }
 
   saveMatch(matchObj: Match, playerParticipations: PlayerParticipation[]) {
+    console.log(matchObj);
     if (matchObj && playerParticipations) {
       const match = { ...matchObj, playerParticipations };
       this.store.dispatch(MatchActions.updateMatch({ match }));

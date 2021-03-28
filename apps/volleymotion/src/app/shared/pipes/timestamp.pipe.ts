@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
   name: 'timestamp',
 })
 export class TimestampPipe implements PipeTransform {
-  transform(value: firebase.default.firestore.Timestamp): unknown {
-    return value?.toDate();
+  transform(value: firebase.default.firestore.Timestamp): Date {
+    return new Date(value?.seconds * 1000);
   }
 }

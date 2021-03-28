@@ -28,6 +28,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
     this.loadMatches();
     this.actions$.pipe(ofType(MatchActions.deleteMatchSuccess), takeUntil(this.unsubscribe$))
       .subscribe(() => this.loadMatches());
+      this.matches$.subscribe(console.log);
   }
 
   ngOnDestroy(): void {

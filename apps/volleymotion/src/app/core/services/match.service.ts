@@ -20,7 +20,7 @@ export class MatchService {
         .get()
         .then((docs) => docs.docs.map((doc) => doc.data() as Match))
         .then(matches => {
-          return matches.sort((a, b) => a?.date.toDate().getTime() - b?.date?.toDate().getTime())
+          return matches.sort((a, b) => a?.date?.toMillis() - b?.date?.toMillis())
         })
     );
   }
