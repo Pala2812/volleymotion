@@ -39,17 +39,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.match$ = this.store.pipe(
-      select(MatchSelectors.selectMatch),
-      map(match => {
-        console.log(match);
-        if (match) {
-          return JSON.parse(JSON.stringify(match));
-        }
-        console.log(match);
-        return match;
-      }));
-
+    this.match$ = this.store.pipe(select(MatchSelectors.selectMatch));
     this.user$ = this.store.pipe(select(UserSelectors.selectUser));
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
@@ -136,12 +126,18 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  changePlayerParticipation(playerParticipation: PlayerParticipation) {
+    playerParticipation.didParticipate = !playerParticipation?.didParticipate;
+    if (!playerParticipation?.didParticipate) {
+      playerParticipation.percentage = 0;
+    }
+  }
+
   onMatchCommentDelete(matchComment: MatchComment) {
     this.store.dispatch(MatchActions.deleteMatchComment({ matchComment }));
   }
 
   saveMatch(matchObj: Match, playerParticipations: PlayerParticipation[]) {
-    console.log(matchObj);
     if (matchObj && playerParticipations) {
       const match = { ...matchObj, playerParticipations };
       this.store.dispatch(MatchActions.updateMatch({ match }));

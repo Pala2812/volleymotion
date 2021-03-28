@@ -9,12 +9,12 @@
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker" formControlName="date">
+                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker" type="date" formControlName="date">
                 <nb-datepicker #datepicker></nb-datepicker>
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker" formControlName="time">
+                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker" type="date" formControlName="time">
                 <nb-timepicker #timepicker hoursText="Stunde" minutesText="Minuten"></nb-timepicker>
             </nb-form-field>
 

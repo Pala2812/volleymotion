@@ -24,13 +24,6 @@
             </mat-label>
           </div>
         </nb-card-body>
-        <!-- 
-        <nb-card-footer>
-          <button nbButton ghost>
-            <nb-icon staus="success" icon="navigation-2-outline"></nb-icon>
-          </button>
-        </nb-card-footer>
-        -->
       </nb-card>
 
       <nb-card *ngIf="data?.match?.playerParticipations?.length">
@@ -93,7 +86,7 @@
           <mat-chip-list [multiple]="true">
             <mat-chip [selected]="playerParticipation.didParticipate"
               *ngFor="let playerParticipation of playerParticipations"
-              (click)="playerParticipation.didParticipate = !playerParticipation?.didParticipate">
+              (click)="changePlayerParticipation(playerParticipation)">
               {{ playerParticipation?.firstname }} {{ playerParticipation?.lastname }}
             </mat-chip>
           </mat-chip-list>
