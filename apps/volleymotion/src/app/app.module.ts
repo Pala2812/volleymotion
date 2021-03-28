@@ -63,7 +63,7 @@ export function initializeApp(appInitService: AppInitService) {
     EffectsModule.forRoot(effects),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    environment.production ? AngularFireAnalyticsModule : [],
+    AngularFireAnalyticsModule,
     AngularFirestoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
