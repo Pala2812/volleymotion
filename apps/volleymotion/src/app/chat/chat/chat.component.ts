@@ -42,7 +42,7 @@ export class ChatComponent implements OnInit {
   }
 
   sortByDate(message1: ChatMessage, message2: ChatMessage) {
-    return (message2?.createdAt as any)?.toMillis() - (message1?.createdAt as any)?.toMillis();
+    return (message1?.createdAt as any)?.toMillis() - (message2?.createdAt as any)?.toMillis();
   }
 
   sendMessage(event: any) {

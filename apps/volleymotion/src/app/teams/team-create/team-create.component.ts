@@ -40,6 +40,10 @@ export class TeamCreateComponent implements OnInit {
     'Jugend',
     'Senioren',
     'Hobby / Mixed',
+    'A-Cup',
+    'B-Cup',
+    'C-Cup',
+    'D-Cup'
   ];
   teamTypes = ['Damen', 'Herren', 'Jugend', 'Senioren', 'Hobby / Mixed'];
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];

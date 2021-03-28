@@ -70,6 +70,16 @@ const routes: Routes = [
         loadChildren: () => import('./tags/tags.module').then(m => m.TagsModule)
       },
       {
+        path: 'übungen',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./exercises/exercises.module').then(m => m.ExercisesModule)
+      },
+      {
+        path: 'blog',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule)
+      },
+      {
         path: 'feedback',
         canActivate: [AuthGuard],
         loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
@@ -78,7 +88,12 @@ const routes: Routes = [
         path: 'analyse',
         canActivate: [AuthGuard],
         loadChildren: () => import('./analyse/analyse.module').then(m => m.AnalyseModule)
-      }
+      },
+      {
+        path: 'einstellungen',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+      },
     ],
   },
   {

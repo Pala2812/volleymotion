@@ -46,13 +46,23 @@ a {
     flex-direction: column;
     align-items: center;
     position: absolute;
-    bottom: 3rem;
+    bottom: 4rem;
     left: 50%;
     transform: translateX(-50%);
 
     nb-icon {
       margin-bottom: 0.5em;
     }
+  }
+
+  .settings-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: .5rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .install-btn {
