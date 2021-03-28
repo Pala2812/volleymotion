@@ -111,3 +111,7 @@ textarea {
   padding: 0 !important;
   margin: 0 !important;
 }
+
+.no-pointer {
+  pointer-events: none;
+}

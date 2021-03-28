@@ -9,12 +9,12 @@
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker" type="date" formControlName="date">
+                <input nbInput fullWidth placeholder="Spieldatum" [nbDatepicker]="datepicker" formControlName="date">
                 <nb-datepicker #datepicker></nb-datepicker>
             </nb-form-field>
 
             <nb-form-field>
-                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker" type="date" formControlName="time">
+                <input nbInput placeholder="Spielbeginn" fullWidth [nbTimepicker]="timepicker" formControlName="time">
                 <nb-timepicker #timepicker hoursText="Stunde" minutesText="Minuten"></nb-timepicker>
             </nb-form-field>
 
@@ -23,40 +23,40 @@
             <form formGroupName="address" class="form">
                 <div class="row">
 
-                    <nb-form-field>
+                    <nb-form-field class="no-pointer">
                         <input nbInput fullWidth formControlName="street" placeholder="Straße">
                     </nb-form-field>
 
-                    <nb-form-field>
+                    <nb-form-field class="no-pointer">
                         <input nbInput fullWidth formControlName="streetnumber" placeholder="Straßennummer">
                     </nb-form-field>
                 </div>
 
                 <div class="row">
-                    <nb-form-field>
+                    <nb-form-field class="no-pointer">
                         <input nbInput fullWidth formControlName="postalcode" placeholder="Postleitzahl">
                     </nb-form-field>
 
-                    <nb-form-field>
+                    <nb-form-field class="no-pointer">
                         <input nbInput fullWidth formControlName="locality" placeholder="Stadt">
                     </nb-form-field>
                 </div>
 
-                <nb-form-field>
+                <nb-form-field class="no-pointer">
                     <input nbInput fullWidth formControlName="administrativeArea" placeholder="Bundesland">
                 </nb-form-field>
 
-                <nb-form-field>
+                <nb-form-field class="no-pointer">
                     <input nbInput fullWidth formControlName="country" placeholder="Land">
                 </nb-form-field>
             </form>
 
             <form class="form geocode-form" formGroupName="_geoloc">
-                <nb-form-field>
+                <nb-form-field class="no-pointer">
                     <input nbInput fullWidth formControlName="lat" placeholder="Latitude">
                 </nb-form-field>
 
-                <nb-form-field>
+                <nb-form-field class="no-pointer">
                     <input nbInput fullWidth formControlName="lng" placeholder="Longitude">
                 </nb-form-field>
             </form>
