@@ -115,3 +115,8 @@ textarea {
 .no-pointer {
   pointer-events: none;
 }
+
+input.ng-touched.ng-invalid {
+  position: relative !important;
+  border: 1px solid rgb(240, 118, 118) !important;
+}

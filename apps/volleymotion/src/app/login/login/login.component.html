@@ -7,48 +7,23 @@
         </nb-card-header>
 
         <nb-card-body>
-          <form
-            (ngSubmit)="login(loginForm)"
-            class="form"
-            [formGroup]="loginForm"
-          >
-            <nb-form-field>
-              <input
-                nbInput
-                fullWidth
-                placeholder="E-Mail"
-                formControlName="email"
-                autocomplete="email"
-                type="email"
-              />
+          <form (ngSubmit)="login(loginForm)" class="form" [formGroup]="loginForm">
+            <nb-form-field vmInvalidInput>
+              <input nbInput fullWidth placeholder="E-Mail *" formControlName="email" autocomplete="email" type="email" />
             </nb-form-field>
 
             <nb-form-field>
-              <input
-                nbInput
-                fullWidth
-                placeholder="Passwort"
-                formControlName="password"
-                autocomplete="current-password"
-                [type]="showPassword ? 'text' : 'password'"
-              />
+              <input nbInput fullWidth placeholder="Passwort *" formControlName="password" autocomplete="current-password"
+                [type]="showPassword ? 'text' : 'password'" />
               <button nbSuffix nbButton ghost type="button" (click)="toggleShowPassword()">
-                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
-                         pack="eva"
-                         [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'" pack="eva"
+                  [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
                 </nb-icon>
               </button>
             </nb-form-field>
 
-            <button
-              [nbSpinner]="isSiginingInWithEmailAndPassword$ | async"
-              class="submit-btn"
-              nbButton
-              color="primary"
-              type="submit"
-              status="primary"
-              [disabled]="isSiginingInWithEmailAndPassword$ | async"
-            >
+            <button [nbSpinner]="isSiginingInWithEmailAndPassword$ | async" class="submit-btn" nbButton color="primary"
+              type="submit" status="primary" [disabled]="isSiginingInWithEmailAndPassword$ | async">
               Login
             </button>
 

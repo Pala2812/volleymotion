@@ -29,10 +29,10 @@
               "apps/volleymotion/src/manifest.webmanifest"
             ],
             "styles": [
+              "./node_modules/@nebular/theme/styles/prebuilt/corporate.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/quill/dist/quill.bubble.css",
               "./node_modules/quill/dist/quill.snow.css",
-              "./node_modules/@nebular/theme/styles/prebuilt/corporate.css",
               "apps/volleymotion/src/styles.scss"
             ],
             "scripts": ["./node_modules/quill/dist/quill.js"]
