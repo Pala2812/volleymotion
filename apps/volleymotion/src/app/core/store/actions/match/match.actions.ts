@@ -20,7 +20,7 @@ export const loadMatchesFailure = createAction(
 
 export const updateMatch = createAction(
   `${key} Update Match`,
-  props<{ match: Match }>(),
+  props<{ match: Match | Partial<Match> }>(),
 );
 
 export const updateMatchSuccess = createAction(

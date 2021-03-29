@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match, Season } from '@volleymotion/models';
 import * as firebase from 'firebase/app';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { MatchService } from '../../core/services/match.service';
-import { MatchActions } from '../../core/store/actions';
+import { MatchActions, SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
-import { SeasonSelectors } from '../../core/store/selectors';
+import { MatchSelectors, SeasonSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-match-create',
@@ -18,6 +18,7 @@ import { SeasonSelectors } from '../../core/store/selectors';
   styleUrls: ['./match-create.component.scss'],
 })
 export class MatchCreateComponent implements OnInit, OnDestroy {
+  match$: Observable<Match>;
   form: FormGroup;
   season: Season;
   unsubscribe$ = new Subject();
@@ -26,10 +27,12 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     private store: Store<StoreState>,
     private matchService: MatchService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.match$ = this.store.pipe(select(MatchSelectors.selectMatch));
     this.form = this.initForm();
 
     this.store
@@ -42,6 +45,16 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.router.navigate(['spieltage']));
+
+    this.route.params.subscribe(params => {
+      const { id } = params;
+      this.store.dispatch(MatchActions.loadMatchById({ id }));
+    });
+
+    this.match$?.pipe(filter(season => !!season), take(1))
+      .subscribe(match => {
+        this.form = this.initForm(match);
+      });
   }
 
   ngOnDestroy(): void {
@@ -49,22 +62,25 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  initForm() {
+  initForm(match?: Match) {
+    const date = new Date(match?.date?.seconds * 1000) ?? new Date();
+
     return new FormGroup({
-      opponent: new FormControl('', [Validators.required]),
+      id: new FormControl(match?.id ?? ''),
+      opponent: new FormControl(match?.opponent ?? '', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', [Validators.required]),
       address: new FormGroup({
-        street: new FormControl('', [Validators.required]),
-        streetnumber: new FormControl('', [Validators.required]),
-        postalcode: new FormControl('', [Validators.required]),
-        locality: new FormControl('', [Validators.required]),
-        administrativeArea: new FormControl('', [Validators.required]),
-        country: new FormControl('', [Validators.required]),
+        street: new FormControl(match?.address?.street ?? '', [Validators.required]),
+        streetnumber: new FormControl(match?.address?.streetnumber ?? '', [Validators.required]),
+        postalcode: new FormControl(match?.address?.postalcode ?? '', [Validators.required]),
+        locality: new FormControl(match?.address?.locality ?? '', [Validators.required]),
+        administrativeArea: new FormControl(match?.address?.administrativeArea ?? '', [Validators.required]),
+        country: new FormControl(match?.address?.country ?? '', [Validators.required]),
       }),
       _geoloc: new FormGroup({
-        lat: new FormControl('', [Validators.required]),
-        lng: new FormControl('', [Validators.required]),
+        lat: new FormControl(match?._geoloc?.lat ?? '', [Validators.required]),
+        lng: new FormControl(match?._geoloc?.lng ?? '', [Validators.required]),
       }),
     });
   }
@@ -79,7 +95,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
 
   submit(form: FormGroup, season: Season) {
     if (form.valid && season) {
-      const id = this.matchService.getId();
+      const id = form.controls.id.value ?? this.matchService.getId();
       const seasonId = season.id;
       const teamId = season.teamId;
       const uid = season.uid;
@@ -87,12 +103,12 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       let time = new Date(form.controls.time.value);
       let matchDate = new Date(form.controls.date.value);
       const address = form.controls.address.value;
+      const _geoloc = form.controls._geoloc.value;
 
       matchDate.setHours(time.getHours());
       matchDate.setMinutes(time.getMinutes());
 
       let date = firebase.default.firestore.Timestamp.fromDate(matchDate);
-      console.log(date);
       const match: Partial<Match> = {
         id,
         seasonId,
@@ -101,7 +117,12 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         opponent,
         address,
         date,
+        _geoloc,
       };
+
+      if (this.match$) {
+        return this.store.dispatch(MatchActions.updateMatch({ match: match }));
+      }
 
       this.store.dispatch(MatchActions.createMatch({ match }));
     }

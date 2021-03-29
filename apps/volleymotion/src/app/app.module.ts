@@ -32,7 +32,7 @@ import {
   NbDialogModule,
   NbLayoutModule,
 } from '@nebular/theme';
-import { NbDateFnsDateModule } from '@nebular/date-fns';
+import { NbDateFnsDateModule } from '@nebular/date-fns'; 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 import { AppInitService } from './core/services/app-init.service';

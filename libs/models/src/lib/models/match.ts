@@ -2,6 +2,7 @@ import * as firebase from 'firebase/app';
 import { Address } from './address';
 import { MatchSet } from './match-set';
 import { PlayerParticipation } from './player-participation';
+import { _geoloc } from './_geoloc';
 
 export interface Match {
   id: string;
@@ -11,6 +12,7 @@ export interface Match {
   opponent: string;
   date: firebase.default.firestore.Timestamp;
   address: Address;
+  _geoloc: _geoloc;
   status: 'Ausstehend' | 'Gewonnen' | 'Verloren';
   playerParticipations: PlayerParticipation[];
   result: {
