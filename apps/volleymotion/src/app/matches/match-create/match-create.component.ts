@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match, Season } from '@volleymotion/models';
+import { isDate } from 'date-fns';
 import * as firebase from 'firebase/app';
 import { Observable, Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
@@ -41,7 +42,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
 
     this.actions$
       .pipe(
-        ofType(MatchActions.createMatchSuccess),
+        ofType(MatchActions.createMatchSuccess, MatchActions.updateMatchSuccess),
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.router.navigate(['spieltage']));
@@ -63,13 +64,21 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
   }
 
   initForm(match?: Match) {
-    const date = new Date(match?.date?.seconds * 1000) ?? new Date();
+    let date: Date | string = '';
+    let time: Date | string = '';
+
+    if (match?.date) {
+      date = new Date(match?.date.seconds * 1000);
+      time = new Date(match?.date.seconds * 1000);
+    }
+
+    console.log(date);
 
     return new FormGroup({
       id: new FormControl(match?.id ?? ''),
       opponent: new FormControl(match?.opponent ?? '', [Validators.required]),
-      date: new FormControl('', [Validators.required]),
-      time: new FormControl('', [Validators.required]),
+      date: new FormControl(date, [Validators.required]),
+      time: new FormControl(time, [Validators.required]),
       address: new FormGroup({
         street: new FormControl(match?.address?.street ?? '', [Validators.required]),
         streetnumber: new FormControl(match?.address?.streetnumber ?? '', [Validators.required]),
