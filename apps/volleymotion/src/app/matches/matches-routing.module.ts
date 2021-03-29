@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'liste', pathMatch: 'fulll' },
   { path: 'liste', component: MatchListComponent },
   { path: 'erstellen', component: MatchCreateComponent },
+  { path: 'bearbeiten/:id', component: MatchCreateComponent },
   { path: 'detail/:id', component: MatchDetailComponent },
 ];
 
@@ -15,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MatchesRoutingModule {}
+export class MatchesRoutingModule { }

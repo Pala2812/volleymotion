@@ -1,9 +1,9 @@
-<nb-card class="player-card" *ngFor="let player of players$ | async" (click)="selectPlayer(player)">
-    <nb-card-header class="player-card-header">
+<nb-card class="card" *ngFor="let player of players$ | async" (click)="selectPlayer(player)">
+    <nb-card-header class="card-header">
         <span>{{player?.firstname}} {{player?.lastname}}</span>
         <span>{{player?.position}}</span>
 
-        <div class="player-card-actions">
+        <div class="card-header-actions">
             <button class="edit-btn" nbButton ghost status="info" (click)="editPlayer(player)">
                 <nb-icon icon="edit-outline"></nb-icon>
             </button>

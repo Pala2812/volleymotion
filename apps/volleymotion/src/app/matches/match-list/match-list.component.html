@@ -1,13 +1,21 @@
 <nb-card class="card" *ngFor="let match of matches$ | async" [routerLink]="['../detail', match?.id]"
     [class.did-win]="match.status === 'Gewonnen'" [class.did-loose]="match.status === 'Verloren'"
     (click)="setMatch(match)">
+
     <nb-card-header class="card-header">
         <span class="card-header-opponent">{{match.opponent}}</span>
         <span *ngIf="match?.date"> {{match?.date | timestamp | date: 'dd.MM HH:mm'}}</span>
-        <button class="action-btn" nbButton ghost status="danger" (click)="deleteMatch(match, $event)">
-            <nb-icon icon="trash-outline"></nb-icon>
-        </button>
+
+        <div class="card-header-actions">
+            <button class="action-btn" nbButton ghost status="danger" (click)="deleteMatch(match, $event)">
+                <nb-icon icon="trash-outline"></nb-icon>
+            </button>
+            <button class="action-btn" nbButton ghost status="info" (click)="editMatch(match, $event)">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+        </div>
     </nb-card-header>
+    
 </nb-card>
 
 <vm-loading-card class="loading-spinner" *ngIf="isLoadingMatches$ | async" [isLoading$]="isLoadingMatches$">

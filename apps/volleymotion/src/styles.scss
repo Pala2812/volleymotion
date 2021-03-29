@@ -96,13 +96,20 @@ textarea {
   position: relative;
 
   .card-header {
+    display: flex;
+    justify-content: space-between;
     position: relative;
+    padding-right: 7rem;
 
-    .action-btn {
+    .card-header-actions {
       position: absolute;
       top: 50%;
       right: 0;
-      transform: translate(-50%, -50%);
+      transform: translateY(-50%);
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 5px;
+      justify-content: flex-end;
     }
   }
 }

@@ -6,16 +6,6 @@
     display: flex;
     justify-content: space-between;
   }
-
-  .player-card-actions {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 5px;
-  }
 }
 
 .add-btn {
