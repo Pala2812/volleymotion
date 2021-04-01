@@ -152,12 +152,14 @@ export class DashboardComponent implements OnInit {
       this.options.legend.position = 'right';
       this.options.chartArea.width = '100%';
     }
+  
     medium.addEventListener('change', (event) => {
       if (event.matches) {
         this.options.legend.position = 'right';
         this.options.chartArea.width = '100%';
       }
     });
+
     this.mediaMatcher.matchMedia('(max-width: 768px)').addEventListener('change', (event) => {
       if (event.matches) {
         this.options.legend.position = 'bottom';

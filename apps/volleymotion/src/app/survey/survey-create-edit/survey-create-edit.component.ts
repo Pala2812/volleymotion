@@ -16,7 +16,7 @@ import { QuillEditorComponent, QuillService } from 'ngx-quill';
 import { Observable, Subject } from 'rxjs';
 import { filter, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
-import { Survey } from '../../core/models';
+import { Article } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { loadSurveyById } from '../../core/store/actions/survey/survey.actions';
 import { StoreState } from '../../core/store/reducers';
@@ -30,7 +30,7 @@ import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 export class SurveyCreateEditComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('quill') quill: ElementRef<QuillEditorComponent>;
-  survey$: Observable<Survey>;
+  survey$: Observable<Article>;
   isCreatingSurvey$: Observable<boolean>;
   uid$: Observable<string>;
   surveyForm: FormGroup;
@@ -44,7 +44,7 @@ export class SurveyCreateEditComponent
     private router: Router,
     private route: ActivatedRoute,
     private fs: AngularFirestore
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.surveyForm = this.initSurveyForm();
@@ -82,7 +82,7 @@ export class SurveyCreateEditComponent
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({survey: undefined}));
+    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({ survey: undefined }));
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -108,15 +108,14 @@ export class SurveyCreateEditComponent
         ),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(() => this.router.navigate(['umfragen']));
+      .subscribe(() => this.router.navigate(['artikel']));
   }
 
-  initSurveyForm(survey?: Survey): FormGroup {
+  initSurveyForm(survey?: Article): FormGroup {
     return new FormGroup({
       title: new FormControl(survey?.title || '', [Validators.required]),
-      description: new FormControl(survey?.description || '', [
-        Validators.required,
-      ]),
+      description: new FormControl(survey?.description || '', [Validators.required]),
+      summary: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     });
   }
 
@@ -125,11 +124,12 @@ export class SurveyCreateEditComponent
   }
 
   publish(form: FormGroup) {
+    form.markAllAsTouched();
     if (form.valid) {
       this.uid$
         .pipe(withLatestFrom(this.survey$), take(1))
         .subscribe((params) => {
-          let survey = params[1] || ({} as Survey);
+          let survey = params[1] || ({} as Article);
           survey = { ...survey, ...this.surveyForm.value };
           const id = params[1]?.id || this.fs.createId();
           survey.id = id;

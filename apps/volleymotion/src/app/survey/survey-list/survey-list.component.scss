@@ -3,31 +3,11 @@
   flex-direction: column;
   padding: 1rem;
 
-  .mat-card {
-    margin-bottom: 1rem;
-    cursor: pointer;
 
-    .survey-content {
-      max-height: 20rem;
-    }
-
-    .mat-card-actions {
-      display: flex;
-      justify-content: flex-end;
-
-      .edit {
-        color: rgb(96, 96, 240);
-      }
-    }
-  }
-
-  .mat-spinner {
-    margin: auto;
-  }
 
   .create-btn {
     position: absolute;
-    bottom: 5rem;
+    bottom: 2rem;
     right: 1rem;
     z-index: 1;
   }

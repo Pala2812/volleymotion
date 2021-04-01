@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Survey, SurveyComment } from '../../../models';
+import { Article, SurveyComment } from '../../../models';
 
 const key = '[Survey]';
 
@@ -7,7 +7,7 @@ export const loadSurveys = createAction(`${key} Load Surveys`);
 
 export const loadSurveysSuccess = createAction(
   `${key} Load Surveys Success`,
-  props<{ surveys: Survey[] }>()
+  props<{ surveys: Article[] }>()
 );
 
 export const loadSurveysFailure = createAction(
@@ -22,7 +22,7 @@ export const loadSurveyById = createAction(
 
 export const loadSurveyByIdSuccess = createAction(
   `${key} Load Survey By Id Success`,
-  props<{ survey: Survey }>()
+  props<{ survey: Article }>()
 );
 
 export const loadSurveyByIdFailure = createAction(
@@ -32,7 +32,7 @@ export const loadSurveyByIdFailure = createAction(
 
 export const createSurvey = createAction(
   `${key} Create Survey`,
-  props<{ survey: Survey }>()
+  props<{ survey: Article }>()
 );
 
 export const createSurveySuccess = createAction(`${key} Create Survey Success`);
@@ -44,7 +44,7 @@ export const createSurveyFailure = createAction(
 
 export const updateSurvey = createAction(
   `${key} Update Survey`,
-  props<{ survey: Survey }>()
+  props<{ survey: Article }>()
 );
 
 export const updateSurveySuccess = createAction(`${key} Update Survey Success`);

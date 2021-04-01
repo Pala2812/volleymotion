@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AuthActions } from '../../store/actions';
 import { StoreState } from '../../store/reducers';
 import { AuthSelectors, SeasonSelectors, TeamSelectors } from '../../store/selectors';
-import { fullItems, initItems } from './sidebar-items';
+import { fullItems, initItems, initItems2 } from './sidebar-items';
 
 @Component({
   selector: 'vm-home',
@@ -55,6 +55,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   initItems(): void {
     combineLatest([this.team$, this.season$]).pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       const [team, season] = params;
+      if (team && !season) {
+        return this.items$.next(initItems2);
+      }
       if (team && season) {
         return this.items$.next(fullItems);
       }

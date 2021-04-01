@@ -39,18 +39,6 @@ export class SeasonListComponent implements OnInit {
       )
     );
 
-
-    this.seasons$.pipe(
-      filter(seasons => !seasons),
-      switchMap(() => interval(5000)),
-      mergeMapTo(this.route.params),
-      take(1)
-    ).subscribe(params => {
-      const { id } = params;
-      this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId: id }));
-    });
-
-
     this.team$.pipe(filter(team => !!team), takeUntil(this.unsubscribe$)).subscribe((team) => {
       const teamId = team.id;
       this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));

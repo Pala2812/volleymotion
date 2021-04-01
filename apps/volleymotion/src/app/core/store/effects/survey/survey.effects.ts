@@ -13,7 +13,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { Survey, SurveyComment, User } from '../../../models';
+import { Article, SurveyComment, User } from '../../../models';
 import { SurveyActions } from '../../actions';
 import { StoreState } from '../../reducers';
 import { AuthSelectors } from '../../selectors';
@@ -59,7 +59,7 @@ export class SurveyEffects {
       ofType(SurveyActions.loadSurveys),
       mergeMap(() =>
         this.fs
-          .collection<Survey>('surveys')
+          .collection<Article>('surveys')
           .valueChanges()
           .pipe(
             map((surveys) => SurveyActions.loadSurveysSuccess({ surveys })),
@@ -76,7 +76,7 @@ export class SurveyEffects {
       ofType(SurveyActions.loadSurveyById),
       mergeMap(({ id }) =>
         this.fs
-          .doc<Survey>(`surveys/${id}`)
+          .doc<Article>(`surveys/${id}`)
           .valueChanges()
           .pipe(
             map((survey) => SurveyActions.loadSurveyByIdSuccess({ survey })),

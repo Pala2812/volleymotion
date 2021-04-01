@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { take, withLatestFrom } from 'rxjs/operators';
 import firebase from 'firebase/app';
 
-import { Survey, SurveyComment } from '../../core/models';
+import { Article, SurveyComment } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
@@ -22,7 +22,7 @@ export class SurveyDetailComponent implements OnInit {
   isLoadingSurvey$: Observable<boolean>;
   isLoadingSurveyComments$: Observable<boolean>;
   surveyComments$: Observable<SurveyComment[]>;
-  survey$: Observable<Survey>;
+  survey$: Observable<Article>;
   messageForm: FormGroup;
 
   constructor(
@@ -56,7 +56,7 @@ export class SurveyDetailComponent implements OnInit {
     });
   }
 
-  likeSurvey(survey: Survey, event: Event) {
+  likeSurvey(survey: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))
@@ -69,7 +69,7 @@ export class SurveyDetailComponent implements OnInit {
       });
   }
 
-  reportSurvey(survey: Survey, event: Event) {
+  reportSurvey(survey: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))

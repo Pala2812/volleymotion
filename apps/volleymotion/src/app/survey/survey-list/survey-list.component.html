@@ -1,27 +1,26 @@
 <ng-template #surveys>
-    <mat-card *ngFor="let survey of surveys$ | async" (click)="viewDetail(survey)">
-        <mat-card-header>
-            <mat-card-title>{{survey?.title}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="survey-content" [innerHTML]="survey?.description"></div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-icon-button (click)="reportSurvey(survey, $event)">
-                <mat-icon color="warn">report</mat-icon>
+    <nb-card class="card" *ngFor="let article of articles$ | async" (click)="viewDetail(article)">
+        <nb-card-header class="card-header">
+            {{article?.title}}
+        </nb-card-header>
+        <nb-card-body class="survey-content" [innerHTML]="article?.summary"></nb-card-body>
+
+      <!--   <nb-card-footer class="card-footer">
+            <button nbButton ghost (click)="reportSurvey(article, $event)">
+                <nb-icon icon="alert-circle-outline"></nb-icon>
             </button>
-            <button mat-icon-button (click)="likeSurvey(survey, $event)" aria-label="Umfrage liken">
-                <mat-icon color="primary">thumb_up</mat-icon>
+            <button nbButton ghost (click)="likeSurvey(article, $event)" aria-label="Umfrage liken">
+                <nb-icon icon="heart-outline"></nb-icon>
             </button>
-            <button mat-icon-button class="edit" (click)="editSurvey(survey, $event)" aria-label="Bearbeiten"
-                *ngIf="survey?.uid === (uid$ | async) ">
-                <mat-icon>edit</mat-icon>
+            <button nbButton ghost class="edit" (click)="editSurvey(article, $event)" aria-label="Bearbeiten"
+                *ngIf="article?.uid === (uid$ | async) ">
+                <nb-icon icon="edit-outline"></nb-icon>
             </button>
-        </mat-card-actions>
-    </mat-card>
+        </nb-card-footer> -->
+    </nb-card>
 </ng-template>
 
-<mat-spinner *ngIf="isLoadingSurveys$ | async; else surveys" [diameter]="10"></mat-spinner>
+<nb-spinner *ngIf="isLoadingSurveys$ | async; else surveys"></nb-spinner>
 
 <button mat-fab class="create-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
     <mat-icon>add</mat-icon>

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Survey, SurveyComment } from '../../../models';
+import { Article, SurveyComment } from '../../../models';
 import { SurveyActions } from '../../actions';
 
 export const surveyFeatureKey = 'survey';
@@ -13,8 +13,8 @@ export interface State {
   isLikingSurvey: boolean;
   isReportingSurvey: boolean;
   isLoadingSurveyComments: boolean;
-  surveys: Survey[];
-  survey: Survey;
+  surveys: Article[];
+  survey: Article;
   surveyComments: SurveyComment[];
 }
 

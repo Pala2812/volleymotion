@@ -8,11 +8,13 @@
             <nb-card class="card">
                 <nb-card-header class="card-header">
                     Saisonziel
-                    <button class="action-btn" nbButton ghost status="info"
-                        [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
-                        [queryParams]="{redirectUrl: 'dashboard'}">
-                        <nb-icon icon="edit-outline"></nb-icon>
-                    </button>
+                    <div class="card-header-actions">
+                        <button class="action-btn" nbButton ghost status="info"
+                            [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
+                            [queryParams]="{redirectUrl: 'dashboard'}">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                    </div>
                 </nb-card-header>
                 <nb-card-body>
                     {{data?.season?.goal}}
@@ -22,11 +24,13 @@
             <nb-card class="card">
                 <nb-card-header class="card-header">
                     Trainingsfocus
-                    <button class="action-btn" nbButton ghost status="info"
-                        [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
-                        [queryParams]="{redirectUrl: 'dashboard'}">
-                        <nb-icon icon="edit-outline"></nb-icon>
-                    </button>
+                    <div class="card-header-actions">
+                        <button class="action-btn" nbButton ghost status="info"
+                            [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
+                            [queryParams]="{redirectUrl: 'dashboard'}">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                    </div>
                 </nb-card-header>
                 <nb-card-body>
                     <mat-chip-list class="tag-list">
@@ -37,25 +41,25 @@
                 </nb-card-body>
             </nb-card>
 
-            <nb-card *ngIf="nextMatch$ | async as nextMatch">
-                <nb-card-header>Nächster Spieltag {{nextMatch?.date | timestamp | date: 'dd.MM HH:mm'}}</nb-card-header>
+            <nb-card class="card" *ngIf="nextMatch$ | async as nextMatch">
+                <nb-card-header class="card-header">Nächster Spieltag {{nextMatch?.date | timestamp | date: 'dd.MM HH:mm'}}</nb-card-header>
                 <nb-card-body>
                     {{nextMatch?.opponent}}
                 </nb-card-body>
             </nb-card>
 
-            <nb-card class="border-red">
-                <nb-card-header>Nächste Trainingseinheit</nb-card-header>
+            <nb-card class="card border-red">
+                <nb-card-header class="card-header">Nächste Trainingseinheit</nb-card-header>
                 <nb-card-body>Verfolge die Zu- und Absagen für deine nächste Trainingseinheit</nb-card-body>
             </nb-card>
 
-            <nb-card *ngIf="!(players$ | async)?.length">
-                <nb-card-header>Spieler anlegen</nb-card-header>
+            <nb-card class="card" *ngIf="!(players$ | async)?.length">
+                <nb-card-header class="card-header">Spieler anlegen</nb-card-header>
                 <nb-card-body>Lege deine <a [routerLink]="['/spieler']">Mannschaft</a> an!</nb-card-body>
             </nb-card>
 
-            <nb-card *ngIf="!(matches$ | async)?.length">
-                <nb-card-header>Spieltag anlegen</nb-card-header>
+            <nb-card class="card" *ngIf="!(matches$ | async)?.length">
+                <nb-card-header class="card-header">Spieltag anlegen</nb-card-header>
                 <nb-card-body>Lege deine <a [href]="['/spieltage']">Spieltage</a> an!</nb-card-body>
             </nb-card>
         </nb-tab>

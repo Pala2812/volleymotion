@@ -1,15 +1,15 @@
 :host {
   display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 1rem;
 
-  form {
+  .form {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    flex: 1;
+    gap: 1rem;
 
-    .mat-flat-button {
-      margin-top: 1rem;
+    .summary-form-field {
+      text-align: right;
     }
   }
 }

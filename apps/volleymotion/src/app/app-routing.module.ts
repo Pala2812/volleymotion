@@ -75,9 +75,9 @@ const routes: Routes = [
         loadChildren: () => import('./exercises/exercises.module').then(m => m.ExercisesModule)
       },
       {
-        path: 'blog',
+        path: 'artikel',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule)
+        loadChildren: () => import('./survey/survey.module').then(m => m.SurveyModule)
       },
       {
         path: 'feedback',

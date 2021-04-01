@@ -1,33 +1,34 @@
-<form [formGroup]="surveyForm" (ngSubmit)="publish(surveyForm)">
-    <mat-form-field>
-        <mat-label>Überschrift</mat-label>
-        <input matInput formControlName="title">
-        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.required">
-            Überschrift wird benötigt
-        </mat-error>
-        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.minLength">
-            Überschrift muss mindestens 5 Zeichen lang sein
-        </mat-error>
-        <mat-error *ngIf="surveyForm?.controls?.title?.errors?.maxLength">
-            Überschrift darf nicht mehr als 60 Zeichen haben
-        </mat-error>
-    </mat-form-field>
+<nb-card>
+    <nb-card-header>Artikel erstellen</nb-card-header>
+    <nb-card-body>
 
-    <mat-form-field class="no-underline">
-        <input matInput formControlName="description" hidden>
-        <quill-editor #quill class="editor" placeholder="Beschreibung eingeben"
-            (onContentChanged)="patchDescription($event)">
-        </quill-editor>
-        <mat-error *ngIf="surveyForm?.controls?.description?.errors?.required">
-            Beschreibung wird benötigt
-        </mat-error>
-    </mat-form-field>
+        <form class="form" [formGroup]="surveyForm" (ngSubmit)="publish(surveyForm)">
+            <nb-form-field>
+                <input nbInput placeholder="Titel" fullWidth formControlName="title">
+            </nb-form-field>
 
-    <button mat-flat-button color="primary" [disabled]="isCreatingSurvey$ | async" aria-label="veröffentlichen">
-        <ng-template #text>
-            <span *ngIf="!isEdit">Veröffentlichen</span>
-            <span *ngIf="isEdit">Updaten</span>
-        </ng-template>
-        <mat-spinner *ngIf="(isCreatingSurvey$ | async); else text" [diameter]=5></mat-spinner>
-    </button>
-</form>
+            // tags
+
+            <nb-form-field>
+                <input nbInput fullWidth formControlName="description" hidden>
+                <quill-editor [class.ng-untouched]="!surveyForm.controls.description.touched"
+                    [class.ng-invalid]="surveyForm.controls.description.invalid" #quill class="editor"
+                    placeholder="Beschreibung eingeben" (onContentChanged)="patchDescription($event)">
+                </quill-editor>
+            </nb-form-field>
+
+            <nb-form-field class="summary-form-field">
+                <input #summaryInput nbInput fullWidth formControlName="summary" placeholder="Zusammenfassung">
+                <small>{{summaryInput?.value.length}}/200</small>
+            </nb-form-field>
+
+            <button nbButton color="primary" [disabled]="isCreatingSurvey$ | async" aria-label="veröffentlichen">
+                <ng-template #text>
+                    <span *ngIf="!isEdit">Veröffentlichen</span>
+                    <span *ngIf="isEdit">Updaten</span>
+                </ng-template>
+                <mat-spinner *ngIf="(isCreatingSurvey$ | async); else text" [diameter]=5></mat-spinner>
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>
