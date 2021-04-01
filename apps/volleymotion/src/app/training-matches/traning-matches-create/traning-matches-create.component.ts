@@ -29,7 +29,7 @@ export class TraningMatchesCreateComponent implements OnInit {
     private actions$: Actions,
     private router: Router,
     private toastService: NbToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -71,7 +71,7 @@ export class TraningMatchesCreateComponent implements OnInit {
       ),
       description: new FormControl(''),
       contact: new FormGroup({
-        email: new FormControl(''),
+        email: new FormControl('', [Validators.required, Validators.email]),
         telefon: new FormControl(''),
       }),
     });
@@ -121,6 +121,7 @@ export class TraningMatchesCreateComponent implements OnInit {
   }
 
   submit(form: FormGroup, team: Team) {
+    form.markAllAsTouched();
     if (form.valid) {
       const id = this.fs.createId();
       const teamId = team.id;
@@ -151,7 +152,7 @@ export class TraningMatchesCreateComponent implements OnInit {
         description,
       };
 
-      
+
       this.store.dispatch(
         TraningMatchActions.createTrainingMatch({ trainingMatch })
       );

@@ -12,11 +12,11 @@ import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-dialog.component';
 
 @Component({
-  selector: 'vm-survey-list',
-  templateUrl: './survey-list.component.html',
-  styleUrls: ['./survey-list.component.scss'],
+  selector: 'vm-article-list',
+  templateUrl: './article-list.component.html',
+  styleUrls: ['./article-list.component.scss'],
 })
-export class SurveyListComponent implements OnInit {
+export class ArticleListComponent implements OnInit {
   isLoadingSurveys$: Observable<boolean>;
   isReportingSurvey$: Observable<boolean>;
   isLikingSurvey$: Observable<boolean>;
@@ -38,11 +38,11 @@ export class SurveyListComponent implements OnInit {
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
   }
 
-  viewDetail(survey: Article) {
-    this.router.navigate([`artikel/detail/${survey.id}`]);
+  viewDetail(article: Article) {
+    this.router.navigate([`artikel/detail/${article.id}`]);
   }
 
-  likeSurvey(survey: Article, event: Event) {
+  likeSurvey(article: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))
@@ -50,7 +50,7 @@ export class SurveyListComponent implements OnInit {
         if (!uid) {
           return this.dialog.open(AuthDialogComponent);
         }
-        this.store.dispatch(SurveyActions.likeSurvey({ id: survey.id }));
+        this.store.dispatch(SurveyActions.likeSurvey({ id: article.id }));
         event.stopImmediatePropagation();
       });
   }
@@ -67,7 +67,7 @@ export class SurveyListComponent implements OnInit {
       });
   }
 
-  reportSurvey(survey: Article, event: Event) {
+  reportSurvey(article: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))
@@ -75,13 +75,13 @@ export class SurveyListComponent implements OnInit {
         if (!uid) {
           return this.dialog.open(AuthDialogComponent);
         }
-        this.store.dispatch(SurveyActions.reportSurvey({ id: survey.id }));
+        this.store.dispatch(SurveyActions.reportSurvey({ id: article.id }));
         event.stopImmediatePropagation();
       });
   }
 
-  editSurvey(survey: Article, event: Event) {
-    this.router.navigate([`artikel/bearbeiten/${survey.id}`]);
+  editSurvey(article: Article, event: Event) {
+    this.router.navigate([`artikel/bearbeiten/${article.id}`]);
     event.stopImmediatePropagation();
   }
 }

@@ -14,15 +14,15 @@ import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-dialog.component';
 
 @Component({
-  selector: 'vm-survey-detail',
-  templateUrl: './survey-detail.component.html',
-  styleUrls: ['./survey-detail.component.scss'],
+  selector: 'vm-article-detail',
+  templateUrl: './article-detail.component.html',
+  styleUrls: ['./article-detail.component.scss'],
 })
-export class SurveyDetailComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit {
   isLoadingSurvey$: Observable<boolean>;
   isLoadingSurveyComments$: Observable<boolean>;
   surveyComments$: Observable<SurveyComment[]>;
-  survey$: Observable<Article>;
+  article$: Observable<Article>;
   messageForm: FormGroup;
 
   constructor(
@@ -47,7 +47,7 @@ export class SurveyDetailComponent implements OnInit {
       select(SurveySelectors.selectSurveyComments)
     );
 
-    this.survey$ = this.store.pipe(select(SurveySelectors.selectSurvey));
+    this.article$ = this.store.pipe(select(SurveySelectors.selectSurvey));
   }
 
   initMessageForm(): FormGroup {
@@ -56,7 +56,7 @@ export class SurveyDetailComponent implements OnInit {
     });
   }
 
-  likeSurvey(survey: Article, event: Event) {
+  likeSurvey(article: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))
@@ -64,12 +64,12 @@ export class SurveyDetailComponent implements OnInit {
         if (!uid) {
           return this.dialog.open(AuthDialogComponent);
         }
-        this.store.dispatch(SurveyActions.likeSurvey({ id: survey.id }));
+        this.store.dispatch(SurveyActions.likeSurvey({ id: article.id }));
         event.stopImmediatePropagation();
       });
   }
 
-  reportSurvey(survey: Article, event: Event) {
+  reportSurvey(article: Article, event: Event) {
     this.store
       .pipe(select(AuthSelectors.selectUid))
       .pipe(take(1))
@@ -77,20 +77,20 @@ export class SurveyDetailComponent implements OnInit {
         if (!uid) {
           return this.dialog.open(AuthDialogComponent);
         }
-        this.store.dispatch(SurveyActions.reportSurvey({ id: survey.id }));
+        this.store.dispatch(SurveyActions.reportSurvey({ id: article.id }));
         event.stopImmediatePropagation();
       });
   }
 
   sendMessage(form: FormGroup) {
     if (form.valid) {
-      this.survey$
+      this.article$
         .pipe(
           withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
           take(1)
         )
         .subscribe((params) => {
-          const survey = params[0];
+          const article = params[0];
           const uid = params[1];
 
           if (!uid) {
@@ -101,7 +101,7 @@ export class SurveyDetailComponent implements OnInit {
           const message: SurveyComment = {
             uid,
             message: comment,
-            surveyId: survey.id,
+            surveyId: article.id,
           };
           (message as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
 

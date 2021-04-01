@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Article, SurveyComment } from '../../../models';
 import { SurveyActions } from '../../actions';
 
-export const surveyFeatureKey = 'survey';
+export const surveyFeatureKey = 'article';
 
 export interface State {
   isLoadingSurvey: boolean;
@@ -14,7 +14,7 @@ export interface State {
   isReportingSurvey: boolean;
   isLoadingSurveyComments: boolean;
   surveys: Article[];
-  survey: Article;
+  article: Article;
   surveyComments: SurveyComment[];
 }
 
@@ -27,7 +27,7 @@ export const initialState: State = {
   isLikingSurvey: false,
   isLoadingSurveyComments: false,
   surveys: [],
-  survey: undefined,
+  article: undefined,
   surveyComments: [],
 };
 
@@ -77,9 +77,9 @@ export const reducer = createReducer(
     ...state,
     isLoadingSurveys: true,
   })),
-  on(SurveyActions.loadSurveyByIdSuccess, (state, { survey }) => ({
+  on(SurveyActions.loadSurveyByIdSuccess, (state, { article }) => ({
     ...state,
-    survey,
+    article,
     isLoadingSurveys: false,
   })),
   on(SurveyActions.loadSurveyByIdFailure, (state) => ({

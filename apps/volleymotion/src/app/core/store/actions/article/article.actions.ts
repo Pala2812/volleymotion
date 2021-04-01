@@ -22,7 +22,7 @@ export const loadSurveyById = createAction(
 
 export const loadSurveyByIdSuccess = createAction(
   `${key} Load Survey By Id Success`,
-  props<{ survey: Article }>()
+  props<{ article: Article }>()
 );
 
 export const loadSurveyByIdFailure = createAction(
@@ -32,7 +32,7 @@ export const loadSurveyByIdFailure = createAction(
 
 export const createSurvey = createAction(
   `${key} Create Survey`,
-  props<{ survey: Article }>()
+  props<{ article: Article }>()
 );
 
 export const createSurveySuccess = createAction(`${key} Create Survey Success`);
@@ -44,7 +44,7 @@ export const createSurveyFailure = createAction(
 
 export const updateSurvey = createAction(
   `${key} Update Survey`,
-  props<{ survey: Article }>()
+  props<{ article: Article }>()
 );
 
 export const updateSurveySuccess = createAction(`${key} Update Survey Success`);

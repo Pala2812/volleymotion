@@ -1,6 +1,6 @@
 import { AuthEffects } from './auth/auth.effects';
 import { UserEffects } from './user/user.effects';
-import { SurveyEffects } from './survey/survey.effects';
+import { SurveyEffects } from './article/article.effects';
 import { TeamEffects } from './team/team.effects';
 import { SeasonEffects } from './season/season.effects';
 import { PlayerEffects } from './player/player.effects';

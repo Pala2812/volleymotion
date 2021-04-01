@@ -12,25 +12,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import firebase from 'firebase/app';
-import { QuillEditorComponent, QuillService } from 'ngx-quill';
+import { QuillEditorComponent } from 'ngx-quill';
 import { Observable, Subject } from 'rxjs';
 import { filter, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { Article } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
-import { loadSurveyById } from '../../core/store/actions/survey/survey.actions';
+import { loadSurveyById } from '../../core/store/actions/article/article.actions';
 import { StoreState } from '../../core/store/reducers';
 import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 
 @Component({
-  selector: 'vm-survey-create-edit',
-  templateUrl: './survey-create-edit.component.html',
-  styleUrls: ['./survey-create-edit.component.scss'],
+  selector: 'vm-article-create-edit',
+  templateUrl: './article-create-edit.component.html',
+  styleUrls: ['./article-create-edit.component.scss'],
 })
-export class SurveyCreateEditComponent
+export class ArticleCreateEditComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('quill') quill: ElementRef<QuillEditorComponent>;
-  survey$: Observable<Article>;
+  article$: Observable<Article>;
   isCreatingSurvey$: Observable<boolean>;
   uid$: Observable<string>;
   surveyForm: FormGroup;
@@ -53,7 +53,7 @@ export class SurveyCreateEditComponent
     );
 
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
-    this.survey$ = this.store.pipe(select(SurveySelectors.selectSurvey));
+    this.article$ = this.store.pipe(select(SurveySelectors.selectSurvey));
 
     this.route.params.subscribe((params) => {
       const id = params?.id;
@@ -71,18 +71,18 @@ export class SurveyCreateEditComponent
       this.store
         .pipe(
           select(SurveySelectors.selectSurvey),
-          filter((survey) => !!survey),
+          filter((article) => !!article),
           take(1)
         )
-        .subscribe((survey) => {
-          this.surveyForm = this.initSurveyForm(survey);
-          (this?.quill as any)?.writeValue(survey?.description);
+        .subscribe((article) => {
+          this.surveyForm = this.initSurveyForm(article);
+          (this?.quill as any)?.writeValue(article?.description);
         });
     }
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({ survey: undefined }));
+    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({ article: undefined }));
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -111,10 +111,10 @@ export class SurveyCreateEditComponent
       .subscribe(() => this.router.navigate(['artikel']));
   }
 
-  initSurveyForm(survey?: Article): FormGroup {
+  initSurveyForm(article?: Article): FormGroup {
     return new FormGroup({
-      title: new FormControl(survey?.title || '', [Validators.required]),
-      description: new FormControl(survey?.description || '', [Validators.required]),
+      title: new FormControl(article?.title || '', [Validators.required]),
+      description: new FormControl(article?.description || '', [Validators.required]),
       summary: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     });
   }
@@ -127,18 +127,18 @@ export class SurveyCreateEditComponent
     form.markAllAsTouched();
     if (form.valid) {
       this.uid$
-        .pipe(withLatestFrom(this.survey$), take(1))
+        .pipe(withLatestFrom(this.article$), take(1))
         .subscribe((params) => {
-          let survey = params[1] || ({} as Article);
-          survey = { ...survey, ...this.surveyForm.value };
+          let article = params[1] || ({} as Article);
+          article = { ...article, ...this.surveyForm.value };
           const id = params[1]?.id || this.fs.createId();
-          survey.id = id;
-          survey.uid = params[0];
-          (survey as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          article.id = id;
+          article.uid = params[0];
+          (article as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
 
           this.isEdit
-            ? this.store.dispatch(SurveyActions.updateSurvey({ survey }))
-            : this.store.dispatch(SurveyActions.createSurvey({ survey }));
+            ? this.store.dispatch(SurveyActions.updateSurvey({ article }))
+            : this.store.dispatch(SurveyActions.createSurvey({ article }));
         });
     }
   }

@@ -9,6 +9,9 @@ export const onAccountDelete = functions
     const uid = user?.uid;
     await admin.firestore().doc(`users/${uid}`).delete();
 
+    const teamPromises = await admin.firestore().collection('teams').where('uid', '==', uid).get()
+      .then(docs => docs.docs.map(doc => doc.ref.delete()));
+
     const matchPromises = await admin.firestore().collection('matches').where('uid', '==', uid).get()
       .then(docs => docs.docs.map(doc => doc.ref.delete()));
 
@@ -25,6 +28,7 @@ export const onAccountDelete = functions
     const messagesPromises = await admin.firestore().collection('messages').where('uid', '==', uid).get()
       .then(docs => docs.docs.map(doc => doc.ref.delete()));
 
+    await teamPromises;
     await matchPromises;
     await seasonPromises;
     await playerPromises;

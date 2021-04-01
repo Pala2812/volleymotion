@@ -3,7 +3,7 @@ import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { environment } from '../../../../environments/environment';
 import * as fromAuth from './auth/auth.reducer';
 import * as fromUsers from './user/user.reducer';
-import * as fromSurvey from './survey/survey.reducer';
+import * as fromSurvey from './article/article.reducer';
 import * as fromTeam from './team/team.reducer';
 import * as fromSeason from './season/season.reducer';
 import * as fromPlayer from './player/player.reducer';

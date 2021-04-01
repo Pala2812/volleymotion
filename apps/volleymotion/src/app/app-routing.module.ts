@@ -77,7 +77,7 @@ const routes: Routes = [
       {
         path: 'artikel',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./survey/survey.module').then(m => m.SurveyModule)
+        loadChildren: () => import('./article/article.module').then(m => m.ArticleModule)
       },
       {
         path: 'feedback',

@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import * as fromSurvey from '../../reducers/survey/survey.reducer';
+import * as fromSurvey from '../../reducers/article/article.reducer';
 
 const surveyFeature = createFeatureSelector<fromSurvey.State>(fromSurvey.surveyFeatureKey);
 
@@ -12,4 +12,4 @@ export const selectIsLoadingSurveysComments = createSelector(surveyFeature, stat
 export const selectIsReportingSurvey = createSelector(surveyFeature, state => state.isReportingSurvey);
 export const selectSurveyComments = createSelector(surveyFeature, state => state.surveyComments);
 export const selectSurveys = createSelector(surveyFeature, state => state.surveys);
-export const selectSurvey = createSelector(surveyFeature, state => state.survey);
+export const selectSurvey = createSelector(surveyFeature, state => state.article);

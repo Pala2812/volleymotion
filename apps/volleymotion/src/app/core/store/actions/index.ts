@@ -1,6 +1,6 @@
 import * as AuthActions from './auth/auth.actions';
 import * as UserActions from './user/user.actions';
-import * as SurveyActions from './survey/survey.actions';
+import * as ArticleActions from './article/article.actions';
 import * as TeamActions from './team/team.actions';
 import * as SeasonActions from './season/season.actions';
 import * as PlayerActions from './player/player.actions';
@@ -11,7 +11,7 @@ import * as TagActions from './tag/tag.actions';
 export {
   AuthActions,
   UserActions,
-  SurveyActions,
+  ArticleActions as SurveyActions,
   SeasonActions,
   TeamActions,
   PlayerActions,

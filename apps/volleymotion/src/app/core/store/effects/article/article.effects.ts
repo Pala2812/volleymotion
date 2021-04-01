@@ -29,8 +29,8 @@ export class SurveyEffects {
   createSurvey$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SurveyActions.createSurvey),
-      mergeMap(({ survey }) =>
-        from(this.fs.doc(`surveys/${survey.id}`).set(survey)).pipe(
+      mergeMap(({ article }) =>
+        from(this.fs.doc(`surveys/${article.id}`).set(article)).pipe(
           map(() => SurveyActions.createSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.createSurveyFailure({ error }))
@@ -43,8 +43,8 @@ export class SurveyEffects {
   updateSurvey$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SurveyActions.updateSurvey),
-      concatMap(({ survey }) =>
-        from(this.fs.doc(`surveys/${survey?.id}`).ref.update(survey)).pipe(
+      concatMap(({ article }) =>
+        from(this.fs.doc(`surveys/${article?.id}`).ref.update(article)).pipe(
           map(() => SurveyActions.updateSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.updateSurveyFailure({ error }))
@@ -79,7 +79,7 @@ export class SurveyEffects {
           .doc<Article>(`surveys/${id}`)
           .valueChanges()
           .pipe(
-            map((survey) => SurveyActions.loadSurveyByIdSuccess({ survey })),
+            map((article) => SurveyActions.loadSurveyByIdSuccess({ article })),
             catchError((error) =>
               of(SurveyActions.loadSurveyByIdFailure({ error }))
             )
