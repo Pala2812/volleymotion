@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   season$: Observable<Season>;
   matchParticipationChart$: Observable<any>;
   matches$: Observable<Match[]>;
+  nextMatch$: Observable<Match>;
   points$: Observable<{ scoredPoints: number, collectedPoints: number }>;
   participations$: Observable<any>;
   attendance$: Observable<any>;
@@ -180,6 +181,22 @@ export class DashboardComponent implements OnInit {
       let improvements = players?.map(player => player.improvements) ?? [];
       let combined = improvements?.reduce((prev, current) => [...prev, ...current]);
       return combined.sort((a, b) => a.name?.localeCompare(b?.name));
+    }));
+
+    this.nextMatch$ = this.matches$.pipe(map(matches => {
+      const today = new Date();
+      today.setHours(23);
+      today.setMinutes(59);
+      let min = Number.MAX_SAFE_INTEGER;
+      let nextMatch;
+      matches.forEach(match => {
+        const offset = new Date(match.date.seconds * 1000).valueOf() - today.valueOf();
+        if (offset > 0 && offset < min) {
+          min = offset;
+          nextMatch = match;
+        }
+      });
+      return nextMatch;
     }));
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { select, Store } from '@ngrx/store';
+import { filter, throttleTime } from 'rxjs/operators';
 
 import {
   AuthActions,
@@ -19,8 +20,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from './core/models';
 import { AppInitService } from './core/services/app-init.service';
 import { SeasonSelectors } from './core/store/selectors';
-import { filter, throttleTime } from 'rxjs/operators';
-import { Match } from '@volleymotion/models';
+import { Router } from '@angular/router';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',
@@ -35,7 +35,8 @@ export class AppComponent implements OnInit {
     private fs: AngularFirestore,
     private swUpdate: SwUpdate,
     private initService: AppInitService,
-    private networkStatusService: NetworkStatusService
+    private networkStatusService: NetworkStatusService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +59,8 @@ export class AppComponent implements OnInit {
           .subscribe(async (user) => {
             this.store.dispatch(UserActions.setUser({ user }));
           });
+      } else {
+        this.router.navigate(['login']);
       }
     });
 

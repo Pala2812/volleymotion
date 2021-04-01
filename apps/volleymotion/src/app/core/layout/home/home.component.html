@@ -31,12 +31,12 @@
       Zum Startbildschirm hinzufügen
     </button>
 
-    <button nbButton ghost status="primary" class="logout-btn" (click)="logout()">
+    <button nbButton ghost status="primary" class="logout-btn" (click)="logout()" (click)="sidebar.collapse()">
       <nb-icon icon="log-out-outline"></nb-icon>
       logout
     </button>
 
-    <button nbButton ghost status="primary" class="settings-btn" [routerLink]="['/einstellungen']">
+    <button nbButton ghost status="primary" class="settings-btn" [routerLink]="['/einstellungen']" (click)="sidebar.collapse()">
       <nb-icon icon="settings-outline"></nb-icon>
     </button>
 

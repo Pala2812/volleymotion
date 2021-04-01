@@ -47,6 +47,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   setMatch(match: Match) {
+    this.store.dispatch(MatchActions.setMatch({ match: undefined }));
     this.store.dispatch(MatchActions.setMatch({ match }));
   }
 
@@ -56,7 +57,8 @@ export class MatchListComponent implements OnInit, OnDestroy {
     event.stopImmediatePropagation();
   }
 
-  editMatch(event: Event) {
+  editMatch(match: Match, event: Event) {
+    this.store.dispatch(MatchActions.setMatch({ match }));
     event.stopImmediatePropagation();
   }
 }

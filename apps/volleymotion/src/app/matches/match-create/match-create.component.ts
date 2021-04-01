@@ -104,7 +104,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
 
   submit(form: FormGroup, season: Season) {
     if (form.valid && season) {
-      const id = form.controls.id.value ?? this.matchService.getId();
+      const id = !!form.controls.id.value ? form.controls.id.value : this.matchService.getId();
       const seasonId = season.id;
       const teamId = season.teamId;
       const uid = season.uid;

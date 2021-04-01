@@ -20,6 +20,14 @@ export const onPlayerDelete = functions
         .doc('tags')
         .get();
 
+      const playerCommentsPromises = await firestore()
+        .collection('players')
+        .doc(player?.id)
+        .collection('comments')
+        .get()
+        .then(docs => docs.docs.map(doc => doc.ref.delete()));
+
+
       const seasonDate = (seasonDoc.data() as Season).name;
 
       const team = await firestore()
@@ -70,6 +78,7 @@ export const onPlayerDelete = functions
       await tagDoc.ref.set(tags, { merge: true });
       await seasonDoc.ref.set(season, { merge: true });
       await auditDoc.ref.set(positions, { merge: true });
+      await playerCommentsPromises;
     } catch (e) {
       functions.logger.error(e);
     }

@@ -10,7 +10,8 @@
             <button class="action-btn" nbButton ghost status="danger" (click)="deleteMatch(match, $event)">
                 <nb-icon icon="trash-outline"></nb-icon>
             </button>
-            <button class="action-btn" nbButton ghost status="info" (click)="editMatch($event)" [routerLink]="['../bearbeiten', match.id]">
+            <button class="action-btn" nbButton ghost status="info" (click)="editMatch(match, $event)"
+                [routerLink]="['../bearbeiten', match.id]">
                 <nb-icon icon="edit-outline"></nb-icon>
             </button>
         </div>

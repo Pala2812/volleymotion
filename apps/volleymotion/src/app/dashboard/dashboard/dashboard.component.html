@@ -37,6 +37,18 @@
                 </nb-card-body>
             </nb-card>
 
+            <nb-card *ngIf="nextMatch$ | async as nextMatch">
+                <nb-card-header>Nächster Spieltag {{nextMatch?.date | timestamp | date: 'dd.MM HH:mm'}}</nb-card-header>
+                <nb-card-body>
+                    {{nextMatch?.opponent}}
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card class="border-red">
+                <nb-card-header>Nächste Trainingseinheit</nb-card-header>
+                <nb-card-body>Verfolge die Zu- und Absagen für deine nächste Trainingseinheit</nb-card-body>
+            </nb-card>
+
             <nb-card *ngIf="!(players$ | async)?.length">
                 <nb-card-header>Spieler anlegen</nb-card-header>
                 <nb-card-body>Lege deine <a [routerLink]="['/spieler']">Mannschaft</a> an!</nb-card-body>

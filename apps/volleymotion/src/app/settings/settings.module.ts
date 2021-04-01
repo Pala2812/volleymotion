@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsHomeComponent } from './settings-home/settings-home.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [SettingsHomeComponent],
   imports: [
     CommonModule,
+    SharedModule,
     SettingsRoutingModule
   ],
   exports: [
