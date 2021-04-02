@@ -1,0 +1,14 @@
+<nb-card class="card">
+    <nb-card-header>
+        Übungsschritt hinzufügen
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="addExerciseStep(form)">
+            <nb-form-field>
+                <textarea nbInput placeholder="Übungsschritt beschreiben (optional)" formControlName="description"></textarea>
+            </nb-form-field>
+
+            <button nbButton>Übungsschritt hinzufügen</button>
+        </form>
+    </nb-card-body>
+</nb-card>

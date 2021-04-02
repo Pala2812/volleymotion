@@ -1,9 +1,14 @@
 .container {
-    display: flex;
-    height: 100%;
-  
-    .card {
-      margin: auto auto;
-    }
+  display: flex;
+  height: 100%;
+
+  .card {
+    margin: auto auto;
   }
-  
+}
+
+.add-btn {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}

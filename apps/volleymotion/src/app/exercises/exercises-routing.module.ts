@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { ExerciseHomeComponent } from './exercise-home/exercise-home.component';
 
-const routes: Routes = [{ path: '', component: ExerciseHomeComponent }];
+const routes: Routes = [
+  { path: '', redirectTo: 'liste', pathMatch: 'full' },
+  { path: 'liste', component: ExerciseHomeComponent },
+  { path: 'erstellen', component: ExerciseCreateComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
