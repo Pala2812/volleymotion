@@ -1,0 +1,9 @@
+.form {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 1em;
+
+  .mat-chip-list-container {
+    margin: 0.5rem 0;
+  }
+}

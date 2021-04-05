@@ -36,6 +36,7 @@ import { TagInputComponent } from './components/tag-input/tag-input.component';
     }),
   ],
   exports: [
+    FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     NebularModule,
@@ -48,4 +49,4 @@ import { TagInputComponent } from './components/tag-input/tag-input.component';
   ],
   entryComponents: [AuthDialogComponent, DeleteDialogComponent],
 })
-export class SharedModule {}
+export class SharedModule { }

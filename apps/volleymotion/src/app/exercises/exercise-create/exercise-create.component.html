@@ -1,144 +1,155 @@
-<div class="tools-toolbar" [class.is-expanded]="isToolsToolbarExpanded">
+<div class="animation-container" *ngIf="!isFormVisible">
 
-    <div class="tools-toolbar-tools">
-        <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)" nbTooltip="Hütchen"
-            nbTooltipPlacement="start">
-            <div class="field-element-icon-container">
-                <img src="assets/exercise/cone.svg" alt="fahne" class="field-element-icon">
-            </div>
-        </button>
+    <div class="tools-toolbar" [class.is-expanded]="isToolsToolbarExpanded">
 
-        <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)" nbTooltip="Fahne"
-            nbTooltipPlacement="start">
-            <div class="field-element-icon-container">
-                <img src="assets/exercise/flag.svg" alt="fahne" class="field-element-icon">
-            </div>
-        </button>
-        <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)" nbTooltip="Leiter"
-            nbTooltipPlacement="start">
-            <div class="field-element-icon-container">
-                <img src="assets/exercise/ladder.svg" alt="fahne" class="field-element-icon">
-            </div>
-        </button>
+        <div class="tools-toolbar-tools">
+            <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
+                nbTooltip="Hütchen" nbTooltipPlacement="start">
+                <div class="field-element-icon-container">
+                    <img src="assets/exercise/cone.svg" alt="fahne" class="field-element-icon">
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
+                nbTooltip="Fahne" nbTooltipPlacement="start">
+                <div class="field-element-icon-container">
+                    <img src="assets/exercise/flag.svg" alt="fahne" class="field-element-icon">
+                </div>
+            </button>
+            <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
+                nbTooltip="Leiter" nbTooltipPlacement="start">
+                <div class="field-element-icon-container">
+                    <img src="assets/exercise/ladder.svg" alt="fahne" class="field-element-icon">
+                </div>
+            </button>
+        </div>
+
+        <div class="tools-toolbar-positions">
+            <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
+                nbTooltip="Volleyball" nbTooltipPlacement="right">
+                <div class="field-element-icon-container">
+                    <img src="assets/exercise/volleyball.svg" alt="volleyball" class="field-element-icon">
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Zuspieler*in" nbTooltipPlacement="right"
+                (click)="addElementToField(setter)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">Z</div>
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Außenangreifer*in"
+                nbTooltipPlacement="right" (click)="addElementToField(outsideAttacker)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">A</div>
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Mittelblocker*in" nbTooltipPlacement="right"
+                (click)="addElementToField(middleBlocker)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">M</div>
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Diagoalangreifer*in"
+                nbTooltipPlacement="right" (click)="addElementToField(diagonalAttacker)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">D</div>
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Libero | Libera" nbTooltipPlacement="right"
+                (click)="addElementToField(libero)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">L</div>
+                </div>
+            </button>
+
+            <button nbButton ghost class="tools-toolbar-element" nbTooltip="Spieler" nbTooltipPlacement="right"
+                (click)="addElementToField(player)">
+                <div class="field-element-icon-container">
+                    <div class="field-element-icon text">S</div>
+                </div>
+            </button>
+
+            <button class="tools-toolbar-expand" nbButton ghost (click)="toggleToolsToobal()">
+                <nb-icon [icon]="isToolsToolbarExpanded ? 'arrowhead-left-outline' :'arrowhead-right-outline'">
+                </nb-icon>
+            </button>
+        </div>
     </div>
 
-    <div class="tools-toolbar-positions">
-        <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
-            nbTooltip="Volleyball" nbTooltipPlacement="right">
-            <div class="field-element-icon-container">
-                <img src="assets/exercise/volleyball.svg" alt="volleyball" class="field-element-icon">
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Zuspieler*in" nbTooltipPlacement="right"
-            (click)="addElementToField(setter)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">Z</div>
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Außenangreifer*in" nbTooltipPlacement="right"
-            (click)="addElementToField(outsideAttacker)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">A</div>
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Mittelblocker*in" nbTooltipPlacement="right"
-            (click)="addElementToField(middleBlocker)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">M</div>
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Diagoalangreifer*in" nbTooltipPlacement="right"
-            (click)="addElementToField(diagonalAttacker)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">D</div>
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Libero | Libera" nbTooltipPlacement="right"
-            (click)="addElementToField(libero)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">L</div>
-            </div>
-        </button>
-
-        <button nbButton ghost class="tools-toolbar-element" nbTooltip="Spieler" nbTooltipPlacement="right"
-            (click)="addElementToField(player)">
-            <div class="field-element-icon-container">
-                <div class="field-element-icon text">S</div>
-            </div>
-        </button>
-
-        <button class="tools-toolbar-expand" nbButton ghost (click)="toggleToolsToobal()">
-            <nb-icon [icon]="isToolsToolbarExpanded ? 'arrowhead-left-outline' :'arrowhead-right-outline'"></nb-icon>
-        </button>
+    <div class="description">
+        {{description}}
     </div>
-</div>
-
-<div class="description">
-    {{description}}
-</div>
-<div cdkDropList #fieldBoundary class="field-outer-boundary">
-    <div class="field">
-        <div class="three-meter-line left"></div>
-        <div class="three-meter-line right"></div>
+    <div cdkDropList #fieldBoundary class="field-outer-boundary">
+        <div class="field">
+            <div class="three-meter-line left"></div>
+            <div class="three-meter-line right"></div>
+        </div>
+        <div #elements class="elements"></div>
     </div>
-    <div #elements class="elements"></div>
+
+    <ng-template #volleyball>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <img src="assets/exercise/volleyball.svg" alt="volleyball" class="field-element-icon">
+        </div>
+    </ng-template>
+
+    <ng-template #setter>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">Z</div>
+        </div>
+    </ng-template>
+
+    <ng-template #outsideAttacker>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">A</div>
+        </div>
+    </ng-template>
+
+    <ng-template #middleBlocker>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">M</div>
+        </div>
+    </ng-template>
+
+    <ng-template #diagonalAttacker>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">D</div>
+        </div>
+    </ng-template>
+
+    <ng-template #libero>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">L</div>
+        </div>
+    </ng-template>
+
+    <ng-template #player>
+        <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
+            <div class="field-element-icon text">S</div>
+        </div>
+    </ng-template>
 </div>
 
 <div class="actions-toolbar">
-    <button nbButton ghost class="actions-toolbar-element" (click)="addStep()" nbTooltip="Schritt hinzufügen"
-        nbTooltipPlacement="left">
+    <button nbButton ghost class="actions-toolbar-element" [disabled]="isFormVisible" (click)="addStep()"
+        nbTooltip="Schritt hinzufügen" nbTooltipPlacement="left">
         <nb-icon icon="plus-square-outline"></nb-icon>
     </button>
-    <button nbButton ghost class="actions-toolbar-element" (click)="play()" nbTooltip="Übung abspielen"
-        nbTooltipPlacement="left">
+    <button nbButton ghost class="actions-toolbar-element" [disabled]="isFormVisible" (click)="play()"
+        nbTooltip="Übung abspielen" nbTooltipPlacement="left">
         <nb-icon icon="play-circle-outline"></nb-icon>
+    </button>
+    <button nbButton ghost class="actions-toolbar-element" (click)="toggleFormVisibility()"
+        nbTooltip="Beschreibung hinzufügen" nbTooltipPlacement="left">
+        <nb-icon icon="file-text-outline"></nb-icon>
     </button>
 </div>
 
-
-<ng-template #volleyball>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <img src="assets/exercise/volleyball.svg" alt="volleyball" class="field-element-icon">
-    </div>
-</ng-template>
-
-<ng-template #setter>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">Z</div>
-    </div>
-</ng-template>
-
-<ng-template #outsideAttacker>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">A</div>
-    </div>
-</ng-template>
-
-<ng-template #middleBlocker>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">M</div>
-    </div>
-</ng-template>
-
-<ng-template #diagonalAttacker>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">D</div>
-    </div>
-</ng-template>
-
-<ng-template #libero>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">L</div>
-    </div>
-</ng-template>
-
-<ng-template #player>
-    <div class="field-element-icon-container drag-element" cdkDrag cdkDragBoundary=".field-outer-boundary">
-        <div class="field-element-icon text">S</div>
-    </div>
-</ng-template>
+<div class="form-container" *ngIf="isFormVisible">
+   <vm-exercise-form [tags$]="tags$" [animationSteps]="snapshots"></vm-exercise-form>
+</div>

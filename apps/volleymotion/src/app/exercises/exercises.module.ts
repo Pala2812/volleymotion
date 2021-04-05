@@ -6,10 +6,11 @@ import { ExerciseHomeComponent } from './exercise-home/exercise-home.component';
 import { SharedModule } from '../shared/shared.module';
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { ExerciseStepDialogComponent } from './exercise-create/exercise-step-dialog/exercise-step-dialog.component';
+import { ExerciseFormComponent } from './exercise-create/exercise-form/exercise-form.component';
 
 
 @NgModule({
-  declarations: [ExerciseHomeComponent, ExerciseCreateComponent, ExerciseStepDialogComponent],
+  declarations: [ExerciseHomeComponent, ExerciseCreateComponent, ExerciseStepDialogComponent, ExerciseFormComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -1,0 +1,67 @@
+<nb-card>
+    <nb-card-header>
+        Übungsbeschreibung hinzufügen
+    </nb-card-header>
+
+    <nb-card-body>
+        <form class="form" [formGroup]="form" (ngSubmit)="submit(form, animationSteps)">
+            <nb-form-field>
+                <mat-label>Titel</mat-label>
+                <input nbInput fullWidth formControlName="title" placeholder="Titel">
+            </nb-form-field>
+
+            <div>
+                <mat-label>Volleyballart</mat-label>
+                <nb-select fullWidth formControlName="sportType" placeholder="Volleyballart auswählen">
+                    <nb-option *ngFor="let sportType of sportTypes" [value]="sportType">
+                        {{sportType}}
+                    </nb-option>
+                </nb-select>
+            </div>
+
+            <nb-form-field>
+                <mat-label>Übungsdauer in Minuten</mat-label>
+                <input nbInput fullWidth formControlName="duration" type="number" placeholder="Übungsdauer in Minuten">
+            </nb-form-field>
+
+            <nb-form-field>
+                <mat-label>Ziel der Übung</mat-label>
+                <textarea nbInput fullWidth formControlName="objective" placeholder="Ziel der Pbung"></textarea>
+            </nb-form-field>
+
+
+            <form formGroupName="tags">
+                <mat-label>Übungsschwerpunkte</mat-label>
+
+                <div class="mat-chip-list-container">
+                    <mat-chip-list *ngIf="tags?.controls">
+                        <mat-chip *ngFor="let control of tags?.controls; let index = index" (click)="removeTag(index)">
+                            {{control?.value?.name}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <nb-form-field>
+                    <input #tagInput nbInput fullWidth [matAutocomplete]="tagsAutocomplete"
+                        (keyup)="filterTags($event)">
+                    <mat-autocomplete #tagsAutocomplete
+                        (optionSelected)="onTagAdded($event); tagInput.value = ''; tagInput.blur()">
+                        <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+                            {{ tag?.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </nb-form-field>
+            </form>
+
+            <form>
+                <mat-label>Animationsschritte</mat-label>
+                <nb-form-field *ngFor="let animationStep of animationSteps; let index = index">
+                    <input nbInput fullWidth [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="animationStep.description" [placeholder]="'Schritt' + (index + 1)">
+                </nb-form-field>
+            </form>
+
+            <button nbButton type="submit">Übung erstellen</button>
+        </form>
+    </nb-card-body>
+</nb-card>

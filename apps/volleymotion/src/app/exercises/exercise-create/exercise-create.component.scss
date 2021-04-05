@@ -1,58 +1,147 @@
 :host {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  margin-top: -0.75rem;
-
-  .tools-toolbar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+  .animation-container {
     display: flex;
-    justify-content: flex-end;
-    padding: 1rem 0.5rem 2rem;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-right: 1px solid #fff;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 
-    .tools-toolbar-tools {
-      display: none;
-    }
-
-    &.is-expanded {
-      width: 13rem;
-      z-index: 2;
-      transition: width 0.5s ease-out, background-color 0.33s ease-out;
-      background-color: rgba(255, 255, 255, 0.8);
+    .tools-toolbar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem 0.5rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-right: 1px solid #fff;
 
       .tools-toolbar-tools {
+        display: none;
+      }
+
+      &.is-expanded {
+        width: 13rem;
+        z-index: 2;
+        transition: width 0.5s ease-out, background-color 0.33s ease-out;
+        background-color: rgba(255, 255, 255, 0.8);
+
+        .tools-toolbar-tools {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .tools-toolbar-positions {
         display: flex;
         flex-direction: column;
+        height: 100%;
+        min-height: 100%;
+      }
+
+      .tools-toolbar-element {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25rem;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .tools-toolbar-expand {
+        margin-top: auto;
       }
     }
 
-    .tools-toolbar-positions {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      min-height: 100%;
+    .field-element-icon-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+
+      .field-element-icon {
+        width: 2rem;
+
+        &.text {
+          width: 2.5rem;
+          height: 2.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 1.5rem;
+          border: 2px solid black;
+          border-radius: 50%;
+          color: black;
+        }
+      }
     }
 
-    .tools-toolbar-element {
+    .drag-element {
+      cursor: move;
+    }
+
+    .description {
+      position: absolute;
+      left: 50%;
+      top: 1rem;
+      width: 100%;
+      max-width: 50rem;
+      max-height: 20rem;
+      padding: 0 1rem;
+      text-align: center;
+      transform: translateX(-50%);
+      text-overflow: ellipsis;
+    }
+
+    .field-outer-boundary {
       position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 0.25rem;
-      width: 3rem;
-      height: 3rem;
-      margin-bottom: 0.25rem;
-    }
+      align-items: center;
+      border: 1px solid white;
+      width: 75vw;
+      height: 40vw;
+      background-color: rgb(252, 214, 204);
 
-    .tools-toolbar-expand {
-      margin-top: auto;
+      .field {
+        position: relative;
+        width: 60vw;
+        height: 30vw;
+        background: rgb(12, 50, 133);
+        border: 5px solid white;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 0;
+          bottom: 0;
+          transform: translateX(-50%);
+          width: 8px;
+          height: 100%;
+          background-color: #fff;
+        }
+
+        .three-meter-line {
+          position: absolute;
+          left: 50%;
+          width: 3px;
+          height: 100%;
+          background-color: #fff;
+
+          &.left {
+            transform: translateX(-10vw);
+          }
+
+          &.right {
+            transform: translateX(10vw);
+          }
+        }
+      }
     }
   }
 
@@ -78,92 +167,7 @@
     }
   }
 
-  .field-element-icon-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-
-    .field-element-icon {
-      width: 2rem;
-
-      &.text {
-        width: 2.5rem;
-        height: 2.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 1.5rem;
-        border: 2px solid black;
-        border-radius: 50%;
-        color: black;
-      }
-    }
-  }
-
-  .drag-element {
-    cursor: move;
-  }
-
-  .description {
-    position: absolute;
-    left: 50%;
-    top: 1rem;
-    width: 100%;
-    max-width: 50rem;
-    max-height: 20rem;
-    padding: 0 1rem;
-    text-align: center;
-    transform: translateX(-50%);
-    text-overflow: ellipsis;
-  }
-
-  .field-outer-boundary {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid white;
-    width: calc(80vw);
-    height: calc(38vw);
-    background-color: rgb(252, 214, 204);
-
-    .field {
-      position: relative;
-      width: 60vw;
-      height: 30vw;
-      background: rgb(12, 50, 133);
-      border: 5px solid white;
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 0;
-        bottom: 0;
-        transform: translateX(-50%);
-        width: 8px;
-        height: 100%;
-        background-color: #fff;
-      }
-
-      .three-meter-line {
-        position: absolute;
-        left: 50%;
-        width: 3px;
-        height: 100%;
-        background-color: #fff;
-
-        &.left {
-          transform: translateX(-10vw);
-        }
-
-        &.right {
-          transform: translateX(10vw);
-        }
-      }
-    }
+  .form-container {
+    padding-right: 3.5rem;
   }
 }
