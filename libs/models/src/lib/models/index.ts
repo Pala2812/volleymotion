@@ -19,3 +19,4 @@ export * from './player-participation';
 export * from './match-set';
 export * from './charts/match-participation-chart';
 export * from './animation-step';
+export * from './exercise';

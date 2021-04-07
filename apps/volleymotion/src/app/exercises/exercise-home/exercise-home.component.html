@@ -1,19 +1,44 @@
-
 <div class="container">
-    <nb-card status="danger" class="card border-red">
-        <nb-card-header>
-            Erstelle Übungen * Alpha *
-        </nb-card-header>
-        <nb-card-body>
-            <ul>
-                <li>Erstelle Übungen zu bestimmten Tags</li>
-                <li>Erstelle Übungen zu bestimmten Positionen</li>
-                <li>Erstelle Übungen zu einer bestimmten Anzahl von Spielern</li>
-                <li>Kommentiere andere Übungen</li>
-            </ul>
-        </nb-card-body>
-    </nb-card>
+    <nb-reveal-card *ngFor="let exercise of exercises$ | async">
+        <nb-card-front>
+            <nb-card class="exercise-card">
+                <nb-card-header class="exercise-card-header" >
+                    <a [routerLink]="['../detail']">{{exercise?.title}}</a>
+                    <span class="exercise-duration">{{exercise?.duration}}min</span>
+                </nb-card-header>
+                <nb-card-body class="exercise-card-body">
+                    <div class="exercise-decription">
+                        {{exercise?.objective}}
+                    </div>
+
+                    <div>
+                        {{exercise.positions | json}}
+                    </div>
+
+                    <div>
+                        {{exercise.tools | json}}
+                    </div>
+                </nb-card-body>
+
+                <nb-card-footer>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let tag of exercise.tags">{{tag.name}}</mat-chip>
+                    </mat-chip-list>
+                </nb-card-footer>
+
+            </nb-card>
+        </nb-card-front>
+        <nb-card-back>
+            <nb-card class="exercise-card">
+                <nb-card-body class="exercise-card-footer">
+                    Animation
+                </nb-card-body>
+            </nb-card>
+        </nb-card-back>
+    </nb-reveal-card>
 </div>
+
+<nb-spinner *ngIf="isLoadingExercises$ | async" class="spinner"></nb-spinner>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
     <mat-icon>add</mat-icon>

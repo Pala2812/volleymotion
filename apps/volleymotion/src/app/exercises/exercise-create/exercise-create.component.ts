@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, QueryList, Renderer2, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
-import { AnimationStep, Tag } from '@volleymotion/models';
+import { AnimationStep, Exercise, Tag } from '@volleymotion/models';
 import { interval, Observable, } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { ExerciseActions } from '../../core/store/actions';
 import { TagSelectors } from '../../core/store/selectors';
 import { ExerciseStepDialogComponent } from './exercise-step-dialog/exercise-step-dialog.component';
 
@@ -17,6 +18,8 @@ export class ExerciseCreateComponent implements OnInit {
   @ViewChildren("drag-element", { read: ViewContainerRef }) dragables: QueryList<ViewContainerRef>
   tags$: Observable<Tag[]>;
   snapshots: any[] = [];
+  positions: any = {};
+  tools: any = {};
   isRunning = false;
   description: string;
   isToolsToolbarExpanded = false;
@@ -36,6 +39,14 @@ export class ExerciseCreateComponent implements OnInit {
   addElementToField(element: TemplateRef<any>) {
     const fieldElement = element.createEmbeddedView(this.elements.nativeElement).rootNodes[0];
     this.renderer.appendChild(this.elements.nativeElement, fieldElement);
+  }
+
+  addPosition(position: string) {
+    this.positions[position] = this.positions[position] >= 1 ? (this.positions[position] += 1) : 1;
+  }
+
+  addTool(tool: string) {
+    this.tools[tool] = this.tools[tool] >= 1 ? (this.tools[tool] += 1) : 1;
   }
 
   addStep() {
@@ -69,7 +80,7 @@ export class ExerciseCreateComponent implements OnInit {
       const y = positions[1] / height;
 
       const snapshot = {
-        element: child,
+        element: child.outerHTML,
         position: { x, y }
       }
 
@@ -81,7 +92,6 @@ export class ExerciseCreateComponent implements OnInit {
     }
 
     this.snapshots.push(snap);
-    console.log(this.snapshots);
   }
 
   play() {
@@ -115,25 +125,38 @@ export class ExerciseCreateComponent implements OnInit {
 
   addElements(snapshot: AnimationStep) {
     snapshot?.elements?.forEach(element => {
-      this.renderer.removeStyle(element.element, 'transform');
-      this.renderer.appendChild(this.elements.nativeElement, element.element);
+      const htmlElement = JSON.parse(element.element);
+      this.renderer.removeStyle(htmlElement, 'transform');
+      this.renderer.appendChild(this.elements.nativeElement, htmlElement);
     });
   }
 
   showSnapshot(snapshot: AnimationStep, width: number, height: number) {
     this.description = snapshot?.description;
     snapshot?.elements?.forEach(element => {
+      const htmlElement = JSON.parse(element.element);
       const position = element.position;
       const transform3d = `translate3d(${position.x * width}px, ${position.y * height}px, 0px)`;
-      this.renderer.setStyle(element.element, 'transition', 'transform 1s ease-out');
-      this.renderer.setStyle(element.element, `transform`, transform3d);
+      this.renderer.setStyle(htmlElement, 'transition', 'transform 1s ease-out');
+      this.renderer.setStyle(htmlElement, `transform`, transform3d);
     });
   }
 
   showLastTick(snapshot: AnimationStep) {
     this.description = '';
     snapshot?.elements?.forEach(element => {
-      this.renderer.removeStyle(element.element, 'transition');
+      const htmlElement = JSON.parse(element.element);
+      this.renderer.removeStyle(htmlElement, 'transition');
     })
+  }
+
+  onFormSubmit(exercise: Exercise) {
+    this.store.dispatch(ExerciseActions.createExercise({ exercise }));
+  }
+
+  delete() {
+    this.snapshots = [];
+    const children = Array.from(this.elements.nativeElement.children);
+    children.forEach(child => this.renderer.removeChild(this.elements.nativeElement, child));
   }
 }

@@ -1,8 +1,14 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import { AnimationStep, Tag } from '@volleymotion/models';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { ExerciseActions } from '../../../core/store/actions';
+import { StoreState } from '../../../core/store/reducers';
+import { ExerciseSelectors } from '../../../core/store/selectors';
 
 @Component({
   selector: 'vm-exercise-form',
@@ -10,19 +16,25 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./exercise-form.component.scss']
 })
 export class ExerciseFormComponent implements OnInit {
+  @Input() positions: any;
+  @Input() tools: any;
   @Input() tags$: Observable<Tag[]>;
   @Input() animationSteps: AnimationStep[];
+  isCreatingExercise$: Observable<boolean>;
   filteredTags$: Observable<Tag[]>;
   form: FormGroup;
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
-  constructor() { }
+  constructor(private store: Store<StoreState>, private router: Router, private actions$: Actions) { }
 
   ngOnInit(): void {
     this.form = this.initForm();
     this.filteredTags$ = this.tags$;
-  }
+    this.isCreatingExercise$ = this.store.pipe(select(ExerciseSelectors.selectIsCreatingExercise));
 
+    this.actions$.pipe(ofType(ExerciseActions.createExerciseSuccess), take(1))
+      .subscribe(() => this.router.navigate(['/übungen']));
+  }
 
   initForm(): FormGroup {
     return new FormGroup({
@@ -30,12 +42,12 @@ export class ExerciseFormComponent implements OnInit {
       sportType: new FormControl('', [Validators.required]),
       duration: new FormControl('', [Validators.required]),
       objective: new FormControl('', [Validators.required]),
-      tags: new FormArray([]),
+      tags: new FormArray([], [Validators.required]),
     });
   }
 
   get tags() {
-    return this.form.controls.tags as FormArray;
+    return this.form?.get('tags') as FormArray;
   }
 
   filterTags(event: any) {
@@ -66,17 +78,18 @@ export class ExerciseFormComponent implements OnInit {
     this.tags.removeAt(index);
   }
 
-  submit(form: FormGroup, animationSteps: AnimationStep[]) {
+  submit(form: FormGroup, animationSteps: AnimationStep[], positions: any, tools: any) {
     form.markAllAsTouched();
-
     if (!animationSteps?.length) {
-      alert('Bitte füge eine Übunganimations hinzu');
+      alert('Bitte füge eine Animation hinzu');
       return;
     }
 
     if (form.valid) {
-      const exercise = form.value;
+      let exercise = form.value;
+      exercise = { ...exercise, animationSteps, positions, tools, };
       console.log(exercise);
+      this.store.dispatch(ExerciseActions.createExercise({ exercise }));
     }
   }
 

@@ -10,6 +10,7 @@ import * as fromPlayer from './player/player.reducer';
 import * as fromMatch from './match/match.reducer';
 import * as fromTrainingMatch from './training-match/training-match.reducer';
 import * as fromTag from './tag/tag.reducer';
+import * as fromExercise from './exercise/exercise.reducer';
 
 import { AuthActions } from '../actions';
 
@@ -23,6 +24,7 @@ export interface StoreState {
   [fromMatch.matchFeatureKey]: fromMatch.State;
   [fromTrainingMatch.trainingMatchFeatureKey]: fromTrainingMatch.State;
   [fromTag.tagFeatureKey]: fromTag.State;
+  [fromExercise.exerciseFeatureKey]: fromExercise.State;
 }
 
 export const reducers: ActionReducerMap<StoreState> = {
@@ -35,6 +37,7 @@ export const reducers: ActionReducerMap<StoreState> = {
   [fromMatch.matchFeatureKey]: fromMatch.reducer,
   [fromTrainingMatch.trainingMatchFeatureKey]: fromTrainingMatch.reducer,
   [fromTag.tagFeatureKey]: fromTag.reducer,
+  [fromExercise.exerciseFeatureKey]: fromExercise.reducer,
 };
 
 export const metaReducers: MetaReducer<StoreState>[] = !environment.production

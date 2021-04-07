@@ -4,7 +4,7 @@
     </nb-card-header>
 
     <nb-card-body>
-        <form class="form" [formGroup]="form" (ngSubmit)="submit(form, animationSteps)">
+        <form class="form" [formGroup]="form" (ngSubmit)="submit(form, animationSteps, positions, tools)">
             <nb-form-field>
                 <mat-label>Titel</mat-label>
                 <input nbInput fullWidth formControlName="title" placeholder="Titel">
@@ -26,7 +26,7 @@
 
             <nb-form-field>
                 <mat-label>Ziel der Übung</mat-label>
-                <textarea nbInput fullWidth formControlName="objective" placeholder="Ziel der Pbung"></textarea>
+                <textarea nbInput fullWidth formControlName="objective" placeholder="Ziel der Übung"></textarea>
             </nb-form-field>
 
 

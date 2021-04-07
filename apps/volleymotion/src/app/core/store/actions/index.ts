@@ -7,6 +7,7 @@ import * as PlayerActions from './player/player.actions';
 import * as MatchActions from './match/match.actions';
 import * as TraningMatchActions from './training-match/training-match.actions';
 import * as TagActions from './tag/tag.actions';
+import * as ExerciseActions from './exercise/exercise.actions';
 
 export {
   AuthActions,
@@ -18,4 +19,5 @@ export {
   MatchActions,
   TraningMatchActions,
   TagActions,
+  ExerciseActions,
 };

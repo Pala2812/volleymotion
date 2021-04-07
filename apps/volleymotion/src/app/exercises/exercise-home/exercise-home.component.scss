@@ -1,9 +1,35 @@
 .container {
   display: flex;
+  flex-direction: column;
   height: 100%;
+  min-height: 100%;
 
-  .card {
-    margin: auto auto;
+  .exercise-card {
+    height: 16rem;
+
+    .exercise-card-header {
+      display: flex;
+
+      .exercise-duration {
+        display: inline-block;
+        margin-left: auto;
+      }
+    }
+
+    .exercise-card-body {
+      min-height: 8rem;
+
+      .exercise-decription {
+        padding-top: 0.5rem;
+        max-height: 2rem;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+      }
+    }
+
+    .exercise-tags {
+      margin-bottom: 0.5rem;
+    }
   }
 }
 

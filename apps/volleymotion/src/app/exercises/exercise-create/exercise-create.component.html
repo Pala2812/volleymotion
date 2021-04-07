@@ -26,49 +26,52 @@
 
         <div class="tools-toolbar-positions">
             <button nbButton ghost class="tools-toolbar-element" (click)="addElementToField(volleyball)"
-                nbTooltip="Volleyball" nbTooltipPlacement="right">
+                (click)="addTool('Volleyball')" nbTooltip="Volleyball" nbTooltipPlacement="right">
                 <div class="field-element-icon-container">
                     <img src="assets/exercise/volleyball.svg" alt="volleyball" class="field-element-icon">
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Zuspieler*in" nbTooltipPlacement="right"
-                (click)="addElementToField(setter)">
+                (click)="addElementToField(setter, 'Zuspieler*in')" (click)="addPosition('Zuspieler*in')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">Z</div>
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Außenangreifer*in"
-                nbTooltipPlacement="right" (click)="addElementToField(outsideAttacker)">
+                nbTooltipPlacement="right" (click)="addElementToField(outsideAttacker, 'Außenangreifer*in')"
+                (click)="addPosition('Außenangreifer*in')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">A</div>
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Mittelblocker*in" nbTooltipPlacement="right"
-                (click)="addElementToField(middleBlocker)">
+                (click)="addElementToField(middleBlocker, 'Mittelblocker*in')"
+                (click)="addPosition('Mittelblocker*in')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">M</div>
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Diagoalangreifer*in"
-                nbTooltipPlacement="right" (click)="addElementToField(diagonalAttacker)">
+                nbTooltipPlacement="right" (click)="addElementToField(diagonalAttacker, 'Diagoalangreifer*in')"
+                (click)="addPosition('Diagoalangreifer*in')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">D</div>
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Libero | Libera" nbTooltipPlacement="right"
-                (click)="addElementToField(libero)">
+                (click)="addElementToField(libero, 'Libero | Libera')" (click)="addPosition('Libero | Libera')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">L</div>
                 </div>
             </button>
 
             <button nbButton ghost class="tools-toolbar-element" nbTooltip="Spieler" nbTooltipPlacement="right"
-                (click)="addElementToField(player)">
+                (click)="addElementToField(player, 'Spieler')" (click)="addPosition('Spieler')">
                 <div class="field-element-icon-container">
                     <div class="field-element-icon text">S</div>
                 </div>
@@ -144,6 +147,10 @@
         nbTooltip="Übung abspielen" nbTooltipPlacement="left">
         <nb-icon icon="play-circle-outline"></nb-icon>
     </button>
+    <button nbButton ghost class="actions-toolbar-element" [disabled]="isFormVisible" (click)="delete()"
+        nbTooltip="Löschen" nbTooltipPlacement="left">
+        <nb-icon icon="trash-outline"></nb-icon>
+    </button>
     <button nbButton ghost class="actions-toolbar-element" (click)="toggleFormVisibility()"
         nbTooltip="Beschreibung hinzufügen" nbTooltipPlacement="left">
         <nb-icon icon="file-text-outline"></nb-icon>
@@ -151,5 +158,7 @@
 </div>
 
 <div class="form-container" *ngIf="isFormVisible">
-   <vm-exercise-form [tags$]="tags$" [animationSteps]="snapshots"></vm-exercise-form>
+    <vm-exercise-form [tags$]="tags$" [animationSteps]="snapshots" (formSubmit)="onFormSubmit($event)"
+        [positions]="positions" [tools]="tools">
+    </vm-exercise-form>
 </div>

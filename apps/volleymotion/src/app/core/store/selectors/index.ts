@@ -7,6 +7,7 @@ import * as PlayerSelectors from './player/player.selectors';
 import * as MatchSelectors from './match/match.selectors';
 import * as TrainingMatchSelectors from './training-match/training-match.selectors';
 import * as TagSelectors from './tag/tag.selectors';
+import * as ExerciseSelectors from './exercise/exercise.selectors';
 
 export {
   AuthSelectors,
@@ -18,4 +19,5 @@ export {
   MatchSelectors,
   TrainingMatchSelectors,
   TagSelectors,
+  ExerciseSelectors,
 };
