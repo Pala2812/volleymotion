@@ -5,6 +5,10 @@
   min-height: 100%;
   padding: 1rem;
 
+  small {
+    display: block;
+  }
+
   .article-detail-container {
     display: grid;
     grid-template-rows: 1fr auto;
@@ -31,7 +35,7 @@
       .comment {
         padding: 1rem 0;
         border-bottom: 1px solid rgb(219, 219, 219);
-        
+
         &:last-of-type {
           border-bottom: none;
         }

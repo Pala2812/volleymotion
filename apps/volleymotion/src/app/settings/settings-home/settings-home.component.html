@@ -1,3 +1,4 @@
+<!-- 
 <ul class="settings-list">
     <li class="settings-list-item">
         <a class="settings-list-item-link">Meine Artikel</a>
@@ -6,5 +7,6 @@
         <a class="settings-list-item-link">Meine Spieltage</a>
     </li>
 </ul>
+-->
 
-<button nbButton ghost (click)="deleteAccount()">Account löschen</button>
+<button nbButton ghost (click)="deleteAccount()" [disabled]="(user$ | async)?.email === 'testnutzer@abc.de'">Account löschen</button>

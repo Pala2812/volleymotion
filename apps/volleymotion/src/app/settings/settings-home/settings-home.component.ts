@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { User } from '../../core/models';
+import { StoreState } from '../../core/store/reducers';
+import { UserSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-settings-home',
@@ -8,10 +13,13 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./settings-home.component.scss']
 })
 export class SettingsHomeComponent implements OnInit {
+  user$: Observable<User>;
 
-  constructor(private auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth, private store: Store<StoreState>) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.user$ = this.store.pipe(select(UserSelectors.selectUser));
+  }
 
   deleteAccount() {
     this.auth.user.pipe(take(1))

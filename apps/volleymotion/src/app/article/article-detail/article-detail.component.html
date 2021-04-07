@@ -1,63 +1,19 @@
-<ng-template #article>
-    <div class="article-detail-container">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    {{(article$ | async)?.title}}
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="content" [innerHTML]="(article$ | async)?.description"></div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-icon-button (click)="reportSurvey(article, $event)">
-                    <mat-icon color="warn">report</mat-icon>
-                </button>
-                <button mat-icon-button (click)="likeSurvey(article)" aria-label="Umfrage liken">
-                    <mat-icon color="primary">thumb_up</mat-icon>
-                </button>
-            </mat-card-actions>
-        </mat-card>
+<nb-card *ngIf="article$ | async as article">
+    <nb-card-header>
+        {{article?.title}}
+        <small>
+            {{article?.author?.firstname}} {{article?.author?.lastname}}
+        </small>
 
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Kommetare</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <ng-template #comments>
-                    <div class="comments">
-                        <div class="comment" *ngFor="let comment of (surveyComments$ | async)">
-                            <div class="user-name">
-                                {{comment?.user?.firstname}}
-                                <span class="user-position">({{comment?.user?.userInfo?.position}})</span>
-                            </div>
-                            <p class="message">{{comment?.message}}</p>
-                            <small>{{comment?.createdAt?.toDate() | date: 'dd.MM.yyyy HH:mm'}}</small>
-                        </div>
-                    </div>
-                </ng-template>
-                <mat-spinner *ngIf="isLoadingSurveyComments$ | async; else comments" color="primary" [diameter]="10"></mat-spinner>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</ng-template>
+    </nb-card-header>
 
-<mat-spinner *ngIf="isLoadingSurvey$ | async; else article"></mat-spinner>
+    <nb-card-body>
+        <div [innerHTML]="article?.description"></div>
+    </nb-card-body>
 
-<mat-card>
-    <form [formGroup]="messageForm" (ngSubmit)="sendMessage(messageForm)">
-        <mat-form-field>
-            <mat-label>Kommentar schreiben</mat-label>
-            <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
-            <mat-error *ngIf="messageForm?.controls?.message?.errors?.required">
-                Nachricht wird benötigt
-            </mat-error>
-            <mat-error *ngIf="messageForm?.controls?.message?.errors?.maxLength">
-                Nachricht braucht einen Inhalt
-            </mat-error>
-        </mat-form-field>
-        <button mat-button type="submit" aria-label="Kommentar senden">
-            <mat-icon color="primary">send</mat-icon>
-        </button>
-    </form>
-</mat-card>
+    <nb-card-footer>
+        <mat-chip-list *ngIf="article?.tags?.length">
+            <mat-chip *ngFor="let tag of article.tags">{{tag.name}}</mat-chip>
+        </mat-chip-list>
+    </nb-card-footer>
+</nb-card>

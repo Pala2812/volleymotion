@@ -1,0 +1,30 @@
+<nb-card>
+    <nb-card-header>
+        Filter hinzufügen
+    </nb-card-header>
+    <nb-card-body>
+
+        <mat-chip-list>
+            <mat-chip *ngFor="let tag of tags; let index = index" (click)="removeTag(index)">{{tag?.name}}</mat-chip>
+        </mat-chip-list>
+
+        <mat-divider></mat-divider>
+
+        <nb-form-field>
+            <input nbInput placeholder="Tags" #tagInput fullWidth [matAutocomplete]="auto" (keyup)="filterTags($event)">
+
+            <mat-autocomplete #auto="matAutocomplete"
+                (optionSelected)="onTagAdded($event); tagInput.value = ''; tagInput.blur()">
+                <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+                    {{ tag?.name }}
+                </mat-option>
+            </mat-autocomplete>
+
+        </nb-form-field>
+    </nb-card-body>
+    <nb-card-footer class="card-footer">
+        <button nbButton ghost (click)="cancel()">Abbrechen</button>
+        <button nbButton ghost (click)="reset()">Zurücksetzen</button>
+        <button nbButton (click)="applyFilter()">Anwenden</button>
+    </nb-card-footer>
+</nb-card>

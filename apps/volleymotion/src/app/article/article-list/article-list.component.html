@@ -1,27 +1,26 @@
 <ng-template #surveys>
-    <nb-card class="card" *ngFor="let article of articles$ | async" (click)="viewDetail(article)">
+    <nb-card class="card" *ngFor="let article of filteredArticles$ | async" (click)="viewDetail(article)">
         <nb-card-header class="card-header">
             {{article?.title}}
         </nb-card-header>
-        <nb-card-body class="article-content" [innerHTML]="article?.summary"></nb-card-body>
 
-      <!--   <nb-card-footer class="card-footer">
-            <button nbButton ghost (click)="reportSurvey(article, $event)">
-                <nb-icon icon="alert-circle-outline"></nb-icon>
-            </button>
-            <button nbButton ghost (click)="likeSurvey(article, $event)" aria-label="Umfrage liken">
-                <nb-icon icon="heart-outline"></nb-icon>
-            </button>
-            <button nbButton ghost class="edit" (click)="editSurvey(article, $event)" aria-label="Bearbeiten"
-                *ngIf="article?.uid === (uid$ | async) ">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </nb-card-footer> -->
+        <nb-card-body class="article-content" [innerHTML]="article?.description"></nb-card-body>
+
+        <nb-card-footer>
+            <mat-chip-list *ngIf="article?.tags?.length">
+                <mat-chip *ngFor="let tag of article.tags">{{tag.name}}</mat-chip>
+            </mat-chip-list>
+        </nb-card-footer>
     </nb-card>
+
 </ng-template>
 
 <nb-spinner *ngIf="isLoadingSurveys$ | async; else surveys"></nb-spinner>
 
-<button mat-fab class="create-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
+<button mat-fab class="add-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
     <mat-icon>add</mat-icon>
+</button>
+
+<button mat-fab class="filter-btn" color="primary" (click)="showFilterDialog()" [matBadge]="tags?.length ? tags.length : ''" matBadgeColor="accent">
+    <mat-icon>filter_alt</mat-icon>
 </button>

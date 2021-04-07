@@ -1,13 +1,31 @@
-<nb-card>
+<nb-card *ngIf="user$ | async as user">
     <nb-card-header>Artikel erstellen</nb-card-header>
     <nb-card-body>
 
-        <form class="form" [formGroup]="surveyForm" (ngSubmit)="publish(surveyForm)">
+        <form class="form" [formGroup]="surveyForm" (ngSubmit)="publish(surveyForm, user)">
             <nb-form-field>
                 <input nbInput placeholder="Titel" fullWidth formControlName="title">
             </nb-form-field>
 
-            // tags
+            <div class="mat-chip-list-container">
+                <mat-chip-list *ngIf="tags?.controls">
+                    <mat-chip *ngFor="let control of tags?.controls; let index = index" (click)="removeTag(index)">
+                        {{control?.value?.name}}
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <nb-form-field>
+                <input nbInput placeholder="Tags" #tagInput fullWidth [matAutocomplete]="tagsAutocomplete"
+                    (keyup)="filterTags($event)">
+
+                <mat-autocomplete #tagsAutocomplete
+                    (optionSelected)="onTagAdded($event); tagInput.value = ''; tagInput.blur()">
+                    <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+                        {{ tag?.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </nb-form-field>
 
             <nb-form-field>
                 <input nbInput fullWidth formControlName="description" hidden>
@@ -15,11 +33,6 @@
                     [class.ng-invalid]="surveyForm.controls.description.invalid" #quill class="editor"
                     placeholder="Beschreibung eingeben" (onContentChanged)="patchDescription($event)">
                 </quill-editor>
-            </nb-form-field>
-
-            <nb-form-field class="summary-form-field">
-                <input #summaryInput nbInput fullWidth formControlName="summary" placeholder="Zusammenfassung">
-                <small>{{summaryInput?.value.length}}/200</small>
             </nb-form-field>
 
             <button nbButton color="primary" [disabled]="isCreatingSurvey$ | async" aria-label="veröffentlichen">

@@ -8,6 +8,10 @@
     grid-template-rows: auto 1fr auto;
     gap: 1rem;
 
+    .mat-chip-list-container {
+      margin-bottom: 0.25rem;
+    }
+
     .summary-form-field {
       text-align: right;
     }

@@ -13,6 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
 @NgModule({
   imports: [
     MatInputModule,
@@ -29,6 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSliderModule,
     MatAutocompleteModule,
     MatDividerModule,
+    MatBadgeModule
   ],
   exports: [
     MatInputModule,
@@ -45,6 +47,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSliderModule,
     MatAutocompleteModule,
     MatDividerModule,
+    MatBadgeModule,
   ],
 })
-export class AngularMaterialModule {}
+export class AngularMaterialModule { }

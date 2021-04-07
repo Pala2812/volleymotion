@@ -137,5 +137,11 @@ quill-editor.ng-touched.ng-invalid {
 .mat-label {
   display: block;
   margin-bottom: 0.25rem;
-  margin-left: .25rem;
+  margin-left: 0.25rem;
+}
+
+.mat-chip-list {
+  .mat-chip-list-wrapper {
+    margin-bottom: 0.5rem;
+  }
 }
