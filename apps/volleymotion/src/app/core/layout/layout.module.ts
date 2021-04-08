@@ -7,9 +7,12 @@ import { NbSidebarModule } from '@nebular/theme';
 
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../../shared/shared.module';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, HeaderComponent, FooterComponent, CardComponent],
   imports: [
     CommonModule,
     SharedModule,

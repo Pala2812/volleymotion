@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  padding: 1rem 2rem;
+  width: 100%;
+  z-index: 100;
+  background-color: transparent;
+  color: black;
+
+  &.is-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0.25rem 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease-out;
+
+    .header-login-btn {
+      color: #fff;
+      background-color: lighten(#4a148c, 10%);
+      transition: background-color 0.33s ease-out, color 0.2s ease-out;
+    }
+  }
+
+  .header-brand {
+    color: inherit;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .header-login-btn {
+    background-color: transparent;
+    margin-left: auto;
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: inherit;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: #4a148c;
+      transition: background-color 0.33s ease-out, color 0.33s ease-out;
+    }
+  }
+}
