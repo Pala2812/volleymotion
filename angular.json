@@ -260,7 +260,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/homepage",
+            "outputPath": "dist/apps/homepage/browser",
             "index": "apps/homepage/src/index.html",
             "main": "apps/homepage/src/main.ts",
             "polyfills": "apps/homepage/src/polyfills.ts",
@@ -336,6 +336,53 @@
           "options": {
             "jestConfig": "apps/homepage/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/apps/homepage/server",
+            "main": "apps/homepage/server.ts",
+            "tsConfig": "apps/homepage/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "apps/homepage/src/environments/environment.ts",
+                  "with": "apps/homepage/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "homepage:build",
+            "serverTarget": "homepage:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "homepage:build:production",
+              "serverTarget": "homepage:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "homepage:build:production",
+            "serverTarget": "homepage:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

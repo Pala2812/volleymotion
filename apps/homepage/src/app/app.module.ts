@@ -18,36 +18,26 @@ import { RootSeoResolver } from './core/resolvers/root-seo.resolver';
     CardComponent,
   ],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot(
-      [
-        {
-          path: '',
-          component: LandingPageComponent,
-          resolve: [RootSeoResolver],
-        },
-        {
-          path: 'about',
-          loadChildren: () =>
-            import('./about/about.module').then((m) => m.AboutModule),
-        },
-        {
-          path: 'impressum',
-          loadChildren: () =>
-            import('./impressum/impressum.module').then(
-              (m) => m.ImpressumModule
-            ),
-        },
-        {
-          path: 'datenschutz',
-          loadChildren: () =>
-            import('./datenschutz/datenschutz.module').then(
-              (m) => m.DatenschutzModule
-            ),
-        },
-      ],
-      { initialNavigation: 'enabled' }
-    ),
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    RouterModule.forRoot([
+    {
+        path: '',
+        component: LandingPageComponent,
+        resolve: [RootSeoResolver],
+    },
+    {
+        path: 'about',
+        loadChildren: () => import('./about/about.module').then((m) => m.AboutModule),
+    },
+    {
+        path: 'impressum',
+        loadChildren: () => import('./impressum/impressum.module').then((m) => m.ImpressumModule),
+    },
+    {
+        path: 'datenschutz',
+        loadChildren: () => import('./datenschutz/datenschutz.module').then((m) => m.DatenschutzModule),
+    },
+], { initialNavigation: 'enabled' }),
     FlexLayoutModule,
   ],
   providers: [RootSeoResolver],
