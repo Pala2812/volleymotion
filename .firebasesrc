@@ -2,4 +2,13 @@
     "projects": {
         "default": "volleymotion
     }
+     "targets": {
+    "sogenau-admin": {
+      "hosting": {
+        "volleymotion": [
+          "volley-motion"
+        ],
+      }
+    }
+  }
 }
