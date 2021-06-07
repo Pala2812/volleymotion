@@ -1,4 +1,16 @@
 <nav class="header" fxLayout [class.is-scrolled]="isScrolled">
-    <a class="header-brand" [routerLink]="['/']">Volleymotion</a>
-    <button class="header-login-btn" fxFlexAlign="center center">Login</button>
+  <a class="header-brand" [routerLink]="['/']">Volleymotion</a>
+
+  <ul class="header-nav-list">
+    <li class="header-nav-list-item">
+      <a class="header-nav-list-item-link" [routerLink]="['/about']">Die Mission</a>
+    </li>
+  </ul>
+
+  <a
+    class="header-login-btn"
+    href="https://volley-motion.web.app/dashboard"
+    target="_blank"
+    >Login</a
+  >
 </nav>

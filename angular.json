@@ -15,7 +15,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["@angular/fire/firestore"],
+            "allowedCommonJsDependencies": [
+              "@angular/fire/firestore"
+            ],
             "outputPath": "dist/apps/volleymotion",
             "index": "apps/volleymotion/src/index.html",
             "main": "apps/volleymotion/src/main.ts",
@@ -35,7 +37,9 @@
               "./node_modules/quill/dist/quill.snow.css",
               "apps/volleymotion/src/styles.scss"
             ],
-            "scripts": ["./node_modules/quill/dist/quill.js"]
+            "scripts": [
+              "./node_modules/quill/dist/quill.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -90,7 +94,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/volleymotion/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/volleymotion/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -123,7 +129,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/volleymotion-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/volleymotion-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -141,7 +149,9 @@
             "outputPath": "dist/apps/functions",
             "main": "apps/functions/src/main.ts",
             "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": ["apps/functions/src/assets"]
+            "assets": [
+              "apps/functions/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -166,7 +176,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/functions/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/functions/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -187,7 +199,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/models/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/models/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -213,7 +227,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/address-input/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/address-input/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -254,7 +270,9 @@
               "apps/homepage/src/favicon.ico",
               "apps/homepage/src/assets"
             ],
-            "styles": ["apps/homepage/src/styles.scss"],
+            "styles": [
+              "apps/homepage/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -308,7 +326,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/homepage/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/homepage/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -341,14 +361,17 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/homepage-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/homepage-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
   },
   "schematics": {
     "@nrwl/angular": {

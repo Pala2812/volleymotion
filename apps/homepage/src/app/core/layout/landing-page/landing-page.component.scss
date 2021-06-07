@@ -1,123 +1,119 @@
-.header {
-    position: fixed;
+.showcase-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+
+  .showcase-content {
+    z-index: 5;
+    transform: translateY(10vh);
+
+    .showcase-title {
+      text-align: center;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+
+    .showcase-subtitle {
+      text-align: center;
+      padding-top: 0.5rem;
+      font-size: 1.5em;
+      letter-spacing: 1px;
+    }
+
+    .showcase-paragraph {
+      text-align: center;
+      font-size: 1.15em;
+      padding-top: 0.5;
+      line-height: 1.5em;
+    }
+  }
+
+  .showcase-show-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    height: 50px;
+    width: 200px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    color: #fff;
+
+    .showcase-show-more-icon {
+      display: block;
+      animation: bounce 2s ease infinite;
+      height: 2rem;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    bottom: 0;
+    background: url('/assets/images/volleyball_showcase.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    z-index: 1;
   }
-  .showcase-section {
-    position: relative;
-    height: 100vh;
-    width: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, white, black);
+    mix-blend-mode: multiply;
+    z-index: 2;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1, 1) translateY(0);
+    }
+    10% {
+      transform: scale(1.1, 0.9) translateY(0);
+    }
+    30% {
+      transform: scale(0.9, 1.1) translateY(-30px);
+    }
+    50% {
+      transform: scale(1.05, 0.95) translateY(0);
+    }
+    57% {
+      transform: scale(1, 1) translateY(-2px);
+    }
+    64% {
+      transform: scale(1, 1) translateY(0);
+    }
+    100% {
+      transform: scale(1, 1) translateY(0);
+    }
+  }
+}
+
+.info-section {
+  position: relative;
+  padding-top: 10rem;
+  width: 100%;
+  height: 100vh;
+
+  .info-card-wrapper {
     display: flex;
-    color: #fff;
-  
-    .showcase-content {
-      z-index: 5;
-      padding-left: 6rem;
-      margin-top: 33vh;
-  
-      .showcase-title {
-        font-size: 2.5em;
-        letter-spacing: 2px;
-      }
-  
-      .showcase-subtitle {
-        padding-top: 0.5rem;
-        font-size: 1.5em;
-        letter-spacing: 1px;
-      }
-  
-      .showcase-paragraph {
-        font-size: 1.15em;
-        padding-top: 0.5;
-        line-height: 1.5em;
-      }
-    }
-  
-    .showcase-show-more {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 5;
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      height: 50px;
-      width: 200px;
-      transform: translateX(-50%);
-      cursor: pointer;
-      color: #fff;
-  
-      .showcase-show-more-icon {
-        display: block;
-        animation: bounce 2s ease infinite;
-        height: 2rem;
-      }
-    }
-  
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('/assets/images/volleyball_showcase.jpg');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-      z-index: 1;
-    }
-  
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to bottom, white, black);
-      mix-blend-mode: multiply;
-      z-index: 2;
-    }
-  
-    @keyframes bounce {
-      0% {
-        transform: scale(1, 1) translateY(0);
-      }
-      10% {
-        transform: scale(1.1, 0.9) translateY(0);
-      }
-      30% {
-        transform: scale(0.9, 1.1) translateY(-30px);
-      }
-      50% {
-        transform: scale(1.05, 0.95) translateY(0);
-      }
-      57% {
-        transform: scale(1, 1) translateY(-2px);
-      }
-      64% {
-        transform: scale(1, 1) translateY(0);
-      }
-      100% {
-        transform: scale(1, 1) translateY(0);
-      }
-    }
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    z-index: 1;
   }
-  
-  .info-section {
-    position: relative;
-    padding-top: 10rem;
-    width: 100%;
-    height: 100vh;
-  
-    .info-card-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      z-index: 1;
-    }
-  }
-  
+}

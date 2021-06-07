@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  padding-top: 8rem;
+  justify-content: center;
+
+  .about-container {
+    width: 100%;
+    max-width: 40rem;
+    padding: 0 1rem;
+
+    .about-paragraph {
+      text-align: justify;
+      letter-spacing: 1px;
+      line-height: 1.25rem;
+    }
+  }
+}
