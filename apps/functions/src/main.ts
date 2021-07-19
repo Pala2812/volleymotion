@@ -1,4 +1,7 @@
 import * as admin from 'firebase-admin';
+import * as express from 'express';
+import { NestFactory } from '@nestjs/core';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 import { onAccountCreate } from './triggers/on-account-create';
 import { onAccountDelete } from './triggers/on-account-delete';
@@ -11,7 +14,25 @@ import { onSeasonEdit } from './triggers/on-season-edit';
 import { onMatchUpdate } from './triggers/on-match-update';
 import { onMatchDelete } from './triggers/on-match-delete';
 
+import { AppModule } from './app/app.module';
+
 admin.initializeApp();
+
+const server = express();
+
+export const createNestServer = async (expressInstance: any) => {
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressInstance)
+  );
+  app.useLogger(false);
+  app.enableCors({
+    origin: true,
+  });
+  return app.init();
+};
+
+createNestServer(server).catch((err) => console.error('Nest broken', err));
 
 exports.onAccountCreate = onAccountCreate;
 exports.onAccountDelete = onAccountDelete;
