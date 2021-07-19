@@ -23,6 +23,11 @@ export const onAccountCreate = functions
         roles,
       };
 
+      if (!email) {
+        functions.logger.error('E-Mail is undefined: ' + uid);
+        return;
+      }
+
       await admin.firestore().doc(`users/${uid}`).create(user);
       const action_url = await getActionUrl(email, getUrl());
       await sendWelcomeMail(email, action_url);

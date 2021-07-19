@@ -31,22 +31,24 @@ import {
   NbToastrModule,
   NbDialogModule,
   NbLayoutModule,
+  NbSpinnerModule,
 } from '@nebular/theme';
-import { NbDateFnsDateModule } from '@nebular/date-fns'; 
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 import { AppInitService } from './core/services/app-init.service';
+import { ConfirmAccountComponent } from './core/components/confirm-account/confirm-account.component';
 
 registerLocaleData(de, 'de-DE');
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
     return appInitService.init();
-  }
+  };
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ConfirmAccountComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -86,6 +88,7 @@ export function initializeApp(appInitService: AppInitService) {
     NbToastrModule.forRoot({ preventDuplicates: true, duration: 2000 }),
     NbThemeModule.forRoot({ name: 'cosmic' }),
     NbDialogModule.forRoot(),
+    NbSpinnerModule,
     AppRoutingModule,
   ],
   providers: [
@@ -107,4 +110,4 @@ export function initializeApp(appInitService: AppInitService) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

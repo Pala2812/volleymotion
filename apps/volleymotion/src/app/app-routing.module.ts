@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfirmAccountComponent } from './core/components/confirm-account/confirm-account.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { SeasonGuard } from './core/guards/season.guard';
@@ -67,32 +68,38 @@ const routes: Routes = [
       {
         path: 'tags',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./tags/tags.module').then(m => m.TagsModule)
+        loadChildren: () =>
+          import('./tags/tags.module').then((m) => m.TagsModule),
       },
       {
         path: 'übungen',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./exercises/exercises.module').then(m => m.ExercisesModule)
+        loadChildren: () =>
+          import('./exercises/exercises.module').then((m) => m.ExercisesModule),
       },
       {
         path: 'artikel',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./article/article.module').then(m => m.ArticleModule)
+        loadChildren: () =>
+          import('./article/article.module').then((m) => m.ArticleModule),
       },
       {
         path: 'feedback',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
+        loadChildren: () =>
+          import('./feedback/feedback.module').then((m) => m.FeedbackModule),
       },
       {
         path: 'analyse',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./analyse/analyse.module').then(m => m.AnalyseModule)
+        loadChildren: () =>
+          import('./analyse/analyse.module').then((m) => m.AnalyseModule),
       },
       {
         path: 'einstellungen',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+        loadChildren: () =>
+          import('./settings/settings.module').then((m) => m.SettingsModule),
       },
     ],
   },
@@ -108,8 +115,12 @@ const routes: Routes = [
   },
   {
     path: 'reset-password',
-    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+    loadChildren: () =>
+      import('./reset-password/reset-password.module').then(
+        (m) => m.ResetPasswordModule
+      ),
   },
+  { path: 'account-bestaetigen', component: ConfirmAccountComponent },
   {
     path: 'impressum',
     loadChildren: () =>
@@ -127,4 +138,4 @@ const routes: Routes = [
   imports: [DashboardModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

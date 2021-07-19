@@ -9,4 +9,5 @@ export const environment = {
     messagingSenderId: '122384843843',
     appId: '1:122384843843:web:c137eefc8cdee29c8900f6',
   },
+  api: 'https://europe-west3-volley-motion-dev.cloudfunctions.net/api'
 };

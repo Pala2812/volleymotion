@@ -16,8 +16,8 @@ export const onSeasonEdit = functions
         const decrement = firestore.FieldValue.increment(-1);
         const increment = firestore.FieldValue.increment(1);
 
-        const decrementAudit = {};
-        const incrementAudit = {};
+        const decrementAudit: any = {};
+        const incrementAudit: any = {};
 
         if (JSON.stringify(seasonBefore?.tags) !== JSON.stringify(seasonAfter?.tags)) {
             seasonBefore?.tags.forEach(tag => {

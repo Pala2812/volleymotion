@@ -10,4 +10,5 @@ export const environment = {
     appId: '1:813157032610:web:d766771b83f9201db92dfb',
     measurementId: 'G-SV9NXVT0R3',
   },
+  api: 'https://europe-west3-volley-motion-dev.cloudfunctions.net/api',
 };

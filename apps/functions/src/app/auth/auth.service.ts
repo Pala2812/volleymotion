@@ -7,7 +7,6 @@ export class AuthService {
   constructor() {}
 
   async getPasswordResetMail(email: string) {
-
     const url = getUrl();
     const action_url = await admin
       .auth()
@@ -25,6 +24,18 @@ export class AuthService {
           },
         },
       });
+  }
+
+  async confirmAccount(email: string) {
+    const user = await admin.auth().getUserByEmail(email.toLowerCase());
+    const uid = user.uid;
+
+    const userPreferences = { isAccountVerified: true };
+    return await admin
+      .firestore()
+      .collection('users')
+      .doc(uid)
+      .set(userPreferences, { merge: true });
   }
 }
 

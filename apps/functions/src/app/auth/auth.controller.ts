@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private auth: AuthService) {}
 
-  @Get('reset-password')
+  @Post('reset-password')
   async sendPasswordResetMail(
     @Req() request: Request,
     @Res() response: Response
@@ -19,5 +19,10 @@ export class AuthController {
     } catch (e) {
       response.status(500).send(e);
     }
+  }
+
+  @Post('confirm-account')
+  async confirmAccount(@Req() request: Request, @Res() response: Response) {
+    const { email } = request.body;
   }
 }
