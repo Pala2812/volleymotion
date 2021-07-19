@@ -1,10 +1,11 @@
-import { role } from "./types";
+import { Meta } from './meta';
+import { role } from './types';
 
 export interface User {
-    createdAt: any;
-    uid: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-    roles: role[];
+  uid: string;
+  firstname: string;
+  lastname: string;
+  meta?: Meta;
+  email: string;
+  roles: role[];
 }
