@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Team } from '@volleymotion/models';
+import { Meta, Team } from '@volleymotion/models';
 import { User } from '../../core/models';
 import { StoreState } from '../../core/store/reducers';
 import * as firebase from 'firebase/app';
@@ -43,7 +43,7 @@ export class TeamCreateComponent implements OnInit {
     'A-Cup',
     'B-Cup',
     'C-Cup',
-    'D-Cup'
+    'D-Cup',
   ];
   teamTypes = ['Damen', 'Herren', 'Jugend', 'Senioren', 'Hobby / Mixed'];
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
@@ -54,7 +54,7 @@ export class TeamCreateComponent implements OnInit {
     private actions$: Actions,
     private route: ActivatedRoute,
     private fs: AngularFirestore
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -76,7 +76,7 @@ export class TeamCreateComponent implements OnInit {
         filter((params) => !!params[0] && params[1].id),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((params) => this.form = this.initForm(params[0]));
+      .subscribe((params) => (this.form = this.initForm(params[0])));
 
     this.store
       .pipe(
@@ -121,7 +121,6 @@ export class TeamCreateComponent implements OnInit {
     if (form.valid) {
       const id = this.id ?? this.fs.createId();
       const uid = this.user.uid;
-      const createdAt = firebase.default.firestore.FieldValue.serverTimestamp();
       const club = form.controls.club.value;
       const name = form.controls.name.value;
       const sportType = form.controls.sportType.value;
@@ -131,7 +130,6 @@ export class TeamCreateComponent implements OnInit {
       const team: Team = {
         id,
         uid,
-        createdAt,
         club,
         name,
         sportType,

@@ -1,22 +1,38 @@
-<nb-card class="team-card" *ngFor="let team of teams$ | async" (click)="selectTeam(team)" [routerLink]="['../detail', team?.id]">
-    <nb-card-header>
-        {{team?.club}} {{team?.name}}
+<nb-card
+  class="team-card"
+  *ngFor="let team of teams$ | async"
+  (click)="selectTeam(team)"
+  [routerLink]="['../detail', team?.id]"
+>
+  <nb-card-header>
+    {{ team?.club }} {{ team?.name }}
 
-        <div class="team-card-actions">
-            <button class="edit-btn" nbButton ghost status="info" [routerLink]="['../bearbeiten', team.id]">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-    
-            <button class="delete-btn" nbButton ghost status="danger" (click)="deleteTeam(team, $event)">
-                <nb-icon icon="trash-outline"></nb-icon>
-            </button>    
-        </div>
+    <div class="team-card-actions">
+      <button
+        class="edit-btn"
+        nbButton
+        ghost
+        status="info"
+        [routerLink]="['../bearbeiten', team.id]"
+      >
+        <nb-icon icon="edit-outline"></nb-icon>
+      </button>
 
-    </nb-card-header>
+      <button
+        class="delete-btn"
+        nbButton
+        ghost
+        status="danger"
+        (click)="deleteTeam(team, $event)"
+      >
+        <nb-icon icon="trash-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
 </nb-card>
 
-<vm-loading-card class="loading-spinner" *ngIf="isLoadingTeams$ | async" [isLoading$]="isLoadingTeams$"></vm-loading-card>
+<nb-spinner *ngIf="isLoadingTeams$ | async"></nb-spinner>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
-    <mat-icon>add</mat-icon>
+  <mat-icon>add</mat-icon>
 </button>

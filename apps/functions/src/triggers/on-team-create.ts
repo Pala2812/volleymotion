@@ -1,44 +1,43 @@
 import * as functions from 'firebase-functions';
 import { firestore } from 'firebase-admin';
-import { Season, Team } from '@volleymotion/models';
+import { Meta, Season, Team } from '@volleymotion/models';
 import { DateTime } from 'luxon';
 
 export const onTeamCreate = functions
   .region('europe-west3')
   .firestore.document('teams/{teamId}')
   .onCreate(async (snap) => {
-    const team = snap.data() as Team;
-    const nextYear = DateTime.local().plus({ years: 1 }).toJSDate();
+    try {
+      const team = snap.data() as Team;
+      const nextYear = DateTime.local().plus({ years: 1 }).toJSDate();
 
-    const currentSeason = createSeason(team, getSeasonName(new Date()));
-    const nextSeason = createSeason(team, getSeasonName(nextYear));
+      const currentSeason = createSeason(team, getSeasonName(new Date()));
+      const nextSeason = createSeason(team, getSeasonName(nextYear));
 
-    const batch = firestore().batch();
-    batch.create(currentSeason.doc, currentSeason.season);
-    batch.create(nextSeason.doc, nextSeason.season);
+      const batch = firestore().batch();
+      batch.create(currentSeason.doc, currentSeason.season);
+      batch.create(nextSeason.doc, nextSeason.season);
 
-    const auditDoc = await firestore()
-      .collection('audits')
-      .doc('teams')
-      .get();
+      const createdAt = firestore.Timestamp.now();
 
-    const increment = firestore.FieldValue.increment(1);
+      const meta: Meta = {
+        createdAt,
+        updatedAt: createdAt,
+      };
 
-    const audit = {
-      total: {
-        [team?.teamType]: increment,
-        [team?.sportType]: increment,
-        [team?.division]: increment,
-      },
-      [team?.sportType]: {
-        [team?.teamType]: {
-          [team?.division]: increment
-        }
-      },
+      const auditDoc = await firestore()
+        .collection('audits')
+        .doc('teams')
+        .get();
+
+      const audit = incrementAudit(team);
+
+      await snap.ref.update(meta);
+      await batch.commit().catch((error) => functions.logger.error(error));
+      await auditDoc.ref.set(audit, { merge: true });
+    } catch (e) {
+      functions.logger.error(e);
     }
-
-    await batch.commit().catch((error) => functions.logger.error(error));
-    await auditDoc.ref.set(audit, { merge: true });
   });
 
 const createSeason = (team: Team, name: string) => {
@@ -64,9 +63,7 @@ const createSeason = (team: Team, name: string) => {
       current: 0,
       max: 0,
     },
-    team: {
-
-    }
+    team: {},
   };
 
   return { doc, season };
@@ -76,4 +73,23 @@ const getSeasonName = (date: Date) => {
   const currentYear = date.getFullYear();
   const lastYear = date.getFullYear() - 1;
   return `${lastYear} - ${currentYear}`;
+};
+
+const incrementAudit = (team: Team) => {
+  const increment = firestore.FieldValue.increment(1);
+
+  const audit = {
+    total: {
+      [team?.teamType]: increment,
+      [team?.sportType]: increment,
+      [team?.division]: increment,
+    },
+    [team?.sportType]: {
+      [team?.teamType]: {
+        [team?.division]: increment,
+      },
+    },
+  };
+
+  return audit;
 };

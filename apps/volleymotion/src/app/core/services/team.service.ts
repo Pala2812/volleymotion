@@ -10,9 +10,6 @@ export class TeamService {
   constructor(private fs: AngularFirestore) {}
 
   createOrUpdateTeam(team: Team | Partial<Team>) {
-    if (!team?.id) {
-      team.id = this.fs.createId();
-    }
     return from(this.fs.collection('teams').doc(team.id).set(team));
   }
 

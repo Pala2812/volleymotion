@@ -1,8 +1,8 @@
-import * as firebase from 'firebase/app';
+import { Meta } from '@volleymotion/models';
 
 export interface Team {
   id: string;
-  createdAt: firebase.default.firestore.FieldValue;
+  meta?: Meta;
   uid: string;
   club: string;
   name: string;

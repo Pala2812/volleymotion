@@ -20,7 +20,13 @@ export class SeasonService {
   }
 
   loadSeasonById(id: string) {
-    return from(this.fs.collection('seasons').doc(id).ref.get().then(doc => doc.data() as Season));
+    return from(
+      this.fs
+        .collection('seasons')
+        .doc(id)
+        .ref.get()
+        .then((doc) => doc.data() as Season)
+    );
   }
 
   updateSeason(season: Partial<Season>) {

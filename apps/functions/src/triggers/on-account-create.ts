@@ -25,7 +25,7 @@ export const onAccountCreate = functions
 
       await admin.firestore().doc(`users/${uid}`).create(user);
       const action_url = await getActionUrl(email, getUrl());
-      await sendWelcomeMail(email, 'Patrick', 'Lange', action_url);
+      await sendWelcomeMail(email, action_url);
     } catch (e) {
       functions.logger.error(e);
     }
@@ -37,14 +37,10 @@ const getUrl = () =>
 const getActionUrl = (email: string, url: string) =>
   admin.auth().generateEmailVerificationLink(email, {
     url,
+    handleCodeInApp: true,
   });
 
-const sendWelcomeMail = (
-  email: string,
-  firstname: string,
-  lastname: string,
-  action_url: string
-) =>
+const sendWelcomeMail = (email: string, action_url: string) =>
   admin
     .firestore()
     .collection('mail')
@@ -53,8 +49,6 @@ const sendWelcomeMail = (
       template: {
         name: 'welcome-mail',
         data: {
-          firstname,
-          lastname,
           action_url,
         },
       },
