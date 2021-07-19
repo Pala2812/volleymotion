@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
@@ -33,6 +34,8 @@ export const createNestServer = async (expressInstance: any) => {
 };
 
 createNestServer(server).catch((err) => console.error('Nest broken', err));
+
+export const api = functions.region('europe-west3').https.onRequest(server);
 
 exports.onAccountCreate = onAccountCreate;
 exports.onAccountDelete = onAccountDelete;
