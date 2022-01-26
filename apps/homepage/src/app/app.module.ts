@@ -45,7 +45,7 @@ import { RootSeoResolver } from './core/resolvers/root-seo.resolver';
             ),
         },
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }
     ),
   ],
   providers: [RootSeoResolver],
