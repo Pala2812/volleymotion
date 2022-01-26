@@ -7,3 +7,10 @@
 .form-field {
   padding-top: 1em;
 }
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 0.5rem;
+}

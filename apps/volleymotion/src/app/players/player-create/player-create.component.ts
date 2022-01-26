@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Player, Season, Tag, Team } from '@volleymotion/models';
@@ -16,6 +17,7 @@ import {
   TagSelectors,
   TeamSelectors,
 } from '../../core/store/selectors';
+import { TagExplanationComponent } from '../../shared/dialogs/tag-explanation/tag-explanation.component';
 
 @Component({
   selector: 'vm-player-create',
@@ -46,7 +48,8 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
     private fs: AngularFirestore,
     private store: Store<StoreState>,
     private router: Router,
-    private actions$: Actions
+    private actions$: Actions,
+    private dialog: NbDialogService
   ) {}
 
   ngOnInit(): void {
@@ -170,5 +173,9 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
 
       this.store.dispatch(PlayerActions.createPlayer({ player }));
     }
+  }
+
+  openTagDialog() {
+    this.dialog.open(TagExplanationComponent);
   }
 }

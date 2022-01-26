@@ -1,9 +1,7 @@
 <ng-container *ngIf="team$ | async as team">
   <ng-container *ngIf="season$ | async as season">
     <nb-card>
-      <nb-card-header>
-        Spielerdaten
-      </nb-card-header>
+      <nb-card-header> Spielerdaten </nb-card-header>
 
       <nb-card-body>
         <form [formGroup]="form" class="form" (ngSubmit)="submit(form, team)">
@@ -39,9 +37,7 @@
     </nb-card>
 
     <nb-card>
-      <nb-card-header>
-        Stärken
-      </nb-card-header>
+      <nb-card-header> Stärken </nb-card-header>
 
       <nb-card-body>
         <mat-chip-list>
@@ -49,95 +45,115 @@
             {{ strength?.value?.name }}
           </mat-chip>
         </mat-chip-list>
-        <nb-form-field class="form-field">
-          <input
-            #strengthInput
-            nbInput
-            [matAutocomplete]="strengthTags"
-            fullWidth
-            placeholder="Tag eingeben"
-          />
-          <mat-autocomplete
-            #strengthTags
-            (optionSelected)="
-              onStrengthTagSelected($event);
-              strengthInput.value = '';
-              strengthInput.blur()
-            "
-          >
-            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-              {{ tag?.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </nb-form-field>
+        <div class="card-container">
+          <nb-form-field class="form-field">
+            <input
+              #strengthInput
+              nbInput
+              [matAutocomplete]="strengthTags"
+              fullWidth
+              placeholder="Tag eingeben"
+            />
+            <mat-autocomplete
+              #strengthTags
+              (optionSelected)="
+                onStrengthTagSelected($event);
+                strengthInput.value = '';
+                strengthInput.blur()
+              "
+            >
+              <mat-option
+                *ngFor="let tag of filteredTags | async"
+                [value]="tag"
+              >
+                {{ tag?.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </nb-form-field>
+          <button nbButton ghost (click)="openTagDialog()">
+            <nb-icon icon="info-outline"></nb-icon>
+          </button>
+        </div>
       </nb-card-body>
     </nb-card>
 
     <nb-card>
-      <nb-card-header>
-        Schwächen
-      </nb-card-header>
+      <nb-card-header> Schwächen </nb-card-header>
       <nb-card-body>
         <mat-chip-list>
           <mat-chip *ngFor="let weakness of weaknesses.controls">
             {{ weakness?.value?.name }}
           </mat-chip>
         </mat-chip-list>
-        <nb-form-field class="form-field">
-          <input
-            #weaknessInput
-            nbInput
-            [matAutocomplete]="weaknessTags"
-            fullWidth
-            placeholder="Tag eingeben"
-          />
-          <mat-autocomplete
-            #weaknessTags
-            (optionSelected)="
-              onWeaknessesSelected($event);
-              weaknessInput.value = '';
-              weaknessInput.blur()
-            "
-          >
-            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-              {{ tag?.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </nb-form-field>
+        <div class="card-container">
+          <nb-form-field class="form-field">
+            <input
+              #weaknessInput
+              nbInput
+              [matAutocomplete]="weaknessTags"
+              fullWidth
+              placeholder="Tag eingeben"
+            />
+            <mat-autocomplete
+              #weaknessTags
+              (optionSelected)="
+                onWeaknessesSelected($event);
+                weaknessInput.value = '';
+                weaknessInput.blur()
+              "
+            >
+              <mat-option
+                *ngFor="let tag of filteredTags | async"
+                [value]="tag"
+              >
+                {{ tag?.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </nb-form-field>
+          <button nbButton ghost (click)="openTagDialog()">
+            <nb-icon icon="info-outline"></nb-icon>
+          </button>
+        </div>
       </nb-card-body>
     </nb-card>
 
     <nb-card>
-      <nb-card-header>
-        Verbesserungwunsch
-      </nb-card-header>
+      <nb-card-header> Verbesserungwunsch </nb-card-header>
       <nb-card-body>
         <mat-chip-list>
           <mat-chip *ngFor="let improvement of improvements.controls">
             {{ improvement?.value?.name }}
           </mat-chip>
         </mat-chip-list>
-        <nb-form-field class="form-field">
-          <input
-            #improvementInput
-            nbInput
-            [matAutocomplete]="improveTags"
-            fullWidth
-            placeholder="Tag eingeben"
-          />
-          <mat-autocomplete
-            #improveTags
-            (optionSelected)="
-              onImprovementSelected($event);
-              improvementInput.value = '';
-              improvementInput.blur()
-            "
-          >
-            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-              {{ tag?.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </nb-form-field>
+        <div class="card-container">
+          <nb-form-field class="form-field">
+            <input
+              #improvementInput
+              nbInput
+              [matAutocomplete]="improveTags"
+              fullWidth
+              placeholder="Tag eingeben"
+            />
+            <mat-autocomplete
+              #improveTags
+              (optionSelected)="
+                onImprovementSelected($event);
+                improvementInput.value = '';
+                improvementInput.blur()
+              "
+            >
+              <mat-option
+                *ngFor="let tag of filteredTags | async"
+                [value]="tag"
+              >
+                {{ tag?.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </nb-form-field>
+          <button nbButton ghost (click)="openTagDialog()">
+            <nb-icon icon="info-outline"></nb-icon>
+          </button>
+        </div>
       </nb-card-body>
     </nb-card>
 

@@ -78,6 +78,13 @@ const routes: Routes = [
           import('./exercises/exercises.module').then((m) => m.ExercisesModule),
       },
       {
+        path: 'video-training',
+        loadChildren: () =>
+          import('./video-training/video-training.module').then(
+            (m) => m.VideoTrainingModule
+          ),
+      },
+      {
         path: 'artikel',
         canActivate: [AuthGuard],
         loadChildren: () =>
@@ -135,7 +142,10 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  imports: [DashboardModule, RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [
+    DashboardModule,
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

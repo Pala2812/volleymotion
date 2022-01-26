@@ -37,7 +37,7 @@ export const fullItems = [
   },
   { title: 'Spieler', link: 'spieler', icon: 'person-add-outline' },
   { title: 'Spieltage', link: 'spieltage', icon: 'calendar-outline' },
- /* {
+  /* {
     title: 'Training',
     link: 'training',
     icon: 'list-outline',
@@ -45,8 +45,9 @@ export const fullItems = [
   // { title: 'Trainingsspiele', link: 'trainingsspiele', icon: 'pin-outline' },
   // { title: 'Übungen', link: 'übungen', icon: 'activity-outline' },
   //  { title: 'Chat', link: 'chat', icon: 'paper-plane-outline' },
-  //  { title: 'Blog', link: 'artikel', icon: 'book-outline' },
+  { title: 'Übungen', link: 'video-training', icon: 'film-outline' },
+  { title: 'Blog', link: 'artikel', icon: 'book-outline' },
   { title: 'Tags', link: 'tags', icon: 'hash-outline' },
   { title: 'Feedback', link: 'feedback', icon: 'star-outline' },
- // { title: 'Analyse', link: 'analyse', icon: 'bar-chart-outline' },
+  // { title: 'Analyse', link: 'analyse', icon: 'bar-chart-outline' },
 ];

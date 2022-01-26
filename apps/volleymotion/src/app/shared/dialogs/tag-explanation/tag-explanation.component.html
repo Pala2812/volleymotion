@@ -1,0 +1,24 @@
+<nb-card>
+  <nb-card-header> Nutzungsweise der Tags </nb-card-header>
+
+  <nb-card-body>
+    Die Tags helfen den Trainer die Stärken, Schwächen und Verbesserungwünsche
+    seiner Spieler im Blick zu behalten und so gezielter sein Training zu
+    gestalten. Weiterhin werden mit den Tags in der Zukunft verschiedene
+    Bereiche von Volleymotion miteinander verknüpft. Beispielsweise:<br />
+
+    <ul>
+      <li>Artikelvorschläge anhand der Tags</li>
+      <li>Übungsvorschläge anhand der Tags</li>
+      <li>Trainingsvorschläge anhand der Tags</li>
+      <li>Vorschläge von YouTube Videos anhand der Tags</li>
+    </ul>
+
+    <span>Nicht vorhandene Tags können
+      <a [routerLink]="['/tags']" (click)="cancel()">hier</a> vorgeschlagen werden</span>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton ghost (click)="cancel()">Schließen</button>
+  </nb-card-footer>
+</nb-card>

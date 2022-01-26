@@ -1,118 +1,173 @@
-<div class="container" *ngIf="{
+<div
+  class="container"
+  *ngIf="{
     team: team$ | async,
     season: season$ | async
-} as data">
-    <nb-tabset>
+  } as data"
+>
+  <nb-tabset>
+    <nb-tab tabTitle="Übersicht">
+      <nb-card class="card">
+        <nb-card-header class="card-header">
+          Saisonziel
+          <div class="card-header-actions">
+            <button
+              class="action-btn"
+              nbButton
+              ghost
+              status="info"
+              [routerLink]="[
+                '../saisons/bearbeiten',
+                data?.season?.id,
+                data?.team?.id
+              ]"
+              [queryParams]="{ redirectUrl: 'dashboard' }"
+            >
+              <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          {{ data?.season?.goal }}
+        </nb-card-body>
+      </nb-card>
 
-        <nb-tab tabTitle="Übersicht">
-            <nb-card class="card">
-                <nb-card-header class="card-header">
-                    Saisonziel
-                    <div class="card-header-actions">
-                        <button class="action-btn" nbButton ghost status="info"
-                            [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
-                            [queryParams]="{redirectUrl: 'dashboard'}">
-                            <nb-icon icon="edit-outline"></nb-icon>
-                        </button>
-                    </div>
-                </nb-card-header>
-                <nb-card-body>
-                    {{data?.season?.goal}}
-                </nb-card-body>
-            </nb-card>
+      <nb-card class="card">
+        <nb-card-header class="card-header">
+          Trainingsfocus
+          <div class="card-header-actions">
+            <button
+              class="action-btn"
+              nbButton
+              ghost
+              status="info"
+              [routerLink]="[
+                '../saisons/bearbeiten',
+                data?.season?.id,
+                data?.team?.id
+              ]"
+              [queryParams]="{ redirectUrl: 'dashboard' }"
+            >
+              <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <mat-chip-list class="tag-list">
+            <mat-chip *ngFor="let tag of data?.season?.tags">
+              {{ tag?.name }}
+            </mat-chip>
+          </mat-chip-list>
+        </nb-card-body>
+      </nb-card>
 
-            <nb-card class="card">
-                <nb-card-header class="card-header">
-                    Trainingsfocus
-                    <div class="card-header-actions">
-                        <button class="action-btn" nbButton ghost status="info"
-                            [routerLink]="['../saisons/bearbeiten', data?.season?.id, data?.team?.id]"
-                            [queryParams]="{redirectUrl: 'dashboard'}">
-                            <nb-icon icon="edit-outline"></nb-icon>
-                        </button>
-                    </div>
-                </nb-card-header>
-                <nb-card-body>
-                    <mat-chip-list class="tag-list">
-                        <mat-chip *ngFor="let tag of data?.season?.tags">
-                            {{tag?.name}}
-                        </mat-chip>
-                    </mat-chip-list>
-                </nb-card-body>
-            </nb-card>
+      <nb-card class="card" *ngIf="nextMatch$ | async as nextMatch">
+        <nb-card-header class="card-header"
+          >Nächster Spieltag
+          {{
+            nextMatch?.date | timestamp | date: 'dd.MM HH:mm'
+          }}</nb-card-header
+        >
+        <nb-card-body>
+          {{ nextMatch?.opponent }}
+        </nb-card-body>
+      </nb-card>
 
-            <nb-card class="card" *ngIf="nextMatch$ | async as nextMatch">
-                <nb-card-header class="card-header">Nächster Spieltag {{nextMatch?.date | timestamp | date: 'dd.MM HH:mm'}}</nb-card-header>
-                <nb-card-body>
-                    {{nextMatch?.opponent}}
-                </nb-card-body>
-            </nb-card>
-
+      <!--
             <nb-card class="card border-red">
                 <nb-card-header class="card-header">Nächste Trainingseinheit</nb-card-header>
                 <nb-card-body>Verfolge die Zu- und Absagen für deine nächste Trainingseinheit</nb-card-body>
             </nb-card>
+            -->
 
-            <nb-card class="card" *ngIf="!(players$ | async)?.length">
-                <nb-card-header class="card-header">Spieler anlegen</nb-card-header>
-                <nb-card-body>Lege deine <a [routerLink]="['/spieler']">Mannschaft</a> an!</nb-card-body>
-            </nb-card>
+      <nb-card class="card" *ngIf="!(players$ | async)?.length">
+        <nb-card-header class="card-header">Spieler anlegen</nb-card-header>
+        <nb-card-body
+          >Lege deine
+          <a [routerLink]="['/spieler']">Mannschaft</a> an!</nb-card-body
+        >
+      </nb-card>
 
-            <nb-card class="card" *ngIf="!(matches$ | async)?.length">
-                <nb-card-header class="card-header">Spieltag anlegen</nb-card-header>
-                <nb-card-body>Lege deine <a [href]="['/spieltage']">Spieltage</a> an!</nb-card-body>
-            </nb-card>
-        </nb-tab>
+      <nb-card class="card" *ngIf="!(matches$ | async)?.length">
+        <nb-card-header class="card-header">Spieltag anlegen</nb-card-header>
+        <nb-card-body
+          >Lege deine <a [href]="['/spieltage']">Spieltage</a> an!</nb-card-body
+        >
+      </nb-card>
+    </nb-tab>
 
-        <nb-tab tabTitle="Analyse">
+    <nb-tab tabTitle="Analyse">
+      <div class="charts">
+        <nb-card class="chart-card">
+          <nb-card-header>Spiele </nb-card-header>
+          <nb-card-body class="chart-card-body">
+            <google-chart
+              *ngIf="(matches$ | async)?.length; else noMatches"
+              [dynamicResize]="true"
+              type="PieChart"
+              [data]="matchParticipationChart$ | async"
+              [options]="options"
+            >
+            </google-chart>
+            <ng-template #noMatches>Noch keine Spiele eingetragen</ng-template>
+          </nb-card-body>
+        </nb-card>
 
-            <div class="charts">
-                <nb-card class="chart-card">
-                    <nb-card-header>Spiele
-                    </nb-card-header>
-                    <nb-card-body class="chart-card-body">
-                        <google-chart *ngIf="(matches$ | async)?.length; else noMatches" [dynamicResize]="true"
-                            type="PieChart" [data]="matchParticipationChart$ | async" [options]="options">
-                        </google-chart>
-                        <ng-template #noMatches>Noch keine Spiele eingetragen</ng-template>
-                    </nb-card-body>
-                </nb-card>
+        <nb-card class="chart-card">
+          <nb-card-header>Spielbeteiligung</nb-card-header>
+          <nb-card-body class="chart-card-body">
+            <google-chart
+              *ngIf="(matches$ | async)?.length; else noMatches"
+              [dynamicResize]="true"
+              type="PieChart"
+              [data]="participations$ | async"
+              [options]="options"
+            ></google-chart>
+          </nb-card-body>
+        </nb-card>
 
-                <nb-card class="chart-card">
-                    <nb-card-header>Spielbeteiligung</nb-card-header>
-                    <nb-card-body class="chart-card-body">
-                        <google-chart *ngIf="(matches$ | async)?.length; else noMatches" [dynamicResize]="true"
-                            type="PieChart" [data]="participations$ | async" [options]="options"></google-chart>
-                    </nb-card-body>
-                </nb-card>
+        <nb-card class="chart-card">
+          <nb-card-header>Spielanwesenheit</nb-card-header>
+          <nb-card-body class="chart-card-body">
+            <google-chart
+              *ngIf="(attendance$ | async)?.length; else noMatches"
+              [dynamicResize]="true"
+              type="PieChart"
+              [data]="attendance$ | async"
+              [options]="options"
+            ></google-chart>
+          </nb-card-body>
+        </nb-card>
 
-                <nb-card class="chart-card">
-                    <nb-card-header>Spielanwesenheit</nb-card-header>
-                    <nb-card-body class="chart-card-body">
-                        <google-chart *ngIf="(attendance$ | async)?.length; else noMatches" [dynamicResize]="true"
-                            type="PieChart" [data]="attendance$ | async" [options]="options"></google-chart>
-                    </nb-card-body>
-                </nb-card>
+        <nb-card class="chart-card border-red">
+          <nb-card-header>Trainingsbeteiligung</nb-card-header>
+          <nb-card-body class="chart-card-body">
+            <google-chart
+              [dynamicResize]="true"
+              type="PieChart"
+              [data]="trainData"
+              [options]="options"
+            >
+            </google-chart>
+          </nb-card-body>
+        </nb-card>
 
-                <nb-card class="chart-card border-red">
-                    <nb-card-header>Trainingsbeteiligung</nb-card-header>
-                    <nb-card-body class="chart-card-body">
-                        <google-chart [dynamicResize]="true" type="PieChart" [data]="trainData" [options]="options">
-                        </google-chart>
-                    </nb-card-body>
-                </nb-card>
+        <nb-card class="chart-card border-red">
+          <nb-card-header>Trainingsfocus</nb-card-header>
+          <nb-card-body class="chart-card-body">
+            <google-chart
+              [dynamicResize]="true"
+              type="PieChart"
+              [data]="trainFocusData"
+              [options]="options"
+            >
+            </google-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </nb-tab>
 
-                <nb-card class="chart-card border-red">
-                    <nb-card-header>Trainingsfocus</nb-card-header>
-                    <nb-card-body class="chart-card-body">
-                        <google-chart [dynamicResize]="true" type="PieChart" [data]="trainFocusData"
-                            [options]="options">
-                        </google-chart>
-                    </nb-card-body>
-                </nb-card>
-            </div>
-        </nb-tab>
-
+    <!--
         <nb-tab tabTitle="Tags">
             <nb-card>
                 <nb-card-header>Stärken deiner Mannschaft</nb-card-header>
@@ -141,5 +196,6 @@
                 </nb-card-body>
             </nb-card>
         </nb-tab>
-    </nb-tabset>
+        -->
+  </nb-tabset>
 </div>

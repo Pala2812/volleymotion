@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Season, Tag } from '@volleymotion/models';
@@ -15,6 +16,7 @@ import { map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { SeasonActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors, TagSelectors } from '../../core/store/selectors';
+import { TagExplanationComponent } from '../../shared/dialogs/tag-explanation/tag-explanation.component';
 
 @Component({
   selector: 'vm-season-edit',
@@ -36,7 +38,8 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private actions$: Actions,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: NbDialogService
   ) {}
 
   ngOnInit(): void {
@@ -120,5 +123,9 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
       const season = { ...this.season, goal, tags };
       this.store.dispatch(SeasonActions.updateSeason({ season }));
     }
+  }
+
+  openTagDialog() {
+    this.dialog.open(TagExplanationComponent);
   }
 }

@@ -1,27 +1,57 @@
 <nb-card>
-    <nb-card-header>Saison bearbeiten</nb-card-header>
+  <nb-card-header>Saison bearbeiten</nb-card-header>
 
-    <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
-        <nb-form-field>
-            <input nbInput fullWidth placeholder="Saisonziel" formControlName="goal">
-        </nb-form-field>
+  <form [formGroup]="form" class="form" (ngSubmit)="submit(form)">
+    <nb-form-field>
+      <input
+        nbInput
+        fullWidth
+        placeholder="Saisonziel definieren"
+        formControlName="goal"
+      />
+    </nb-form-field>
 
-        <nb-form-field *ngFor="let control of tags.controls; let index">
-            <input fullWidth nbInput disabled [value]="control?.value?.name">
-            <button nbSuffix nbButton ghost status="danger" type="button" (click)="removeTag(index, $event)">
-                <nb-icon icon="trash-outline" ghost></nb-icon>
-            </button>
-        </nb-form-field>
+    <nb-form-field *ngFor="let control of tags.controls; let index">
+      <input fullWidth nbInput disabled [value]="control?.value?.name" />
+      <button
+        nbSuffix
+        nbButton
+        ghost
+        status="danger"
+        type="button"
+        (click)="removeTag(index, $event)"
+      >
+        <nb-icon icon="trash-outline" ghost></nb-icon>
+      </button>
+    </nb-form-field>
 
-        <nb-form-field>
-            <input nbInput #tagInput fullWidth [matAutocomplete]="tagsAuto" (input)="onInputChanged($event)" placeholder="Tags Suchen">
-            <mat-autocomplete #tagsAuto (optionSelected)="onTagClicked($event)" (optionSelected)="tagInput.value = ''; tagInput.blur()" >
-                <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
-                  {{tag?.name}}
-                </mat-option>
-              </mat-autocomplete>
-        </nb-form-field>
-        <button nbButton type="submit" [disabled]="isUpdatingSeason$ | async">Saison aktualisieren</button>
-    </form>
+    <div class="focus-container">
+      <nb-form-field>
+        <input
+          nbInput
+          #tagInput
+          fullWidth
+          [matAutocomplete]="tagsAuto"
+          (input)="onInputChanged($event)"
+          placeholder="Trainingsfocus festlegen"
+        />
+        <mat-autocomplete
+          #tagsAuto
+          (optionSelected)="onTagClicked($event)"
+          (optionSelected)="tagInput.value = ''; tagInput.blur()"
+        >
+          <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+            {{ tag?.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </nb-form-field>
+      <button nbButton type="button" ghost (click)="openTagDialog()">
+        <nb-icon icon="info-outline"></nb-icon>
+      </button>
+    </div>
 
+    <button nbButton type="submit" [disabled]="isUpdatingSeason$ | async">
+      Saison aktualisieren
+    </button>
+  </form>
 </nb-card>

@@ -79,9 +79,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       time = new Date(match?.date.seconds * 1000);
     }
 
-    console.log(date);
-
-    return new FormGroup({
+    const form = new FormGroup({
       id: new FormControl(match?.id ?? ''),
       opponent: new FormControl(match?.opponent ?? '', [Validators.required]),
       date: new FormControl(date, [Validators.required]),
@@ -112,6 +110,9 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
         lng: new FormControl(match?._geoloc?.lng ?? '', [Validators.required]),
       }),
     });
+
+    form.get('_geoloc')?.disable();
+    return form;
   }
 
   get address() {

@@ -13,6 +13,7 @@ import { environment } from '../../environments/environment';
 import { LoadingCardComponent } from './components/loading-card/loading-card.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { TagInputComponent } from './components/tag-input/tag-input.component';
+import { TagExplanationComponent } from './dialogs/tag-explanation/tag-explanation.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TagInputComponent } from './components/tag-input/tag-input.component';
     LoadingCardComponent,
     DeleteDialogComponent,
     TagInputComponent,
+    TagExplanationComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,10 @@ import { TagInputComponent } from './components/tag-input/tag-input.component';
     GoogleChartsModule,
     AgmCoreModule,
   ],
-  entryComponents: [AuthDialogComponent, DeleteDialogComponent],
+  entryComponents: [
+    AuthDialogComponent,
+    DeleteDialogComponent,
+    TagExplanationComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
