@@ -1,0 +1,16 @@
+.video-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.filter-btn {
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+}

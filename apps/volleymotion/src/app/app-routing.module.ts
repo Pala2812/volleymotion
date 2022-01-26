@@ -79,6 +79,7 @@ const routes: Routes = [
       },
       {
         path: 'video-training',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./video-training/video-training.module').then(
             (m) => m.VideoTrainingModule

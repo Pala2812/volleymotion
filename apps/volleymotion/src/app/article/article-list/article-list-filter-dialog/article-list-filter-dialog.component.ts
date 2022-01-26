@@ -17,6 +17,8 @@ export class ArticleListFilterDialogComponent implements OnInit {
   @Input() tags: Tag[] = [];
   tags$: Observable<Tag[]> | undefined;
   filteredTags$: Observable<Tag[]> | undefined;
+  sportType = 'Hallenvolleyball';
+  sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
   constructor(
     private dialogRef: NbDialogRef<ArticleListFilterDialogComponent>,
@@ -65,6 +67,6 @@ export class ArticleListFilterDialogComponent implements OnInit {
   }
 
   applyFilter() {
-    this.dialogRef.close(this.tags);
+    this.dialogRef.close({ tags: this.tags, sportType: this.sportType });
   }
 }

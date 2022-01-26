@@ -21,3 +21,4 @@ export * from './charts/match-participation-chart';
 export * from './animation-step';
 export * from './exercise';
 export * from './meta';
+export * from './video-training';
