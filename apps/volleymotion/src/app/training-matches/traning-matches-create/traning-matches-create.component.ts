@@ -53,7 +53,6 @@ export class TraningMatchesCreateComponent implements OnInit {
 
   initForm(team?: Team) {
     const form = new FormGroup({
-      club: new FormControl(team?.club ?? ''),
       name: new FormControl(team?.name),
       sportType: new FormControl(team?.sportType ?? ''),
       teamType: new FormControl(team?.teamType ?? ''),

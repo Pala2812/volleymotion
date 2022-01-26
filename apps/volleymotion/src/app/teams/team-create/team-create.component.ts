@@ -37,13 +37,13 @@ export class TeamCreateComponent implements OnInit {
     'Bezirksklasse',
     'Kreisliga',
     'Kreisklasse',
-    'Jugend',
-    'Senioren',
-    'Hobby / Mixed',
     'A-Cup',
     'B-Cup',
     'C-Cup',
     'D-Cup',
+    'Jugend',
+    'Senioren',
+    'Hobby / Mixed',
   ];
   teamTypes = ['Damen', 'Herren', 'Jugend', 'Senioren', 'Hobby / Mixed'];
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
@@ -95,7 +95,6 @@ export class TeamCreateComponent implements OnInit {
 
   initForm(team?: Team) {
     return new FormGroup({
-      club: new FormControl(team?.club ?? '', [Validators.required]),
       name: new FormControl(team?.name ?? '', [Validators.required]),
       sportType: new FormControl(team?.sportType ?? '', [Validators.required]),
       teamType: new FormControl(team?.teamType ?? '', [Validators.required]),
@@ -119,7 +118,6 @@ export class TeamCreateComponent implements OnInit {
     if (form.valid && this.user?.uid) {
       const id = this.id ?? this.fs.createId();
       const uid = this.user.uid;
-      const club = form.controls.club.value;
       const name = form.controls.name.value;
       const sportType = form.controls.sportType.value;
       const teamType = form.controls.teamType.value;
@@ -128,7 +126,6 @@ export class TeamCreateComponent implements OnInit {
       const team: Team = {
         id,
         uid,
-        club,
         name,
         sportType,
         teamType,

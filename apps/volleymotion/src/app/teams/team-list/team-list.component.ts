@@ -75,8 +75,8 @@ export class TeamListComponent implements OnInit, OnDestroy {
   deleteTeam(team: Team, event: Event) {
     const ref = this.dialogService.open(DeleteDialogComponent, {
       context: {
-        title: `${team?.club} ${team?.name} Löschen?`,
-        message: `Möchtest du ${team?.club} ${team?.name} wirklich löschen?<br>
+        title: `${team?.name} Löschen?`,
+        message: `Möchtest du ${team?.name} wirklich löschen?<br>
         Diese Aktion ist ist unwiderruflich!`,
       },
       autoFocus: false,
