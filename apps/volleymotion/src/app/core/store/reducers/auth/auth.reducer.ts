@@ -6,7 +6,7 @@ export const authFeatureKey = 'auth';
 export interface State {
   isCreatingUserWithEMailAndPassword: boolean;
   isSigningInWithEMailAndPassword: boolean;
-  uid: string;
+  uid: string | undefined;
 }
 
 export const initialState: State = {

@@ -12,7 +12,7 @@ import { TagProposalService } from '../shared/services.service';
 })
 export class TagCreateComponent implements OnInit {
   isSending$ = new Subject<boolean>();
-  form: FormGroup;
+  form: FormGroup = this.initForm();
 
   constructor(
     private tagProposalService: TagProposalService,
@@ -20,9 +20,7 @@ export class TagCreateComponent implements OnInit {
     private toastService: NbToastrService
   ) {}
 
-  ngOnInit(): void {
-    this.form = this.initForm();
-  }
+  ngOnInit(): void {}
 
   initForm() {
     return new FormGroup({
@@ -43,7 +41,7 @@ export class TagCreateComponent implements OnInit {
         });
         return;
       }
-      
+
       this.tagProposalService
         .addTagProposal(tagProposal)
         .pipe(

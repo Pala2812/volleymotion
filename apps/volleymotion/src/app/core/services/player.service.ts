@@ -52,7 +52,7 @@ export class PlayerService {
     )
   };
 
-  loadPlayerComments(player: Player): Observable<PlayerComment[]> {
+  loadPlayerComments(player: Player | undefined): Observable<PlayerComment[]> {
     return this.fs.collection('players').doc(player?.id).collection<PlayerComment>('comments').valueChanges()
       .pipe(map((comments) => comments?.sort((a, b) => b?.createdAt?.toMillis() - a?.createdAt?.toMillis())));
   }

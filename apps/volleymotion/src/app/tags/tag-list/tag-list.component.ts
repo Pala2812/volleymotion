@@ -12,8 +12,8 @@ import { TagProposalService } from '../shared/services.service';
 export class TagListComponent implements OnInit {
   isLoadingProposals$ = new Subject<boolean>();
   isLoadingTags$ = new Subject<boolean>();
-  tagProposals$: Observable<TagProposal[]>;
-  tags$: Observable<Tag[]>;
+  tagProposals$: Observable<TagProposal[]> | undefined;
+  tags$: Observable<Tag[]> | undefined;
 
   constructor(private tagProposalService: TagProposalService) {}
 

@@ -30,7 +30,10 @@ export const createTeamFailure = createAction(
   props<{ error: any }>()
 );
 
-export const setTeam = createAction(`${key} Set Team`, props<{ team: Team }>());
+export const setTeam = createAction(
+  `${key} Set Team`,
+  props<{ team: Team | undefined }>()
+);
 
 export const loadTeamById = createAction(
   `${key} Load Team By Id`,
@@ -52,15 +55,11 @@ export const deleteTeam = createAction(
   props<{ team: Team }>()
 );
 
-export const deleteTeamSuccess = createAction(
-  `${key} Delete Team Success`,
-);
+export const deleteTeamSuccess = createAction(`${key} Delete Team Success`);
 
 export const deleteTeamFailure = createAction(
   `${key} Delete Team Failure`,
   props<{ error: Error }>()
 );
 
-export const resetTeam = createAction(
-  `${key} reset Team`,
-);
+export const resetTeam = createAction(`${key} reset Team`);

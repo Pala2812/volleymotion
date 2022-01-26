@@ -15,8 +15,8 @@ import { MatchSelectors, SeasonSelectors } from '../../core/store/selectors';
   styleUrls: ['./match-list.component.scss'],
 })
 export class MatchListComponent implements OnInit, OnDestroy {
-  isLoadingMatches$: Observable<boolean>;
-  matches$: Observable<Match[]>;
+  isLoadingMatches$: Observable<boolean> | undefined;
+  matches$: Observable<Match[]> | undefined;
 
   private unsubscribe$ = new Subject();
 
@@ -40,6 +40,9 @@ export class MatchListComponent implements OnInit, OnDestroy {
       .pipe(select(SeasonSelectors.selectSeason),
         filter(season => !!season))
       .subscribe((season) => {
+        if (!season) {
+          throw new Error('Unable to find Season');
+        }
         const teamId = season.teamId;
         const seasonId = season.id;
         this.store.dispatch(MatchActions.loadMatches({ teamId, seasonId }));

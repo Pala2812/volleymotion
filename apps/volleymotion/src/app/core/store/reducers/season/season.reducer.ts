@@ -9,7 +9,7 @@ export interface State {
   isLoadingSeason: boolean;
   isUpdatingSeason: boolean;
   seasons: Season[];
-  season: Season;
+  season: Season | undefined;
 }
 
 export const initialState: State = {
@@ -37,7 +37,7 @@ export const reducer = createReducer(
   })),
 
   on(SeasonActions.setSeason, (state, {season}) => ({...state, season})),
-  
+
   on(SeasonActions.updateSeason, (state) => ({...state, isUpdatingSeason: true})),
   on(SeasonActions.updateSeasonSuccess, (state) => ({...state, isUpdatingSeason: false})),
   on(SeasonActions.updateSeasonFailure, (state) => ({...state, isUpdatingSeason: false})),

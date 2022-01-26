@@ -147,7 +147,7 @@ export class SurveyEffects {
               ).pipe(
                 map((users) =>
                   surveyComments.map((comment) => {
-                    const user = users.find((user) => (user.uid = comment.uid));
+                    const user = users.find((user) => user?.uid === comment?.uid);
                     comment.user = user;
                     return comment;
                   })
@@ -156,7 +156,8 @@ export class SurveyEffects {
             ),
             map((surveyComments) =>
               surveyComments.sort(
-                (a, b) => a?.createdAt?.toMillis() - b?.createdAt?.toMillis()
+                (a: any, b: any) =>
+                  a?.createdAt?.toMillis() - b?.createdAt?.toMillis()
               )
             ),
             map((surveyComments) =>

@@ -14,7 +14,7 @@ export interface State {
   isReportingSurvey: boolean;
   isLoadingSurveyComments: boolean;
   surveys: Article[];
-  article: Article;
+  article: Article | undefined;
   surveyComments: SurveyComment[];
 }
 

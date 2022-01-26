@@ -8,13 +8,13 @@ import { PlayerComment } from '@volleymotion/models';
 })
 export class PlayerCommentComponent implements OnInit {
   @Output() deletePlayerComment = new EventEmitter<PlayerComment>();
-  @Input() playerComment: PlayerComment;
+  @Input() playerComment: PlayerComment | undefined;
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  onDeleteItem(playerComment: PlayerComment) {
+  onDeleteItem(playerComment: PlayerComment | undefined) {
     this.deletePlayerComment.next(playerComment);
   }
 }

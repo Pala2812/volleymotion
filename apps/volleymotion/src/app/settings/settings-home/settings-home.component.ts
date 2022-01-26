@@ -13,7 +13,7 @@ import { UserSelectors } from '../../core/store/selectors';
   styleUrls: ['./settings-home.component.scss']
 })
 export class SettingsHomeComponent implements OnInit {
-  user$: Observable<User>;
+  user$: Observable<User | undefined> | undefined;
 
   constructor(private auth: AngularFireAuth, private store: Store<StoreState>) { }
 
@@ -26,7 +26,7 @@ export class SettingsHomeComponent implements OnInit {
       .subscribe(user => {
         const deleteAccount = confirm('Möchtest du deinen Account und alle Daten wirklich löschen?')
         if (deleteAccount) {
-          user.delete()
+          user?.delete()
             .then(() => alert('Dein Account und deine Daten würden gelöscht!'))
             .catch(error => alert(error.message));
         }

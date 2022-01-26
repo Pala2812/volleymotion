@@ -18,11 +18,11 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./team-create.component.scss'],
 })
 export class TeamCreateComponent implements OnInit {
-  isCreatingTeam$: Observable<boolean>;
+  isCreatingTeam$: Observable<boolean> | undefined;
   unsubscribe$ = new Subject();
-  form: FormGroup;
-  user: User;
-  id: string;
+  form: FormGroup = this.initForm();
+  user: User | undefined;
+  id: string | undefined;
   title = 'Mannschaft erstellen';
   buttonText = 'Mannschaft erstellen';
   divisions = [
@@ -57,8 +57,6 @@ export class TeamCreateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = this.initForm();
-
     this.route.params.subscribe((params) => {
       this.id = params.id;
       if (this.id) {
@@ -118,7 +116,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   submit(form: FormGroup) {
-    if (form.valid) {
+    if (form.valid && this.user?.uid) {
       const id = this.id ?? this.fs.createId();
       const uid = this.user.uid;
       const club = form.controls.club.value;

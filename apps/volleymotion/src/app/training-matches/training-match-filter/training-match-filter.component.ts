@@ -8,7 +8,7 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./training-match-filter.component.scss'],
 })
 export class TrainingMatchFilterComponent implements OnInit {
-  filters: { teamType: string, division: string, sportType: string };
+  filters: { teamType: string; division: string; sportType: string } | undefined;
   divisions = [
     '1. Bundesliga',
     '2. Bundensliga',
@@ -27,13 +27,11 @@ export class TrainingMatchFilterComponent implements OnInit {
   ];
   teamTypes = ['Damen', 'Herren', 'Jugend', 'Senioren', 'Hobby / Mixed'];
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
-  form: FormGroup;
+  form: FormGroup = this.initForm(undefined);
 
-  constructor(private dialogRef: NbDialogRef<TrainingMatchFilterComponent>) { }
+  constructor(private dialogRef: NbDialogRef<TrainingMatchFilterComponent>) {}
 
-  ngOnInit(): void {
-    this.form = this.initForm(this.filters);
-  }
+  ngOnInit(): void {}
 
   initForm(filters: any) {
     return new FormGroup({

@@ -21,7 +21,7 @@ export class AuthService {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
       mergeMap((userCredentials) =>
         this.fs
-          .doc<User>(`users/${userCredentials.user.uid}`)
+          .doc<User>(`users/${userCredentials?.user?.uid}`)
           .valueChanges()
           .pipe(
             map((user) => {
@@ -44,7 +44,7 @@ export class AuthService {
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
       mergeMap((userCredentials) =>
         this.fs
-          .doc<User>(`users/${userCredentials.user.uid}`)
+          .doc<User>(`users/${userCredentials?.user?.uid}`)
           .snapshotChanges()
           .pipe(
             filter((snapshot) => snapshot.payload.exists),

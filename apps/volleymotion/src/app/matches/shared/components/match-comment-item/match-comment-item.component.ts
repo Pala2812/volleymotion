@@ -8,14 +8,14 @@ import { MatchComment } from '@volleymotion/models';
 })
 export class MatchCommentItemComponent implements OnInit {
   @Output() deleteMatchComment = new EventEmitter<MatchComment>();
-  @Input() matchComment: MatchComment;
+  @Input() matchComment: MatchComment | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onDeleteItem(matchComment: MatchComment) {
+  onDeleteItem(matchComment: MatchComment | undefined) {
     this.deleteMatchComment.next(matchComment);
   }
 }

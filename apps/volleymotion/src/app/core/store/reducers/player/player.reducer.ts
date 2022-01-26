@@ -13,7 +13,7 @@ export interface State {
   isAddingCommentToPlayer: boolean;
   playerComments: PlayerComment[];
   players: Player[];
-  player: Player;
+  player: Player | undefined;
 }
 
 export const initialState: State = {

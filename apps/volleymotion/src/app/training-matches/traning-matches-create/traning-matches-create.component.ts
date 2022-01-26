@@ -19,8 +19,8 @@ import { TeamSelectors } from '../../core/store/selectors';
   styleUrls: ['./traning-matches-create.component.scss'],
 })
 export class TraningMatchesCreateComponent implements OnInit {
-  form: FormGroup;
-  team: Team;
+  form: FormGroup = this.initForm();
+  team: Team | undefined;
   unsubscribe$ = new Subject();
 
   constructor(
@@ -29,22 +29,26 @@ export class TraningMatchesCreateComponent implements OnInit {
     private actions$: Actions,
     private router: Router,
     private toastService: NbToastrService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.form = this.initForm();
+    this.store
+      .pipe(select(TeamSelectors.selectTeam), takeUntil(this.unsubscribe$))
+      .subscribe((team) => {
+        this.form = this.initForm(team);
+        this.team = team;
+        this.disableControls();
+      });
 
-    this.store.pipe(select(TeamSelectors.selectTeam), takeUntil(this.unsubscribe$)).subscribe((team) => {
-      this.form = this.initForm(team);
-      this.team = team;
-      this.disableControls();
-    });
-
-    this.actions$.pipe(ofType(TraningMatchActions.createTrainingMatchSuccess), takeUntil(this.unsubscribe$))
+    this.actions$
+      .pipe(
+        ofType(TraningMatchActions.createTrainingMatchSuccess),
+        takeUntil(this.unsubscribe$)
+      )
       .subscribe(() => {
         this.toastService.success('Traningsspiel wurd erstellt!', 'Erstellt');
         this.router.navigate(['trainingsspiele']);
-      })
+      });
   }
 
   initForm(team?: Team) {
@@ -54,21 +58,17 @@ export class TraningMatchesCreateComponent implements OnInit {
       sportType: new FormControl(team?.sportType ?? ''),
       teamType: new FormControl(team?.teamType ?? ''),
       division: new FormControl(team?.division ?? ''),
-      address: new FormGroup(
-        {
-          street: new FormControl('', [Validators.required]),
-          streetnumber: new FormControl('', [Validators.required]),
-          postalcode: new FormControl('', [Validators.required]),
-          locality: new FormControl('', [Validators.required]),
-          administrativeArea: new FormControl('', [Validators.required]),
-        },
-      ),
-      _geoloc: new FormGroup(
-        {
-          lat: new FormControl('', [Validators.required]),
-          lng: new FormControl('', [Validators.required]),
-        },
-      ),
+      address: new FormGroup({
+        street: new FormControl('', [Validators.required]),
+        streetnumber: new FormControl('', [Validators.required]),
+        postalcode: new FormControl('', [Validators.required]),
+        locality: new FormControl('', [Validators.required]),
+        administrativeArea: new FormControl('', [Validators.required]),
+      }),
+      _geoloc: new FormGroup({
+        lat: new FormControl('', [Validators.required]),
+        lng: new FormControl('', [Validators.required]),
+      }),
       description: new FormControl(''),
       contact: new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -152,14 +152,13 @@ export class TraningMatchesCreateComponent implements OnInit {
         description,
       };
 
-
       this.store.dispatch(
         TraningMatchActions.createTrainingMatch({ trainingMatch })
       );
     }
   }
 
-  onAddressSelected({ address, geometry }) {
+  onAddressSelected({ address, geometry }: { address: any; geometry: any }) {
     Object.keys(address).forEach((key) => {
       this.address?.controls[key]?.patchValue(address[key]);
     });

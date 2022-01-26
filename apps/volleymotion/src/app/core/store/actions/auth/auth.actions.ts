@@ -10,7 +10,7 @@ export const CreateUserWithEmailAndPassword = createAction(
 
 export const CreateUserWithEmailAndPasswordSuccess = createAction(
   `${key} Create User With Email And Password Success`,
-  props<{ uid: string }>()
+  props<{ uid: string | undefined }>()
 );
 
 export const CreateUserWithEmaiAndPasswordFailure = createAction(
@@ -25,7 +25,7 @@ export const SignInWithEmailAndPassword = createAction(
 
 export const SignInWithEMailAndPasswordSuccess = createAction(
   `${key} Sign In With Email And Password Success`,
-  props<{ uid: string }>()
+  props<{ uid: string | undefined }>()
 );
 
 export const SignInWithEmailAndPasswordFailure = createAction(

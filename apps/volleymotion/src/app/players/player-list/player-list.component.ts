@@ -19,10 +19,10 @@ import {
   styleUrls: ['./player-list.component.scss'],
 })
 export class PlayerListComponent implements OnInit, OnDestroy {
-  isLoadingPlayers$: Observable<Player[]>;
-  players$: Observable<Player[]>;
-  team$: Observable<Team>;
-  season$: Observable<Season>;
+  isLoadingPlayers$: Observable<Player[]> | undefined;
+  players$: Observable<Player[]> | undefined;
+  team$: Observable<Team | undefined> | undefined;
+  season$: Observable<Season | undefined> | undefined;
   unsubscribe$ = new Subject();
 
   constructor(private store: Store<StoreState>, private router: Router, private actions$: Actions) { }
@@ -50,7 +50,7 @@ export class PlayerListComponent implements OnInit, OnDestroy {
 
   loadPlayers() {
     combineLatest([this.team$, this.season$]).pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         if (res[0] && res[1]) {
           const team = res[0];
           const season = res[1];

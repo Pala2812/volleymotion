@@ -20,7 +20,7 @@ export const loadSeasonsByTeamIdFailure = createAction(
 
 export const setSeason = createAction(
   `${key} Set Season`,
-  props<{ season: Season }>()
+  props<{ season: Season | undefined }>()
 );
 
 export const updateSeason = createAction(

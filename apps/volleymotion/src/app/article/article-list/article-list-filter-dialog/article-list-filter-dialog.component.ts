@@ -11,16 +11,17 @@ import { TagSelectors } from '../../../core/store/selectors';
 @Component({
   selector: 'vm-article-list-filter-dialog',
   templateUrl: './article-list-filter-dialog.component.html',
-  styleUrls: ['./article-list-filter-dialog.component.scss']
+  styleUrls: ['./article-list-filter-dialog.component.scss'],
 })
 export class ArticleListFilterDialogComponent implements OnInit {
   @Input() tags: Tag[] = [];
-  tags$: Observable<Tag[]>;
-  filteredTags$: Observable<Tag[]>;
+  tags$: Observable<Tag[]> | undefined;
+  filteredTags$: Observable<Tag[]> | undefined;
 
   constructor(
     private dialogRef: NbDialogRef<ArticleListFilterDialogComponent>,
-    private store: Store<StoreState>) { }
+    private store: Store<StoreState>
+  ) {}
 
   ngOnInit(): void {
     this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
@@ -39,8 +40,10 @@ export class ArticleListFilterDialogComponent implements OnInit {
       this.filteredTags$ = this.tags$;
     }
 
-    this.filteredTags$ = this.filteredTags$.pipe(
-      map(tags => tags.filter(tag => tag.name.toLowerCase().includes(query)))
+    this.filteredTags$ = this.filteredTags$?.pipe(
+      map((tags) =>
+        tags.filter((tag) => tag.name.toLowerCase().includes(query))
+      )
     );
   }
 

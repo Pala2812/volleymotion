@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./analyse.component.scss']
 })
 export class AnalyseComponent implements OnInit {
-  teams$: Observable<any[]>;
-  tags$: Observable<any[]>;
+  teams$: Observable<any[]> | undefined;
+  tags$: Observable<any[]> | undefined;
 
   constructor(private fs: AngularFirestore) { }
 

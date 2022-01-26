@@ -16,8 +16,13 @@ import { Address, _geoloc } from '@volleymotion/models';
   styleUrls: ['./address-input.component.scss'],
 })
 export class AddressInputComponent implements AfterViewInit {
-  @Output() addressSelected = new EventEmitter<{address: Address, geometry: _geoloc}>();
-  @ViewChild('search') searchElementRef: ElementRef<HTMLInputElement>;
+  @Output() addressSelected = new EventEmitter<{
+    address: Address;
+    geometry: _geoloc;
+  }>();
+  @ViewChild('search') searchElementRef:
+    | ElementRef<HTMLInputElement>
+    | undefined;
 
   constructor(private ngZone: NgZone, private mapsAPILoader: MapsAPILoader) {}
 
@@ -27,6 +32,10 @@ export class AddressInputComponent implements AfterViewInit {
 
   findAddress() {
     this.mapsAPILoader.load().then(() => {
+      if (!this.searchElementRef?.nativeElement) {
+        return;
+      }
+
       const autocomplete = new google.maps.places.Autocomplete(
         this.searchElementRef.nativeElement
       );
@@ -61,18 +70,22 @@ export class AddressInputComponent implements AfterViewInit {
             country,
           };
 
+          if (!lat || !lng) {
+            throw new Error('Unable to retrieve latitude and logitude');
+          }
+
           const geometry: _geoloc = {
             lat,
             lng,
           };
 
-          this.addressSelected.next({address, geometry});
+          this.addressSelected.next({ address, geometry });
         });
       });
     });
   }
 
-  getValue(components: any[], key: string) {
+  getValue(components: any[] | undefined, key: string) {
     return components?.filter((components) =>
       (components.types as string[])?.includes(key)
     )[0]?.long_name;

@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { effects } from './core/store/effects';
-import { reducers, metaReducers } from './core/store/reducers';
+import { reducers } from './core/store/reducers';
 import { LayoutModule } from './core/layout/layout.module';
 import {
   NbThemeModule,
@@ -38,6 +38,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 import { AppInitService } from './core/services/app-init.service';
 import { ConfirmAccountComponent } from './core/components/confirm-account/confirm-account.component';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(de, 'de-DE');
 
@@ -52,6 +53,7 @@ export function initializeApp(appInitService: AppInitService) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FlexLayoutModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
@@ -60,7 +62,6 @@ export function initializeApp(appInitService: AppInitService) {
         strictActionWithinNgZone: true,
         strictStateImmutability: true,
       },
-      metaReducers,
     }),
     EffectsModule.forRoot(effects),
     AngularFireModule.initializeApp(environment.firebase),

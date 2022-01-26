@@ -40,7 +40,7 @@ export const deletePlayerSuccess = createAction(
 );
 export const deletePlayerFailure = createAction(
   `${key} Delete Player Failure`,
-  props<{ error }>()
+  props<{ error: any }>()
 );
 
 export const updatePlayer = createAction(
@@ -78,7 +78,7 @@ export const addCommentToPlayerFailure = createAction(
 
 export const loadPlayerComments = createAction(
   `${key} load Player Comments`,
-  props<{ player: Player }>(),
+  props<{ player: Player | undefined }>(),
 );
 
 export const loadPlayerCommentsSuccess = createAction(
@@ -112,7 +112,7 @@ export const loadPlayerById = createAction(
 
 export const loadPlayerByIdSuccess = createAction(
   `${key} load Player By Id Success`,
-  props<{ player: Player }>(),
+  props<{ player: Player | undefined }>(),
 );
 
 export const loadPlayerByIdFailure = createAction(

@@ -15,8 +15,8 @@ import { AuthSelectors } from '../../core/store/selectors';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  isSiginingInWithEmailAndPassword$: Observable<boolean>;
-  loginForm: FormGroup;
+  isSiginingInWithEmailAndPassword$: Observable<boolean> | undefined;
+  loginForm: FormGroup = this.initForm();
   showPassword = false;
 
   private unsubscribe$ = new Subject();

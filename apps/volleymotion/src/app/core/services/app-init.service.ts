@@ -23,7 +23,7 @@ export class AppInitService {
     private fs: AngularFirestore,
     private auth: AngularFireAuth,
     private store: Store<StoreState>
-  ) { }
+  ) {}
 
   async init() {
     return this.auth.user
@@ -46,18 +46,37 @@ export class AppInitService {
 
   async loadFromCache() {
     try {
-      const team = JSON.parse(await localStorage.getItem('team')) as Team;
-      const season = JSON.parse(await localStorage.getItem('season')) as Season;
-      const user = JSON.parse(await localStorage.getItem('user')) as User;
+      const t = await localStorage.getItem('team');
+      const s = await localStorage.getItem('season');
+      const u = await localStorage.getItem('user');
 
-      this.store.dispatch(TeamActions.setTeam({ team }));
-      this.store.dispatch(SeasonActions.setSeason({ season }));
-      this.store.dispatch(UserActions.setUser({ user }));
+      if (u) {
+        const user = JSON.parse(u) as User;
+        this.store.dispatch(UserActions.setUser({ user }));
+      }
 
-      this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
-      this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
-      this.store.dispatch(PlayerActions.loadPlayers({ teamId: season?.teamId, seasonId: season?.id }));
-      this.store.dispatch(MatchActions.loadMatches({ teamId: season.teamId, seasonId: season?.id }));
-    } catch { }
+      if (t && s) {
+        const team = JSON.parse(t) as Team;
+        const season = JSON.parse(s) as Season;
+
+        this.store.dispatch(TeamActions.setTeam({ team }));
+        this.store.dispatch(SeasonActions.setSeason({ season }));
+
+        this.store.dispatch(TeamActions.loadTeamById({ id: team?.id }));
+        this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
+        this.store.dispatch(
+          PlayerActions.loadPlayers({
+            teamId: season?.teamId,
+            seasonId: season?.id,
+          })
+        );
+        this.store.dispatch(
+          MatchActions.loadMatches({
+            teamId: season.teamId,
+            seasonId: season?.id,
+          })
+        );
+      }
+    } catch {}
   }
 }

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { filter, take, withLatestFrom } from 'rxjs/operators';
 import firebase from 'firebase/app';
 
 import { Article, SurveyComment } from '../../core/models';
@@ -19,11 +19,11 @@ import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-di
   styleUrls: ['./article-detail.component.scss'],
 })
 export class ArticleDetailComponent implements OnInit {
-  isLoadingSurvey$: Observable<boolean>;
-  isLoadingSurveyComments$: Observable<boolean>;
-  surveyComments$: Observable<SurveyComment[]>;
-  article$: Observable<Article>;
-  messageForm: FormGroup;
+  isLoadingSurvey$: Observable<boolean> | undefined;
+  isLoadingSurveyComments$: Observable<boolean> | undefined;
+  surveyComments$: Observable<SurveyComment[]> | undefined;
+  article$: Observable<Article | undefined> | undefined;
+  messageForm: FormGroup = this.initMessageForm();
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +32,6 @@ export class ArticleDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.messageForm = this.initMessageForm();
     this.route.params.subscribe((params) => {
       const id = params.id;
       this.store.dispatch(SurveyActions.loadSurveyById({ id }));
@@ -83,10 +82,11 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   sendMessage(form: FormGroup) {
-    if (form.valid) {
+    if (form?.valid) {
       this.article$
-        .pipe(
+        ?.pipe(
           withLatestFrom(this.store.pipe(select(AuthSelectors.selectUid))),
+          filter(([article, uid]) => !!article && !!uid),
           take(1)
         )
         .subscribe((params) => {
@@ -96,19 +96,19 @@ export class ArticleDetailComponent implements OnInit {
           if (!uid) {
             return this.dialog.open(AuthDialogComponent);
           }
-          
+
           const comment = form.controls.message.value;
           const message: SurveyComment = {
             uid,
             message: comment,
-            surveyId: article.id,
+            surveyId: article!.id,
           };
           (message as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
 
           this.store.dispatch(SurveyActions.addCommentToSurvey({ message }));
           form.reset();
           Object.keys(form.controls).forEach((key) => {
-            form.get(key).setErrors(null);
+            form.get(key)?.setErrors(null);
           });
         });
     }

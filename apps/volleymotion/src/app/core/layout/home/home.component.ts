@@ -8,7 +8,11 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AuthActions } from '../../store/actions';
 import { StoreState } from '../../store/reducers';
-import { AuthSelectors, SeasonSelectors, TeamSelectors } from '../../store/selectors';
+import {
+  AuthSelectors,
+  SeasonSelectors,
+  TeamSelectors,
+} from '../../store/selectors';
 import { fullItems, initItems, initItems2 } from './sidebar-items';
 
 @Component({
@@ -17,20 +21,20 @@ import { fullItems, initItems, initItems2 } from './sidebar-items';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  uid$: Observable<string>;
+  uid$: Observable<string | undefined> | undefined;
   sidebarState = 'collapsed';
-  season$: Observable<Season>;
-  team$: Observable<Team>;
+  season$: Observable<Season | undefined> | undefined;
+  team$: Observable<Team | undefined> | undefined;
   items$ = new BehaviorSubject<any[]>([]);
-  deferredPrompt;
+  deferredPrompt: Event | undefined;
 
   private unsubscribe$ = new Subject();
 
   constructor(
     private store: Store<StoreState>,
     private menuService: NbMenuService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -53,16 +57,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   initItems(): void {
-    combineLatest([this.team$, this.season$]).pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
-      const [team, season] = params;
-      if (team && !season) {
-        return this.items$.next(initItems2);
-      }
-      if (team && season) {
-        return this.items$.next(fullItems);
-      }
-      this.items$.next(initItems);
-    });
+    combineLatest([this.team$, this.season$])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((params: any) => {
+        const [team, season] = params;
+        if (team && !season) {
+          return this.items$.next(initItems2);
+        }
+        if (team && season) {
+          return this.items$.next(fullItems);
+        }
+        this.items$.next(initItems);
+      });
   }
 
   toggleMenu() {
@@ -70,9 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.sidebarState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
-  showInstallDialog() {
-    
-  }
+  showInstallDialog() {}
 
   async logout() {
     this.store.dispatch(AuthActions.signOut());

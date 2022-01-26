@@ -22,7 +22,7 @@ export const loadSurveyById = createAction(
 
 export const loadSurveyByIdSuccess = createAction(
   `${key} Load Survey By Id Success`,
-  props<{ article: Article }>()
+  props<{ article: Article | undefined }>()
 );
 
 export const loadSurveyByIdFailure = createAction(

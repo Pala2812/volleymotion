@@ -20,13 +20,13 @@ import { ArticleListFilterDialogComponent } from './article-list-filter-dialog/a
   styleUrls: ['./article-list.component.scss'],
 })
 export class ArticleListComponent implements OnInit {
-  isLoadingSurveys$: Observable<boolean>;
-  isReportingSurvey$: Observable<boolean>;
-  isLikingSurvey$: Observable<boolean>;
-  uid$: Observable<string>;
+  isLoadingSurveys$: Observable<boolean> | undefined;
+  isReportingSurvey$: Observable<boolean> | undefined;
+  isLikingSurvey$: Observable<boolean> | undefined;
+  uid$: Observable<string | undefined> | undefined;
   tags: Tag[] = [];
-  filteredArticles$: Observable<Article[]>;
-  articles$: Observable<Article[]>;
+  filteredArticles$: Observable<Article[]> | undefined;
+  articles$: Observable<Article[]> | undefined;
 
   constructor(
     private store: Store<StoreState>,
@@ -90,7 +90,7 @@ export class ArticleListComponent implements OnInit {
     const ref = this.dialog.open(ArticleListFilterDialogComponent, { context: { tags: this.tags } });
 
     ref.onClose.subscribe((tags: undefined | Tag[] | 'reset') => {
-      if (!tags) { return; }
+      if (!tags || !this.articles$) { return; }
 
       if (tags === 'reset') {
         this.filteredArticles$ = this.articles$;
@@ -100,7 +100,7 @@ export class ArticleListComponent implements OnInit {
       this.tags = tags as Tag[];
 
       this.filteredArticles$ = this.articles$.pipe(map(articles => {
-        let filtered = [];
+        let filtered: Article[] = [];
         tags.forEach(tag => {
           filtered = filtered.concat(articles.filter(article => article.tagIds.includes(tag.id)));
         });

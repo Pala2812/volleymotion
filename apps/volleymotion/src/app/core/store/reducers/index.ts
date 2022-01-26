@@ -39,12 +39,12 @@ export const reducers: ActionReducerMap<StoreState> = {
   [fromTag.tagFeatureKey]: fromTag.reducer,
   [fromExercise.exerciseFeatureKey]: fromExercise.reducer,
 };
-
+/*
 export const metaReducers: MetaReducer<StoreState>[] = !environment.production
   ? [logoutClearState]
   : [logoutClearState];
 
-export function logoutClearState(reducer) {
+export function logoutClearState(reducer: ActionReducerMap<StoreState>) {
   return function (state, action) {
     if (action.type === AuthActions.signOut().type) {
       state = undefined;
@@ -52,3 +52,4 @@ export function logoutClearState(reducer) {
     return reducer(state, action);
   };
 }
+*/

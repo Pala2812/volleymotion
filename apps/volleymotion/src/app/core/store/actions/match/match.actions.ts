@@ -48,7 +48,7 @@ export const createMatchFailure = createAction(
 
 export const setMatch = createAction(
   `${key} Set Match`,
-  props<{ match: Match }>()
+  props<{ match: Match | undefined }>()
 );
 
 export const addCommentToMatch = createAction(
@@ -67,7 +67,7 @@ export const addCommentToMatchFailure = createAction(
 
 export const loadMatchComments = createAction(
   `${key} Load Match Comments`,
-  props<{ match: Match }>()
+  props<{ match: Match | undefined }>()
 );
 
 export const loadMatchCommentsSuccess = createAction(
@@ -101,7 +101,7 @@ export const loadMatchById = createAction(
 
 export const loadMatchByIdSuccess = createAction(
   `${key} load Match By Id Success`,
-  props<{ match: Match }>(),
+  props<{ match: Match | undefined }>(),
 );
 
 export const loadMatchByIdFailure = createAction(

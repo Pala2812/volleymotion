@@ -12,8 +12,8 @@ import { ExerciseSelectors } from '../../core/store/selectors';
   styleUrls: ['./exercise-home.component.scss']
 })
 export class ExerciseHomeComponent implements OnInit {
-  exercises$: Observable<Exercise[]>;
-  isLoadingExercises$: Observable<boolean>;
+  exercises$: Observable<Exercise[]> | undefined;
+  isLoadingExercises$: Observable<boolean> | undefined;
 
   constructor(private store: Store<StoreState>) { }
 

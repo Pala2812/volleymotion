@@ -15,7 +15,7 @@ import { ChatService } from '../shared/services/chat.service';
 })
 export class ChatComponent implements OnInit {
   isLoading$ = new Subject<boolean>();
-  messages$: Observable<ChatMessage[]>;
+  messages$: Observable<ChatMessage[]> | undefined;
 
   constructor(
     private chatService: ChatService,
@@ -54,6 +54,9 @@ export class ChatComponent implements OnInit {
         take(1)
       )
       .subscribe((userObj) => {
+        if (!userObj) {
+          throw new Error('Unable to retrieve user');
+        }
         const { firstname, lastname, uid } = userObj;
         const user = { firstname, lastname, uid };
         const id = this.chatService.getId();

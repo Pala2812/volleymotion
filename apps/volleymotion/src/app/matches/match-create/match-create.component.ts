@@ -19,9 +19,9 @@ import { MatchSelectors, SeasonSelectors } from '../../core/store/selectors';
   styleUrls: ['./match-create.component.scss'],
 })
 export class MatchCreateComponent implements OnInit, OnDestroy {
-  match$: Observable<Match>;
-  form: FormGroup;
-  season: Season;
+  match$: Observable<Match | undefined> | undefined;
+  form: FormGroup = this.initForm();
+  season: Season | undefined;
   unsubscribe$ = new Subject();
 
   constructor(
@@ -29,8 +29,8 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     private matchService: MatchService,
     private actions$: Actions,
     private router: Router,
-    private route: ActivatedRoute,
-  ) { }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.match$ = this.store.pipe(select(MatchSelectors.selectMatch));
@@ -42,18 +42,25 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
 
     this.actions$
       .pipe(
-        ofType(MatchActions.createMatchSuccess, MatchActions.updateMatchSuccess),
+        ofType(
+          MatchActions.createMatchSuccess,
+          MatchActions.updateMatchSuccess
+        ),
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.router.navigate(['spieltage']));
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const { id } = params;
       this.store.dispatch(MatchActions.loadMatchById({ id }));
     });
 
-    this.match$?.pipe(filter(season => !!season), take(1))
-      .subscribe(match => {
+    this.match$
+      ?.pipe(
+        filter((season) => !!season),
+        take(1)
+      )
+      .subscribe((match) => {
         this.form = this.initForm(match);
       });
   }
@@ -80,12 +87,25 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       date: new FormControl(date, [Validators.required]),
       time: new FormControl(time, [Validators.required]),
       address: new FormGroup({
-        street: new FormControl(match?.address?.street ?? '', [Validators.required]),
-        streetnumber: new FormControl(match?.address?.streetnumber ?? '', [Validators.required]),
-        postalcode: new FormControl(match?.address?.postalcode ?? '', [Validators.required]),
-        locality: new FormControl(match?.address?.locality ?? '', [Validators.required]),
-        administrativeArea: new FormControl(match?.address?.administrativeArea ?? '', [Validators.required]),
-        country: new FormControl(match?.address?.country ?? '', [Validators.required]),
+        street: new FormControl(match?.address?.street ?? '', [
+          Validators.required,
+        ]),
+        streetnumber: new FormControl(match?.address?.streetnumber ?? '', [
+          Validators.required,
+        ]),
+        postalcode: new FormControl(match?.address?.postalcode ?? '', [
+          Validators.required,
+        ]),
+        locality: new FormControl(match?.address?.locality ?? '', [
+          Validators.required,
+        ]),
+        administrativeArea: new FormControl(
+          match?.address?.administrativeArea ?? '',
+          [Validators.required]
+        ),
+        country: new FormControl(match?.address?.country ?? '', [
+          Validators.required,
+        ]),
       }),
       _geoloc: new FormGroup({
         lat: new FormControl(match?._geoloc?.lat ?? '', [Validators.required]),
@@ -102,9 +122,11 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     return this.form.controls._geoloc as FormGroup;
   }
 
-  submit(form: FormGroup, season: Season) {
+  submit(form: FormGroup, season: Season | undefined) {
     if (form.valid && season) {
-      const id = !!form.controls.id.value ? form.controls.id.value : this.matchService.getId();
+      const id = !!form.controls.id.value
+        ? form.controls.id.value
+        : this.matchService.getId();
       const seasonId = season.id;
       const teamId = season.teamId;
       const uid = season.uid;
@@ -137,7 +159,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAddressSelected({ address, geometry }) {
+  onAddressSelected({ address, geometry }: { address: any; geometry: any }) {
     Object.keys(address).forEach((key) => {
       this.address?.controls[key]?.patchValue(address[key]);
     });

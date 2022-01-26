@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'vm-exercise-step-dialog',
   templateUrl: './exercise-step-dialog.component.html',
-  styleUrls: ['./exercise-step-dialog.component.scss']
+  styleUrls: ['./exercise-step-dialog.component.scss'],
 })
 export class ExerciseStepDialogComponent implements OnInit {
-  form: FormGroup;
+  form: FormGroup = new FormGroup({
+    description: new FormControl('', []),
+  });
 
-  constructor(private dialogRef: NbDialogRef<ExerciseStepDialogComponent>) { }
+  constructor(private dialogRef: NbDialogRef<ExerciseStepDialogComponent>) {}
 
-  ngOnInit(): void {
-    this.form = new FormGroup({
-      description: new FormControl('', [])
-    });
-  }
+  ngOnInit(): void {}
 
   addExerciseStep(form: FormGroup) {
     form.markAllAsTouched();
@@ -25,5 +23,4 @@ export class ExerciseStepDialogComponent implements OnInit {
       this.dialogRef.close(description);
     }
   }
-
 }

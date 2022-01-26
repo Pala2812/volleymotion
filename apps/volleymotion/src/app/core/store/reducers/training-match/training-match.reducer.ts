@@ -8,7 +8,7 @@ export interface State {
   isCreatingTrainingMatch: boolean;
   isLoadingTrainingMatches: boolean;
   trainingMatches: TrainingMatch[];
-  trainingMatch: TrainingMatch;
+  trainingMatch: TrainingMatch | undefined;
 }
 
 export const initialState: State = {

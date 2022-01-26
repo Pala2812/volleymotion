@@ -10,7 +10,12 @@ import { filter, take, takeUntil } from 'rxjs/operators';
 import { PlayerActions } from '../../core/store/actions';
 
 import { StoreState } from '../../core/store/reducers';
-import { PlayerSelectors, SeasonSelectors, TagSelectors, TeamSelectors } from '../../core/store/selectors';
+import {
+  PlayerSelectors,
+  SeasonSelectors,
+  TagSelectors,
+  TeamSelectors,
+} from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-player-create',
@@ -18,16 +23,17 @@ import { PlayerSelectors, SeasonSelectors, TagSelectors, TeamSelectors } from '.
   styleUrls: ['./player-create.component.scss'],
 })
 export class PlayerCreateComponent implements OnInit, OnDestroy {
-  isUpdatingPlayer$: Observable<boolean>;
-  isCreatingPlayer$: Observable<boolean>;
-  player$: Observable<Player>;
-  team$: Observable<Team>;
-  player: Player;
-  season$: Observable<Season>;
-  tags$: Observable<Tag[]>;
-  filteredTags: Observable<Tag[]>;
+  isUpdatingPlayer$: Observable<boolean> | undefined;
+  isCreatingPlayer$: Observable<boolean> | undefined;
+  player$: Observable<Player | undefined> | undefined;
+  team$: Observable<Team | undefined> | undefined;
+  player: Player | undefined;
+  season$: Observable<Season | undefined> | undefined;
+  tags$: Observable<Tag[]> | undefined;
+  filteredTags: Observable<Tag[]> | undefined;
   unsubscribe$ = new Subject();
-  form: FormGroup;
+  form: FormGroup = this.initForm();
+
   positions = [
     'Außenangreifer*in',
     'Diagonalangreifer*in',
@@ -41,19 +47,26 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
     private store: Store<StoreState>,
     private router: Router,
     private actions$: Actions
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.form = this.initForm();
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
     this.season$ = this.store.pipe(select(SeasonSelectors.selectSeason));
     this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
     this.player$ = this.store.pipe(select(PlayerSelectors.selectPlayer));
     this.filteredTags = this.store.pipe(select(TagSelectors.selectTags));
-    this.isCreatingPlayer$ = this.store.pipe(select(PlayerSelectors.selectIsCreatingPlayer));
-    this.isUpdatingPlayer$ = this.store.pipe(select(PlayerSelectors.selectIsUpdatingPlayer));
+    this.isCreatingPlayer$ = this.store.pipe(
+      select(PlayerSelectors.selectIsCreatingPlayer)
+    );
+    this.isUpdatingPlayer$ = this.store.pipe(
+      select(PlayerSelectors.selectIsUpdatingPlayer)
+    );
 
-    this.player$.pipe(filter(player => !!player), take(1))
+    this.player$
+      .pipe(
+        filter((player) => !!player),
+        take(1)
+      )
       .subscribe((player) => {
         this.player = player;
         this.form = this.initForm(player);
@@ -61,7 +74,10 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
 
     this.actions$
       .pipe(
-        ofType(PlayerActions.createPlayerSuccess, PlayerActions.updatePlayerSuccess),
+        ofType(
+          PlayerActions.createPlayerSuccess,
+          PlayerActions.updatePlayerSuccess
+        ),
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.router.navigate(['spieler']));
@@ -74,17 +90,21 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
 
   initForm(player?: Player) {
     return new FormGroup({
-      firstname: new FormControl(player?.firstname ?? '', [Validators.required]),
+      firstname: new FormControl(player?.firstname ?? '', [
+        Validators.required,
+      ]),
       lastname: new FormControl(player?.lastname ?? '', [Validators.required]),
       position: new FormControl(player?.position ?? '', [Validators.required]),
-      strengths: new FormArray(this.getControlArray(player?.strengths) ?? []),
-      weaknesses: new FormArray(this.getControlArray(player?.weaknesses) ?? []),
-      improvements: new FormArray(this.getControlArray(player?.improvements) ?? []),
+      strengths: new FormArray(this.getControlArray(player?.strengths ?? [])),
+      weaknesses: new FormArray(this.getControlArray(player?.weaknesses ?? [])),
+      improvements: new FormArray(
+        this.getControlArray(player?.improvements ?? [])
+      ),
     });
   }
 
   getControlArray(array: any[]) {
-    return array?.map(value => new FormControl(value));
+    return array?.map((value) => new FormControl(value));
   }
 
   get strengths() {
@@ -123,9 +143,11 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
       const firstname = form.controls.firstname.value;
       const lastname = form.controls.lastname.value;
       const position = form.controls.position.value;
-      const strengths = [...new Set(form.controls.strengths.value as any[])]
-      const weaknesses = [...new Set(form.controls.weaknesses.value as any[])]
-      const improvements = [...new Set(form.controls.improvements.value as any[])]
+      const strengths = [...new Set(form.controls.strengths.value as any[])];
+      const weaknesses = [...new Set(form.controls.weaknesses.value as any[])];
+      const improvements = [
+        ...new Set(form.controls.improvements.value as any[]),
+      ];
 
       let player: Player = {
         id,

@@ -9,7 +9,7 @@ export interface State {
   isCreatingExercise: boolean;
   isLoadingExercises: boolean;
   exercises: Exercise[];
-  exercise: Exercise[];
+  exercise: Exercise[] | undefined;
 }
 
 export const initialState: State = {

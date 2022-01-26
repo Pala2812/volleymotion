@@ -18,17 +18,16 @@ import { ExerciseSelectors } from '../../../core/store/selectors';
 export class ExerciseFormComponent implements OnInit {
   @Input() positions: any;
   @Input() tools: any;
-  @Input() tags$: Observable<Tag[]>;
-  @Input() animationSteps: AnimationStep[];
-  isCreatingExercise$: Observable<boolean>;
-  filteredTags$: Observable<Tag[]>;
-  form: FormGroup;
+  @Input() tags$: Observable<Tag[]> | undefined;
+  @Input() animationSteps: AnimationStep[] = [];
+  isCreatingExercise$: Observable<boolean> | undefined;
+  filteredTags$: Observable<Tag[]> | undefined;
+  form = this.initForm();
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
   constructor(private store: Store<StoreState>, private router: Router, private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.form = this.initForm();
     this.filteredTags$ = this.tags$;
     this.isCreatingExercise$ = this.store.pipe(select(ExerciseSelectors.selectIsCreatingExercise));
 
@@ -62,7 +61,7 @@ export class ExerciseFormComponent implements OnInit {
       this.filteredTags$ = this.tags$;
     }
 
-    this.filteredTags$ = this.filteredTags$.pipe(
+    this.filteredTags$ = this.filteredTags$?.pipe(
       map(tags => tags.filter(tag => tag.name.toLowerCase().includes(query)))
     );
   }

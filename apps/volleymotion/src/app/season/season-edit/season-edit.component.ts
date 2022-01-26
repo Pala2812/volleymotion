@@ -22,13 +22,13 @@ import { SeasonSelectors, TagSelectors } from '../../core/store/selectors';
   styleUrls: ['./season-edit.component.scss'],
 })
 export class SeasonEditComponent implements OnInit, OnDestroy {
-  isUpdatingSeason$: Observable<boolean>;
-  form: FormGroup;
-  season: Season;
-  id: string;
-  teamId: string;
-  tags$: Observable<Tag[]>;
-  filteredTags$: Observable<Tag[]>;
+  isUpdatingSeason$: Observable<boolean> | undefined;
+  form: FormGroup = this.initForm();
+  season: Season | undefined;
+  id: string | undefined;
+  teamId: string | undefined;
+  tags$: Observable<Tag[]> | undefined;
+  filteredTags$: Observable<Tag[]> | undefined;
   unsubscribe$ = new Subject();
 
   constructor(
@@ -37,7 +37,7 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
     private actions$: Actions,
     private router: Router,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.initForm();
@@ -106,7 +106,7 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
 
   onInputChanged(event: any) {
     const filter = event?.value;
-    this.filteredTags$ = this.tags$.pipe(
+    this.filteredTags$ = this.tags$?.pipe(
       map((tags) =>
         [...tags].filter((tag) => tag.name.toLowerCase().includes(event.value))
       )

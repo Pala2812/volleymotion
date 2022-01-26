@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./loading-card.component.scss']
 })
 export class LoadingCardComponent implements OnInit {
-  @Input() isLoading$: Observable<boolean>;
+  @Input() isLoading$: Observable<boolean> | undefined;
 
   constructor() { }
 

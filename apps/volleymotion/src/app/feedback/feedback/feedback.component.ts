@@ -11,16 +11,14 @@ import { FeedbackService } from '../shared/services/feedback.service';
 })
 export class FeedbackComponent implements OnInit {
   isSending$ = new Subject<boolean>();
-  form: FormGroup;
+  form: FormGroup = this.initForm();
 
   constructor(
     private feedbackService: FeedbackService,
     private toast: NbToastrService
   ) {}
 
-  ngOnInit(): void {
-    this.form = this.initForm();
-  }
+  ngOnInit(): void {}
 
   initForm() {
     return new FormGroup({

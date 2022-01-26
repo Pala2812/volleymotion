@@ -69,6 +69,9 @@ export class AppComponent implements OnInit {
       filter(season => !!season),
       throttleTime(500))
       .subscribe(season => {
+        if (!season) {
+          throw new Error('Unable to retrieve season');
+        }
         this.store.dispatch(TeamActions.loadTeamById({ id: season?.teamId }));
         this.store.dispatch(SeasonActions.loadSeasonById({ id: season?.id }));
         this.store.dispatch(PlayerActions.loadPlayers({ teamId: season?.teamId, seasonId: season?.id }));

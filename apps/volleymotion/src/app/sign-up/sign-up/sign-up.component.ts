@@ -19,8 +19,8 @@ import { NbToastrService } from '@nebular/theme';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit, OnDestroy {
-  isCreatingUserWithEmailAndPassword$: Observable<boolean>;
-  signUpForm: FormGroup;
+  isCreatingUserWithEmailAndPassword$: Observable<boolean> | undefined;
+  signUpForm: FormGroup = this.initSignUpForm();
   showPassword = false;
 
   userPreferences: UserPreferences = {
@@ -39,8 +39,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.signUpForm = this.initSignUpForm();
-
     this.actions$
       .pipe(
         ofType(AuthActions.CreateUserWithEmailAndPasswordSuccess),

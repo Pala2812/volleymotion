@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
-import { TrainingMatch } from '@volleymotion/models';
+import { Match, TrainingMatch } from '@volleymotion/models';
 import { object } from 'firebase-functions/lib/providers/storage';
 import { off } from 'process';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -18,18 +18,20 @@ import { TrainingMatchFilterComponent } from '../training-match-filter/training-
   styleUrls: ['./traning-matches-map.component.scss'],
 })
 export class TraningMatchesMapComponent implements OnInit, OnDestroy {
-  isLoading$: Observable<boolean>;
+  isLoading$: Observable<boolean> | undefined;
   latitude = 51.164305;
   longitude = 10.4541205;
-  traningMatches$: Observable<TrainingMatch[]>;
+  traningMatches$: Observable<TrainingMatch[]> | undefined;
   filteredMatches$ = new BehaviorSubject<TrainingMatch[]>([]);
   unsubscribe$ = new Subject();
-  filters: { division: string; teamType: string; sportType: string };
+  filters:
+    | { division: string; teamType: string; sportType: string }
+    | undefined;
 
   constructor(
     private store: Store<StoreState>,
     private dialog: NbDialogService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
@@ -75,7 +77,9 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
   }
 
   showFilter() {
-    const ref = this.dialog.open(TrainingMatchFilterComponent, { context: { filters: this.filters } });
+    const ref = this.dialog.open(TrainingMatchFilterComponent, {
+      context: { filters: this.filters },
+    });
 
     ref.onClose.subscribe((res) => {
       if (!res) {
@@ -83,30 +87,43 @@ export class TraningMatchesMapComponent implements OnInit, OnDestroy {
       }
 
       if (res === 'reset') {
-        this.traningMatches$.pipe(take(1)).subscribe((matches) => {
+        this.traningMatches$?.pipe(take(1)).subscribe((matches) => {
           this.filteredMatches$.next(matches);
         });
       }
 
       if (!res?.length && Object?.keys(res)?.length) {
         this.filters = res;
-        this.traningMatches$.pipe(take(1)).subscribe((matches) => {
-          let filteredMatches = [];
+        this.traningMatches$?.pipe(take(1)).subscribe((matches) => {
+          let filteredMatches: TrainingMatch[] = [];
           const filtered = matches.filter((match) => {
             if (res?.teamType && res?.division && res?.sportType) {
-              return match['teamType'] === res['teamType'] && match['division'] === res['division'] && match['sportType'] === res['sportType'];
+              return (
+                match['teamType'] === res['teamType'] &&
+                match['division'] === res['division'] &&
+                match['sportType'] === res['sportType']
+              );
             }
 
             if (res?.teamType && res?.sportType) {
-              return match['teamType'] === res['teamType'] && match['sportType'] === res['sportType'];
+              return (
+                match['teamType'] === res['teamType'] &&
+                match['sportType'] === res['sportType']
+              );
             }
 
             if (res?.teamType && res?.division) {
-              return match['teamType'] === res['teamType'] && match['division'] === res['division'];
+              return (
+                match['teamType'] === res['teamType'] &&
+                match['division'] === res['division']
+              );
             }
 
             if (res?.sportType && res?.division) {
-              return match['sportType'] === res['sportType'] && match['division'] === res['division'];
+              return (
+                match['sportType'] === res['sportType'] &&
+                match['division'] === res['division']
+              );
             }
           });
           filteredMatches = filteredMatches.concat(filtered);

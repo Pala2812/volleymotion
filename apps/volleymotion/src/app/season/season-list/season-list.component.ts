@@ -3,8 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Season, Team } from '@volleymotion/models';
 import { interval, Observable, Subject, timer } from 'rxjs';
-import { filter, map, mergeMap, mergeMapTo, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
-import { MatchActions, PlayerActions, SeasonActions, TeamActions } from '../../core/store/actions';
+import {
+  filter,
+  map,
+  mergeMap,
+  mergeMapTo,
+  switchMap,
+  take,
+  takeUntil,
+  takeWhile,
+} from 'rxjs/operators';
+import {
+  MatchActions,
+  PlayerActions,
+  SeasonActions,
+  TeamActions,
+} from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
 
@@ -14,16 +28,16 @@ import { SeasonSelectors, TeamSelectors } from '../../core/store/selectors';
   styleUrls: ['./season-list.component.scss'],
 })
 export class SeasonListComponent implements OnInit {
-  isLoadingSeasons$: Observable<boolean>;
-  seasons$: Observable<Season[]>;
-  team$: Observable<Team>;
+  isLoadingSeasons$: Observable<boolean> | undefined;
+  seasons$: Observable<Season[]> | undefined;
+  team$: Observable<Team | undefined> | undefined;
   unsubscribe$ = new Subject();
 
   constructor(
     private store: Store<StoreState>,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isLoadingSeasons$ = this.store.pipe(
@@ -39,10 +53,18 @@ export class SeasonListComponent implements OnInit {
       )
     );
 
-    this.team$.pipe(filter(team => !!team), takeUntil(this.unsubscribe$)).subscribe((team) => {
-      const teamId = team.id;
-      this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));
-    });
+    this.team$
+      .pipe(
+        filter((team) => !!team),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((team) => {
+        if (!team?.id) {
+          throw new Error('No TeamID found');
+        }
+        const teamId = team?.id;
+        this.store.dispatch(SeasonActions.loadSeasonsByTeamId({ teamId }));
+      });
   }
 
   selectSeason(season: Season) {

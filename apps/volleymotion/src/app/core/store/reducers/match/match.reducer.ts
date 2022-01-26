@@ -12,7 +12,7 @@ export interface State {
   isAddingCommentToMatch: boolean;
   isLoadingMatchComments: boolean;
   matches: Match[];
-  match: Match;
+  match: Match | undefined;
   matchComments: MatchComment[];
 }
 

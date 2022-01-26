@@ -7,7 +7,7 @@ export const userFeatureKey = 'user';
 
 export interface State {
   isUpdatingUser: boolean;
-  user: User;
+  user: User | undefined;
 }
 
 export const initialState: State = {

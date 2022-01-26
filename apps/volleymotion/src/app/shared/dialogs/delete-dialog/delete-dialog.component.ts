@@ -7,8 +7,8 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./delete-dialog.component.scss'],
 })
 export class DeleteDialogComponent implements OnInit {
-  title: string;
-  message: string;
+  title: string | undefined;
+  message: string | undefined;
 
   constructor(private dialogRef: NbDialogRef<DeleteDialogComponent>) {}
 

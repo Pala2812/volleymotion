@@ -25,7 +25,7 @@ export class AuthEffects {
           .pipe(
             map((user) =>
               AuthActions.CreateUserWithEmailAndPasswordSuccess({
-                uid: user.uid,
+                uid: user?.uid,
               })
             ),
             catchError((error) =>
@@ -42,7 +42,7 @@ export class AuthEffects {
       mergeMap(({ email, password }) =>
         this.authService.signInWithEmailAndPassword(email, password).pipe(
           map((user) =>
-            AuthActions.SignInWithEMailAndPasswordSuccess({ uid: user.uid })
+            AuthActions.SignInWithEMailAndPasswordSuccess({ uid: user?.uid })
           ),
           catchError((error) =>
             of(AuthActions.SignInWithEmailAndPasswordFailure({ error }))

@@ -10,7 +10,7 @@ export interface State {
   isLoadingTeam: boolean;
   isDeletingTeam: boolean;
   teams: Team[];
-  team: Team;
+  team: Team | undefined;
 }
 
 export const initialState: State = {

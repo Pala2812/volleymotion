@@ -7,30 +7,32 @@ import { NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'vm-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-  form: FormGroup;
-  constructor(private auth: AngularFireAuth, private toastService: NbToastrService, private router: Router) { }
+  form: FormGroup = this.initForm();
+  constructor(
+    private auth: AngularFireAuth,
+    private toastService: NbToastrService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-    this.form = this.initForm();
-  }
+  ngOnInit(): void {}
 
   initForm() {
     return new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email])
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
   sendEmail(form: FormGroup) {
     if (form.valid) {
       const { email } = form.value;
-      this.auth.sendPasswordResetEmail(email)
+      this.auth
+        .sendPasswordResetEmail(email)
         .then(() => this.router.navigate(['login']))
         .then(() => this.toastService.success('E-Mail wurde versendet'))
-        .catch(error => this.toastService.danger(error?.message));
+        .catch((error) => this.toastService.danger(error?.message));
     }
   }
-
 }

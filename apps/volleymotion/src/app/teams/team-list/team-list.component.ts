@@ -18,8 +18,8 @@ import { DeleteDialogComponent } from '../../shared/dialogs/delete-dialog/delete
   styleUrls: ['./team-list.component.scss'],
 })
 export class TeamListComponent implements OnInit, OnDestroy {
-  isLoadingTeams$: Observable<Boolean>;
-  teams$: Observable<Team[]>;
+  isLoadingTeams$: Observable<boolean> | undefined;
+  teams$: Observable<Team[]> | undefined;
   unsubscribe$ = new Subject();
 
   constructor(
@@ -59,6 +59,9 @@ export class TeamListComponent implements OnInit, OnDestroy {
         filter((user) => !!user?.uid)
       )
       .subscribe((user) => {
+        if (!user) {
+          throw new Error('unable to retrieve user');
+        }
         this.store.dispatch(TeamActions.loadTeams({ uid: user?.uid }));
       });
   }

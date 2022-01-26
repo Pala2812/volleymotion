@@ -30,14 +30,14 @@ import { AuthSelectors, SurveySelectors, TagSelectors, UserSelectors } from '../
 })
 export class ArticleCreateEditComponent
   implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('quill') quill: ElementRef<QuillEditorComponent>;
-  user$: Observable<User>;
-  tags$: Observable<Tag[]>;
-  filteredTags$: Observable<Tag[]>;
-  article$: Observable<Article>;
-  isCreatingSurvey$: Observable<boolean>;
-  uid$: Observable<string>;
-  surveyForm: FormGroup;
+  @ViewChild('quill') quill: ElementRef<QuillEditorComponent> | undefined;
+  user$: Observable<User | undefined> | undefined;
+  tags$: Observable<Tag[]> | undefined;
+  filteredTags$: Observable<Tag[]> | undefined;
+  article$: Observable<Article | undefined> | undefined;
+  isCreatingSurvey$: Observable<boolean> | undefined;
+  uid$: Observable<string> | undefined;
+  surveyForm: FormGroup = this.initSurveyForm();
   isEdit = false;
 
   private unsubscribe$ = new Subject();
@@ -51,7 +51,6 @@ export class ArticleCreateEditComponent
   ) { }
 
   ngOnInit(): void {
-    this.surveyForm = this.initSurveyForm();
     this.isCreatingSurvey$ = this.store.pipe(
       select(SurveySelectors.selectIsCreatingSurvey)
     );
@@ -134,7 +133,7 @@ export class ArticleCreateEditComponent
       this.filteredTags$ = this.tags$;
     }
 
-    this.filteredTags$ = this.filteredTags$.pipe(
+    this.filteredTags$ = this.filteredTags$?.pipe(
       map(tags => tags.filter(tag => tag.name.toLowerCase().includes(query)))
     );
   }

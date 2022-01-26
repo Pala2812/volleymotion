@@ -21,15 +21,15 @@ import { loadMatchComments } from '../../core/store/actions/match/match.actions'
   styleUrls: ['./match-detail.component.scss']
 })
 export class MatchDetailComponent implements OnInit, OnDestroy {
-  match$: Observable<Match>;
-  matchComments$: Observable<MatchComment[]>;
-  team$: Observable<Team>;
-  user$: Observable<User>;
-  players$: Observable<Player[]>;
-  isAddingCommentToMatch$: Observable<boolean>;
-  matchForm: FormGroup;
-  commentForm: FormGroup;
-  playerParticipations: PlayerParticipation[];
+  match$: Observable<Match | undefined> | undefined;
+  matchComments$: Observable<MatchComment[]> | undefined;
+  team$: Observable<Team | undefined> | undefined;
+  user$: Observable<User | undefined> | undefined;
+  players$: Observable<Player[]> | undefined;
+  isAddingCommentToMatch$: Observable<boolean> | undefined;
+  matchForm: FormGroup | undefined;
+  commentForm: FormGroup = this.initCommentForm();
+  playerParticipations: PlayerParticipation[] | undefined;
 
   private unsubscribe$ = new Subject();
 
@@ -46,7 +46,6 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     this.isAddingCommentToMatch$ = this.store.pipe(select(MatchSelectors.selectIsAddingCommentToMatches));
     this.matchComments$ = this.store.pipe(select(MatchSelectors.selectMatchComments));
     this.match$.pipe(filter(match => !!match), take(1)).subscribe(match => this.store.dispatch(loadMatchComments({ match })));
-    this.commentForm = this.initCommentForm();
     this.loadMatchIfUndefined();
 
     combineLatest([this.players$, this.match$]).pipe(
@@ -91,7 +90,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   }
 
   loadMatchIfUndefined() {
-    this.match$.pipe(filter(match => !match), mergeMapTo(this.route.params), take(1))
+    this.match$?.pipe(filter(match => !match), mergeMapTo(this.route.params), take(1))
       .subscribe(params => {
         const { id } = params;
         this.store.dispatch(MatchActions.loadMatchById({ id }));
