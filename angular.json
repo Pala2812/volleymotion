@@ -23,7 +23,6 @@
             "main": "apps/volleymotion/src/main.ts",
             "polyfills": "apps/volleymotion/src/polyfills.ts",
             "tsConfig": "apps/volleymotion/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/volleymotion/src/favicon.ico",
               "apps/volleymotion/src/robots.txt",
@@ -39,7 +38,13 @@
             ],
             "scripts": [
               "./node_modules/quill/dist/quill.js"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -71,7 +76,8 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/volleymotion/ngsw-config.json"
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -264,7 +270,6 @@
             "main": "apps/homepage/src/main.ts",
             "polyfills": "apps/homepage/src/polyfills.ts",
             "tsConfig": "apps/homepage/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/homepage/src/favicon.ico",
               "apps/homepage/src/assets"
@@ -272,7 +277,13 @@
             "styles": [
               "apps/homepage/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -302,7 +313,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -341,7 +353,9 @@
           "options": {
             "outputPath": "dist/apps/homepage/server",
             "main": "apps/homepage/server.ts",
-            "tsConfig": "apps/homepage/tsconfig.server.json"
+            "tsConfig": "apps/homepage/tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {
@@ -355,7 +369,8 @@
               "sourceMap": false,
               "optimization": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
