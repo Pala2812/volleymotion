@@ -57,17 +57,43 @@ export class SurveyEffects {
   loadSurvey$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SurveyActions.loadSurveys),
-      mergeMap(() =>
-        this.fs
-          .collection<Article>('surveys')
-          .valueChanges()
-          .pipe(
-            map((surveys) => SurveyActions.loadSurveysSuccess({ surveys })),
-            catchError((error) =>
-              of(SurveyActions.loadSurveysFailure({ error }))
-            )
-          )
-      )
+      mergeMap(({ sportType, tagIds }) => {
+        let request = from(this.fs.collection<Article>('surveys').ref.get());
+
+        if (sportType !== 'Allgemein') {
+          request = from(
+            this.fs
+              .collection<Article>('surveys')
+              .ref.where('sportType', '==', sportType)
+              .get()
+          );
+        }
+
+        if (tagIds?.length) {
+          request = from(
+            this.fs
+              .collection<Article>('surveys')
+              .ref.where('tagIds', 'array-contains-any', tagIds)
+              .get()
+          );
+        }
+
+        if (sportType !== 'Allgemein' && tagIds?.length) {
+          request = from(
+            this.fs
+              .collection<Article>('surveys')
+              .ref.where('sportType', '==', sportType)
+              .where('tagIds', 'array-contains-any', tagIds)
+              .get()
+          );
+        }
+
+        return request.pipe(
+          map((surveyDocs) => surveyDocs.docs.map(doc => doc.data())),
+          map((surveys) => SurveyActions.loadSurveysSuccess({ surveys })),
+          catchError((error) => of(SurveyActions.loadSurveysFailure({ error })))
+        );
+      })
     )
   );
 
@@ -147,7 +173,9 @@ export class SurveyEffects {
               ).pipe(
                 map((users) =>
                   surveyComments.map((comment) => {
-                    const user = users.find((user) => user?.uid === comment?.uid);
+                    const user = users.find(
+                      (user) => user?.uid === comment?.uid
+                    );
                     comment.user = user;
                     return comment;
                   })

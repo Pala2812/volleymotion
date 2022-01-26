@@ -7,6 +7,12 @@
                 <input nbInput placeholder="Titel" fullWidth formControlName="title">
             </nb-form-field>
 
+          <nb-select fullWidth formControlName="sportType" placeholder="Kontext auswählen">
+              <nb-option *ngFor="let sportType of sportTypes" [value]="sportType">
+                  {{sportType}}
+              </nb-option>
+          </nb-select>
+
             <div class="mat-chip-list-container">
                 <mat-chip-list *ngIf="tags?.controls">
                     <mat-chip *ngFor="let control of tags?.controls; let index = index" (click)="removeTag(index)">

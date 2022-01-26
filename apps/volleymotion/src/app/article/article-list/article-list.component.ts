@@ -9,6 +9,7 @@ import { map, take } from 'rxjs/operators';
 
 import { Article } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
+import { loadSurveys } from '../../core/store/actions/article/article.actions';
 import { StoreState } from '../../core/store/reducers';
 import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
 import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-dialog.component';
@@ -27,20 +28,31 @@ export class ArticleListComponent implements OnInit {
   tags: Tag[] = [];
   filteredArticles$: Observable<Article[]> | undefined;
   articles$: Observable<Article[]> | undefined;
+  sportType = 'Allgemein';
 
   constructor(
     private store: Store<StoreState>,
     private router: Router,
-    private dialog: NbDialogService,
-  ) { }
+    private dialog: NbDialogService
+  ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(SurveyActions.loadSurveys());
-    this.isLoadingSurveys$ = this.store.pipe(select(SurveySelectors.selectIsLoadingSurveys));
-    this.isLikingSurvey$ = this.store.pipe(select(SurveySelectors.selectIsLikingSurvey));
-    this.isReportingSurvey$ = this.store.pipe(select(SurveySelectors.selectIsReportingSurvey));
+    this.store.dispatch(
+      SurveyActions.loadSurveys({ sportType: this.sportType })
+    );
+    this.isLoadingSurveys$ = this.store.pipe(
+      select(SurveySelectors.selectIsLoadingSurveys)
+    );
+    this.isLikingSurvey$ = this.store.pipe(
+      select(SurveySelectors.selectIsLikingSurvey)
+    );
+    this.isReportingSurvey$ = this.store.pipe(
+      select(SurveySelectors.selectIsReportingSurvey)
+    );
     this.articles$ = this.store.pipe(select(SurveySelectors.selectSurveys));
-    this.filteredArticles$ = this.store.pipe(select(SurveySelectors.selectSurveys));
+    this.filteredArticles$ = this.store.pipe(
+      select(SurveySelectors.selectSurveys)
+    );
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
   }
 
@@ -87,28 +99,29 @@ export class ArticleListComponent implements OnInit {
   }
 
   showFilterDialog() {
-    const ref = this.dialog.open(ArticleListFilterDialogComponent, { context: { tags: this.tags } });
-
-    ref.onClose.subscribe((tags: undefined | Tag[] | 'reset') => {
-      if (!tags || !this.articles$) { return; }
-
-      if (tags === 'reset') {
-        this.filteredArticles$ = this.articles$;
-        return;
-      }
-
-      this.tags = tags as Tag[];
-
-      this.filteredArticles$ = this.articles$.pipe(map(articles => {
-        let filtered: Article[] = [];
-        tags.forEach(tag => {
-          filtered = filtered.concat(articles.filter(article => article.tagIds.includes(tag.id)));
-        });
-        filtered = [...new Set(filtered)];
-        return filtered;
-      }));
-
+    const ref = this.dialog.open(ArticleListFilterDialogComponent, {
+      context: { tags: this.tags, sportType: this.sportType },
     });
+
+    ref.onClose.subscribe(
+      (data: { sportType: string; tags: undefined | Tag[] } | 'reset') => {
+        if (!this.articles$) {
+          return;
+        }
+
+        if (data === 'reset') {
+          this.filteredArticles$ = this.articles$;
+          return;
+        }
+
+        this.tags = (data.tags as Tag[]) ?? [];
+        this.sportType = data.sportType;
+        const tagIds = this.tags.map((tag) => tag.id);
+
+        this.store.dispatch(loadSurveys({ tagIds, sportType: data.sportType }));
+        this.articles$ = this.store.pipe(select(SurveySelectors.selectSurveys));
+      }
+    );
   }
 
   editSurvey(article: Article, event: Event) {

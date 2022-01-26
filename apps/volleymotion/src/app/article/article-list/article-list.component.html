@@ -1,4 +1,5 @@
-<ng-template #surveys>
+
+<ng-container *ngIf="(isLoadingSurveys$ | async) === false && (articles$ | async)?.length; else noData">
     <nb-card class="card" *ngFor="let article of filteredArticles$ | async" (click)="viewDetail(article)">
         <nb-card-header class="card-header">
             {{article?.title}}
@@ -13,14 +14,22 @@
         </nb-card-footer>
     </nb-card>
 
+</ng-container>
+
+<ng-template #noData>
+  <vm-no-data
+    [routerLink]="['../erstellen']"
+    message="Keinen Blogeintrag mit dieser Konfiguration gefunden..."
+    linkMessage="Schreibe jetzt einen Blogeintrag!"
+  ></vm-no-data>
 </ng-template>
 
-<nb-spinner *ngIf="isLoadingSurveys$ | async; else surveys"></nb-spinner>
+<nb-spinner *ngIf="isLoadingSurveys$ | async;"></nb-spinner>
 
 <button mat-fab class="add-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
     <mat-icon>add</mat-icon>
 </button>
 
-<button mat-fab class="filter-btn" color="primary" (click)="showFilterDialog()" [matBadge]="tags?.length ? tags.length : ''" matBadgeColor="accent">
+<button mat-fab class="filter-btn" color="primary" (click)="showFilterDialog()" [matBadge]="tags?.length ? tags.length + 1 : '1'" matBadgeColor="accent">
     <mat-icon>filter_alt</mat-icon>
 </button>

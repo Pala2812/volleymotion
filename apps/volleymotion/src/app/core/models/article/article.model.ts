@@ -9,6 +9,7 @@ export interface Article {
         firstname: string,
         lastname: string,
     };
+    sportType: string;
     tagIds: string[];
     tags: Tag[];
     createdAt: Timestamp;

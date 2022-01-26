@@ -3,7 +3,10 @@ import { Article, SurveyComment } from '../../../models';
 
 const key = '[Survey]';
 
-export const loadSurveys = createAction(`${key} Load Surveys`);
+export const loadSurveys = createAction(
+  `${key} Load Surveys`,
+  props<{ sportType: string; tagIds?: string[] }>()
+);
 
 export const loadSurveysSuccess = createAction(
   `${key} Load Surveys Success`,

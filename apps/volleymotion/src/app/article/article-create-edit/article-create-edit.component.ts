@@ -39,6 +39,8 @@ export class ArticleCreateEditComponent
   uid$: Observable<string> | undefined;
   surveyForm: FormGroup = this.initSurveyForm();
   isEdit = false;
+  sportTypes = ['Allgemein', 'Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
+
 
   private unsubscribe$ = new Subject();
 
@@ -152,6 +154,7 @@ export class ArticleCreateEditComponent
   initSurveyForm(article?: Article): FormGroup {
     return new FormGroup({
       title: new FormControl(article?.title || '', [Validators.required]),
+      sportType: new FormControl(article?.sportType || 'Allgemein', [Validators.required]),
       tags: new FormArray([]),
       description: new FormControl(article?.description || '', [Validators.required]),
     });

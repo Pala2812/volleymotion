@@ -15,10 +15,10 @@ import { TagSelectors } from '../../../core/store/selectors';
 })
 export class ArticleListFilterDialogComponent implements OnInit {
   @Input() tags: Tag[] = [];
+  @Input() sportType: string = 'Allgemein';
   tags$: Observable<Tag[]> | undefined;
   filteredTags$: Observable<Tag[]> | undefined;
-  sportType = 'Hallenvolleyball';
-  sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
+  sportTypes = ['Allgemein', 'Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
   constructor(
     private dialogRef: NbDialogRef<ArticleListFilterDialogComponent>,
