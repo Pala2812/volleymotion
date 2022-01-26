@@ -19,7 +19,7 @@ import {
   styleUrls: ['./player-list.component.scss'],
 })
 export class PlayerListComponent implements OnInit, OnDestroy {
-  isLoadingPlayers$: Observable<Player[]> | undefined;
+  isLoadingPlayers$: Observable<boolean> | undefined;
   players$: Observable<Player[]> | undefined;
   team$: Observable<Team | undefined> | undefined;
   season$: Observable<Season | undefined> | undefined;
@@ -28,11 +28,10 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<StoreState>, private router: Router, private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.isLoadingPlayers$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
+    this.isLoadingPlayers$ = this.store.pipe(select(PlayerSelectors.selectIsLoadingPlayers));
     this.players$ = this.store.pipe(select(PlayerSelectors.selectPlayers));
     this.season$ = this.store.pipe(select(SeasonSelectors.selectSeason));
     this.team$ = this.store.pipe(select(TeamSelectors.selectTeam));
-
     this.actions$
       .pipe(
         ofType(PlayerActions.deletePlayerSuccess),
@@ -54,6 +53,7 @@ export class PlayerListComponent implements OnInit, OnDestroy {
         if (res[0] && res[1]) {
           const team = res[0];
           const season = res[1];
+          console.log(team, season);
           this.store.dispatch(PlayerActions.loadPlayers({ teamId: team?.id, seasonId: season?.id }));
         }
       });

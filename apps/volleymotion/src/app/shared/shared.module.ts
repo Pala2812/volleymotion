@@ -14,6 +14,7 @@ import { LoadingCardComponent } from './components/loading-card/loading-card.com
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { TagInputComponent } from './components/tag-input/tag-input.component';
 import { TagExplanationComponent } from './dialogs/tag-explanation/tag-explanation.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TagExplanationComponent } from './dialogs/tag-explanation/tag-explanati
     DeleteDialogComponent,
     TagInputComponent,
     TagExplanationComponent,
+    NoDataComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { TagExplanationComponent } from './dialogs/tag-explanation/tag-explanati
     AuthDialogComponent,
     LoadingCardComponent,
     DeleteDialogComponent,
+    NoDataComponent,
     TimestampPipe,
     GoogleChartsModule,
     AgmCoreModule,

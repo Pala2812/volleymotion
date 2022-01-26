@@ -1,27 +1,58 @@
-<nb-card class="card" *ngFor="let match of matches$ | async" [routerLink]="['../detail', match?.id]"
-    [class.did-win]="match.status === 'Gewonnen'" [class.did-loose]="match.status === 'Verloren'"
-    (click)="setMatch(match)">
-
+<ng-container *ngIf="(matches$ | async)?.length && (isLoadingMatches$ | async) === false; else noData">
+  <nb-card
+    class="card"
+    *ngFor="let match of matches$ | async"
+    [routerLink]="['../detail', match?.id]"
+    [class.did-win]="match.status === 'Gewonnen'"
+    [class.did-loose]="match.status === 'Verloren'"
+    (click)="setMatch(match)"
+  >
     <nb-card-header class="card-header">
-        <span class="card-header-opponent">{{match.opponent}}</span>
-        <span *ngIf="match?.date"> {{match?.date | timestamp | date: 'dd.MM HH:mm'}}</span>
+      <span class="card-header-opponent">{{ match.opponent }}</span>
+      <span *ngIf="match?.date">
+        {{ match?.date | timestamp | date: 'dd.MM HH:mm' }}</span
+      >
 
-        <div class="card-header-actions">
-            <button class="action-btn" nbButton ghost status="danger" (click)="deleteMatch(match, $event)">
-                <nb-icon icon="trash-outline"></nb-icon>
-            </button>
-            <button class="action-btn" nbButton ghost status="info" (click)="editMatch(match, $event)"
-                [routerLink]="['../bearbeiten', match.id]">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </div>
+      <div class="card-header-actions">
+        <button
+          class="action-btn"
+          nbButton
+          ghost
+          status="danger"
+          (click)="deleteMatch(match, $event)"
+        >
+          <nb-icon icon="trash-outline"></nb-icon>
+        </button>
+        <button
+          class="action-btn"
+          nbButton
+          ghost
+          status="info"
+          (click)="editMatch(match, $event)"
+          [routerLink]="['../bearbeiten', match.id]"
+        >
+          <nb-icon icon="edit-outline"></nb-icon>
+        </button>
+      </div>
     </nb-card-header>
+  </nb-card>
+</ng-container>
 
-</nb-card>
+<ng-template #noData>
+  <vm-no-data
+    [routerLink]="['../erstellen']"
+    message="Noch keine Spiele vorhanden..."
+    linkMessage="Erstelle jetzt ein Spieltag!"
+  ></vm-no-data>
+</ng-template>
 
-<vm-loading-card class="loading-spinner" *ngIf="isLoadingMatches$ | async" [isLoading$]="isLoadingMatches$">
+<vm-loading-card
+  class="loading-spinner"
+  *ngIf="isLoadingMatches$ | async"
+  [isLoading$]="isLoadingMatches$"
+>
 </vm-loading-card>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
-    <mat-icon>add</mat-icon>
+  <mat-icon>add</mat-icon>
 </button>

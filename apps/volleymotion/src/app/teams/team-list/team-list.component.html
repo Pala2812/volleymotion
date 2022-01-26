@@ -1,37 +1,47 @@
-<nb-card
-  class="team-card"
-  *ngFor="let team of teams$ | async"
-  (click)="selectTeam(team)"
-  [routerLink]="['../detail', team?.id]"
->
-  <nb-card-header>
-    {{ team?.name }}
+<ng-container *ngIf="(teams$ | async)?.length && (isLoadingTeams$ | async) === false; else noData">
+  <nb-card
+    class="team-card"
+    *ngFor="let team of teams$ | async"
+    (click)="selectTeam(team)"
+    [routerLink]="['../detail', team?.id]"
+  >
+    <nb-card-header>
+      {{ team?.name }}
 
-    <div class="team-card-actions">
-      <button
-        class="edit-btn"
-        nbButton
-        ghost
-        status="info"
-        [routerLink]="['../bearbeiten', team.id]"
-      >
-        <nb-icon icon="edit-outline"></nb-icon>
-      </button>
+      <div class="team-card-actions">
+        <button
+          class="edit-btn"
+          nbButton
+          ghost
+          status="info"
+          [routerLink]="['../bearbeiten', team.id]"
+        >
+          <nb-icon icon="edit-outline"></nb-icon>
+        </button>
 
-      <button
-        class="delete-btn"
-        nbButton
-        ghost
-        status="danger"
-        (click)="deleteTeam(team, $event)"
-      >
-        <nb-icon icon="trash-outline"></nb-icon>
-      </button>
-    </div>
-  </nb-card-header>
-</nb-card>
+        <button
+          class="delete-btn"
+          nbButton
+          ghost
+          status="danger"
+          (click)="deleteTeam(team, $event)"
+        >
+          <nb-icon icon="trash-outline"></nb-icon>
+        </button>
+      </div>
+    </nb-card-header>
+  </nb-card>
+</ng-container>
 
-<nb-spinner *ngIf="isLoadingTeams$ | async"></nb-spinner>
+<nb-spinner *ngIf="(isLoadingTeams$ | async) === true && (teams$ | async)?.length === 0"></nb-spinner>
+
+<ng-template #noData>
+  <vm-no-data
+    [routerLink]="['../erstellen']"
+    message="Noch keine Mannschaft vorhanden..."
+    linkMessage="Erstelle jetzt eine Mannschaft!"
+  ></vm-no-data>
+</ng-template>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
   <mat-icon>add</mat-icon>

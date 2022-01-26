@@ -3,8 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NbDialogService } from '@nebular/theme';
 import { select, Store } from '@ngrx/store';
 import { Tag, VideoTraining } from '@volleymotion/models';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, tap } from 'rxjs/operators';
 import { ArticleListFilterDialogComponent } from '../../article/article-list/article-list-filter-dialog/article-list-filter-dialog.component';
 import { VideoTrainingService } from '../../core/services/video-training.service';
 import { TagSelectors } from '../../core/store/selectors';
@@ -15,6 +15,7 @@ import { TagSelectors } from '../../core/store/selectors';
   styleUrls: ['./video-training-list.component.scss'],
 })
 export class VideoTrainingListComponent implements OnInit {
+  isLoading$ = new BehaviorSubject(false);
   tags$: Observable<Tag[]> | undefined;
   videoTrainings$: Observable<VideoTraining[] | any[]> | undefined;
   selectedTags: Tag[] = [];
@@ -36,12 +37,14 @@ export class VideoTrainingListComponent implements OnInit {
     this.videoTrainings$ = this.videoTrainingService
       .loadVideoTrainingList(sportType, tagIds)
       .pipe(
+        tap(() => this.isLoading$.next(true)),
         map((videos) =>
           videos.map((video) => ({
             ...video,
             url: this.sanitizer.bypassSecurityTrustResourceUrl(video.url),
           }))
-        )
+        ),
+        finalize(() => this.isLoading$.next(false))
       );
   }
 

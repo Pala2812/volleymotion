@@ -1,21 +1,46 @@
-<nb-card class="card" *ngFor="let player of players$ | async" (click)="selectPlayer(player)">
+<ng-container *ngIf="(isLoadingPlayers$ | async) === false && (players$ | async)?.length; else noData">
+  <nb-card
+    class="card"
+    *ngFor="let player of players$ | async"
+    (click)="selectPlayer(player)"
+  >
     <nb-card-header class="card-header">
-        <span>{{player?.firstname}} {{player?.lastname}}</span>
-        <span>{{player?.position}}</span>
+      <span>{{ player?.firstname }} {{ player?.lastname }}</span>
+      <span>{{ player?.position }}</span>
 
-        <div class="card-header-actions">
-            <button class="edit-btn" nbButton ghost status="info" (click)="editPlayer(player)">
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
+      <div class="card-header-actions">
+        <button
+          class="edit-btn"
+          nbButton
+          ghost
+          status="info"
+          (click)="editPlayer(player)"
+        >
+          <nb-icon icon="edit-outline"></nb-icon>
+        </button>
 
-            <button class="delete-btn" nbButton ghost status="danger" (click)="deletePlayer(player, $event)">
-                <nb-icon icon="trash-outline"></nb-icon>
-            </button>
-        </div>
-
+        <button
+          class="delete-btn"
+          nbButton
+          ghost
+          status="danger"
+          (click)="deletePlayer(player, $event)"
+        >
+          <nb-icon icon="trash-outline"></nb-icon>
+        </button>
+      </div>
     </nb-card-header>
-</nb-card>
+  </nb-card>
+</ng-container>
+
+<ng-template #noData>
+  <vm-no-data
+    [routerLink]="['../erstellen']"
+    message="Noch keine Spieler vorhanden..."
+    linkMessage="Erstelle jetzt einen Spieler!"
+  ></vm-no-data>
+</ng-template>
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
-    <mat-icon>add</mat-icon>
+  <mat-icon>add</mat-icon>
 </button>
