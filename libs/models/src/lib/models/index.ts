@@ -22,3 +22,5 @@ export * from './animation-step';
 export * from './exercise';
 export * from './meta';
 export * from './video-training';
+export * from './training';
+export * from './training-unit';

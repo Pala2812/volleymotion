@@ -1,0 +1,12 @@
+.form {
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 1em;
+  padding: 1em;
+
+  .form-timespan-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+  }
+}

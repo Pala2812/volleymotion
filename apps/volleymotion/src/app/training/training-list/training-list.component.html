@@ -1,15 +1,50 @@
-<div class="container">
-    <nb-card status="danger" class="card border-red">
-        <nb-card-header>Trainingseinheit erstellen</nb-card-header>
-        <nb-card-body>
-            <ul>
-                <li>Sehe zu und Absagen</li>
-                <li>Übungsvorschläge mit den Schwerpunkt des Saisonfocus</li>
-                <li>Übungsvorschläge mit der Anzahl von Spielern beim Training</li>
-                <li>Übungsvorschläge mit den aktuellen Spieler eines Trainings und deren Schwächen</li>
-                <li>Übungsvorschläge mit den aktuellen Spieler eines Trainings und deren Verbesserungswüsche</li>
-                <li>usw... :)</li>
-            </ul>
-        </nb-card-body>
-    </nb-card>
-</div>
+<nb-card *ngFor="let training of trainingList$ | async" class="card">
+  <nb-card-header class="card-header"
+    >{{ training?.day }}
+    <div class="card-header-actions">
+      <button
+        class="edit-btn"
+        nbButton
+        ghost
+        status="info"
+        (click)="editTraining(training.id, $event)"
+      >
+        <nb-icon icon="edit-outline"></nb-icon>
+      </button>
+
+      <button
+        class="delete-btn"
+        nbButton
+        ghost
+        status="danger"
+        (click)="deleteTraining(training.id, $event)"
+      >
+        <nb-icon icon="trash-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      {{ training?.address?.street }} {{ training?.address?.streetnumber }}
+    </div>
+    <div>
+      {{ training?.address?.postalcode }} {{ training?.address?.locality }}
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button
+      nbButton
+      (click)="createTrainingUnit(training, uid, seasonId, teamId)"
+    >
+      Trainingseinheit erstellen
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+<nb-card *ngFor="let unit of trainingUnits$ | async" [routerLink]="['../einheit/' + unit.id]">
+  <nb-card-header>{{ unit?.date | timestamp | date: 'dd.MM' }}</nb-card-header>
+</nb-card>
+
+<button class="add-btn" mat-fab [routerLink]="['../erstellen']">
+  <mat-icon>add</mat-icon>
+</button>

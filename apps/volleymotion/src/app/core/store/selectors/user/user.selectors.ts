@@ -14,3 +14,7 @@ export const selectUser = createSelector(
   selectUserFeature,
   (state) => state.user
 );
+
+export const selectIsEditor = createSelector(selectUserFeature, (state) =>
+  state?.user?.roles?.includes('Editor') ?? false
+);

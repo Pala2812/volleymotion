@@ -32,10 +32,7 @@ export class VideoTrainingListComponent implements OnInit {
   ngOnInit(): void {
     this.loadVideos(this.sportType);
     this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
-    this.isEditor$ = this.store.pipe(
-      select(UserSelectors.selectUser),
-      map((user) => user?.roles?.includes('Editor') ?? false)
-    );
+    this.isEditor$ = this.store.pipe(select(UserSelectors.selectIsEditor));
   }
 
   loadVideos(sportType: string, tagIds?: string[]) {

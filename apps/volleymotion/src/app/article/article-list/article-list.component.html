@@ -1,19 +1,29 @@
+<ng-container
+  *ngIf="
+    (isLoadingSurveys$ | async) === false && (articles$ | async)?.length;
+    else noData
+  "
+>
+  <nb-card
+    class="card"
+    *ngFor="let article of filteredArticles$ | async"
+    (click)="viewDetail(article)"
+  >
+    <nb-card-header class="card-header">
+      {{ article?.title }}
+    </nb-card-header>
 
-<ng-container *ngIf="(isLoadingSurveys$ | async) === false && (articles$ | async)?.length; else noData">
-    <nb-card class="card" *ngFor="let article of filteredArticles$ | async" (click)="viewDetail(article)">
-        <nb-card-header class="card-header">
-            {{article?.title}}
-        </nb-card-header>
+    <nb-card-body
+      class="article-content"
+      [innerHTML]="article?.description"
+    ></nb-card-body>
 
-        <nb-card-body class="article-content" [innerHTML]="article?.description"></nb-card-body>
-
-        <nb-card-footer>
-            <mat-chip-list *ngIf="article?.tags?.length">
-                <mat-chip *ngFor="let tag of article.tags">{{tag.name}}</mat-chip>
-            </mat-chip-list>
-        </nb-card-footer>
-    </nb-card>
-
+    <nb-card-footer>
+      <mat-chip-list *ngIf="article?.tags?.length">
+        <mat-chip *ngFor="let tag of article.tags">{{ tag.name }}</mat-chip>
+      </mat-chip-list>
+    </nb-card-footer>
+  </nb-card>
 </ng-container>
 
 <ng-template #noData>
@@ -24,12 +34,26 @@
   ></vm-no-data>
 </ng-template>
 
-<nb-spinner *ngIf="isLoadingSurveys$ | async;"></nb-spinner>
+<nb-spinner *ngIf="isLoadingSurveys$ | async"></nb-spinner>
 
-<button mat-fab class="add-btn" color="primary" (click)="createSurvey()" aria-label="Umfrage erstellen">
-    <mat-icon>add</mat-icon>
+<button
+  *ngIf="isEditor$ | async"
+  mat-fab
+  class="add-btn"
+  color="primary"
+  (click)="createSurvey()"
+  aria-label="Umfrage erstellen"
+>
+  <mat-icon>add</mat-icon>
 </button>
 
-<button mat-fab class="filter-btn" color="primary" (click)="showFilterDialog()" [matBadge]="tags?.length ? tags.length + 1 : '1'" matBadgeColor="accent">
-    <mat-icon>filter_alt</mat-icon>
+<button
+  mat-fab
+  class="filter-btn"
+  color="primary"
+  (click)="showFilterDialog()"
+  [matBadge]="tags?.length ? tags.length + 1 : '1'"
+  matBadgeColor="accent"
+>
+  <mat-icon>filter_alt</mat-icon>
 </button>

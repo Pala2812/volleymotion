@@ -11,7 +11,7 @@ import { Article } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { loadSurveys } from '../../core/store/actions/article/article.actions';
 import { StoreState } from '../../core/store/reducers';
-import { AuthSelectors, SurveySelectors } from '../../core/store/selectors';
+import { AuthSelectors, SurveySelectors, UserSelectors } from '../../core/store/selectors';
 import { AuthDialogComponent } from '../../shared/components/auth-dialog/auth-dialog.component';
 import { ArticleListFilterDialogComponent } from './article-list-filter-dialog/article-list-filter-dialog.component';
 
@@ -24,6 +24,7 @@ export class ArticleListComponent implements OnInit {
   isLoadingSurveys$: Observable<boolean> | undefined;
   isReportingSurvey$: Observable<boolean> | undefined;
   isLikingSurvey$: Observable<boolean> | undefined;
+  isEditor$: Observable<boolean> | undefined;
   uid$: Observable<string | undefined> | undefined;
   tags: Tag[] = [];
   filteredArticles$: Observable<Article[]> | undefined;
@@ -53,6 +54,7 @@ export class ArticleListComponent implements OnInit {
     this.filteredArticles$ = this.store.pipe(
       select(SurveySelectors.selectSurveys)
     );
+    this.isEditor$ = this.store.pipe(select(UserSelectors.selectIsEditor));
     this.uid$ = this.store.pipe(select(AuthSelectors.selectUid));
   }
 

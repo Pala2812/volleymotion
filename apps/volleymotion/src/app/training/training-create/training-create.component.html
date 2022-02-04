@@ -1,1 +1,137 @@
-<p>training-create works!</p>
+<nb-card>
+  <nb-card-header>Trainingstag erstellen</nb-card-header>
+
+  <nb-card-body>
+    <form [formGroup]="form" class="form" (ngSubmit)="submit(form, season)">
+      <nb-form-field>
+        <nb-select fullWidth formControlName="day" placeholder="Trainingstag">
+          <nb-option value="Montag">Montag</nb-option>
+          <nb-option value="Dienstag">Dienstag</nb-option>
+          <nb-option value="Mittwoch">Mittwoch</nb-option>
+          <nb-option value="Donnerstag">Donnerstag</nb-option>
+          <nb-option value="Freitag">Freitag</nb-option>
+          <nb-option value="Samstag">Samstag</nb-option>
+          <nb-option value="Sonntag">Sonntag</nb-option>
+        </nb-select>
+      </nb-form-field>
+
+      <div class="form-timespan-row">
+        <nb-form-field>
+          <input
+            nbInput
+            fullWidth
+            placeholder="Von"
+            [nbTimepicker]="frompicker"
+            formControlName="from"
+          />
+          <nb-timepicker
+            #frompicker
+            hoursText="Stunde"
+            minutesText="Minute"
+          ></nb-timepicker>
+        </nb-form-field>
+
+        <nb-form-field>
+          <input
+            nbInput
+            placeholder="Bis"
+            fullWidth
+            [nbTimepicker]="topicker"
+            formControlName="to"
+          />
+          <nb-timepicker
+            #topicker
+            hoursText="Stunde"
+            minutesText="Minute"
+          ></nb-timepicker>
+        </nb-form-field>
+      </div>
+
+      <vm-address-input
+        (addressSelected)="onAddressSelected($event)"
+      ></vm-address-input>
+
+      <form formGroupName="address">
+        <div class="row">
+          <nb-form-field class="no-pointer">
+            <input
+              nbInput
+              fullWidth
+              formControlName="street"
+              placeholder="Straße"
+            />
+          </nb-form-field>
+
+          <nb-form-field class="no-pointer">
+            <input
+              nbInput
+              fullWidth
+              formControlName="streetnumber"
+              placeholder="Straßennummer"
+            />
+          </nb-form-field>
+        </div>
+
+        <div class="row">
+          <nb-form-field class="no-pointer">
+            <input
+              nbInput
+              fullWidth
+              formControlName="postalcode"
+              placeholder="Postleitzahl"
+            />
+          </nb-form-field>
+
+          <nb-form-field class="no-pointer">
+            <input
+              nbInput
+              fullWidth
+              formControlName="locality"
+              placeholder="Stadt"
+            />
+          </nb-form-field>
+        </div>
+
+        <nb-form-field class="no-pointer">
+          <input
+            nbInput
+            fullWidth
+            formControlName="administrativeArea"
+            placeholder="Bundesland"
+          />
+        </nb-form-field>
+
+        <nb-form-field class="no-pointer">
+          <input
+            nbInput
+            fullWidth
+            formControlName="country"
+            placeholder="Land"
+          />
+        </nb-form-field>
+      </form>
+
+      <form class="geocode-form" formGroupName="_geoloc">
+        <nb-form-field class="no-pointer">
+          <input
+            nbInput
+            fullWidth
+            formControlName="lat"
+            placeholder="Latitude"
+          />
+        </nb-form-field>
+
+        <nb-form-field class="no-pointer">
+          <input
+            nbInput
+            fullWidth
+            formControlName="lng"
+            placeholder="Longitude"
+          />
+        </nb-form-field>
+      </form>
+
+      <button nbButton type="submit">Trainingstag erstellen</button>
+    </form>
+  </nb-card-body>
+</nb-card>
