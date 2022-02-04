@@ -30,7 +30,7 @@ export class SurveyEffects {
     this.actions$.pipe(
       ofType(SurveyActions.createSurvey),
       mergeMap(({ article }) =>
-        from(this.fs.doc(`surveys/${article.id}`).set(article)).pipe(
+        from(this.fs.doc(`articles/${article.id}`).set(article)).pipe(
           map(() => SurveyActions.createSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.createSurveyFailure({ error }))
@@ -44,7 +44,7 @@ export class SurveyEffects {
     this.actions$.pipe(
       ofType(SurveyActions.updateSurvey),
       concatMap(({ article }) =>
-        from(this.fs.doc(`surveys/${article?.id}`).ref.update(article)).pipe(
+        from(this.fs.doc(`articles/${article?.id}`).ref.update(article)).pipe(
           map(() => SurveyActions.updateSurveySuccess()),
           catchError((error) =>
             of(SurveyActions.updateSurveyFailure({ error }))
@@ -58,12 +58,12 @@ export class SurveyEffects {
     this.actions$.pipe(
       ofType(SurveyActions.loadSurveys),
       mergeMap(({ sportType, tagIds }) => {
-        let request = from(this.fs.collection<Article>('surveys').ref.get());
+        let request = from(this.fs.collection<Article>('articles').ref.get());
 
         if (sportType !== 'Allgemein') {
           request = from(
             this.fs
-              .collection<Article>('surveys')
+              .collection<Article>('articles')
               .ref.where('sportType', '==', sportType)
               .get()
           );
@@ -72,7 +72,7 @@ export class SurveyEffects {
         if (tagIds?.length) {
           request = from(
             this.fs
-              .collection<Article>('surveys')
+              .collection<Article>('articles')
               .ref.where('tagIds', 'array-contains-any', tagIds)
               .get()
           );
@@ -81,7 +81,7 @@ export class SurveyEffects {
         if (sportType !== 'Allgemein' && tagIds?.length) {
           request = from(
             this.fs
-              .collection<Article>('surveys')
+              .collection<Article>('articles')
               .ref.where('sportType', '==', sportType)
               .where('tagIds', 'array-contains-any', tagIds)
               .get()
@@ -102,7 +102,7 @@ export class SurveyEffects {
       ofType(SurveyActions.loadSurveyById),
       mergeMap(({ id }) =>
         this.fs
-          .doc<Article>(`surveys/${id}`)
+          .doc<Article>(`articles/${id}`)
           .valueChanges()
           .pipe(
             map((article) => SurveyActions.loadSurveyByIdSuccess({ article })),
@@ -121,7 +121,7 @@ export class SurveyEffects {
       mergeMap((params) =>
         from(
           this.fs
-            .doc(`surveys/${params[0].id}/likes/${params[1]}`)
+            .doc(`articles/${params[0].id}/likes/${params[1]}`)
             .set({ uid: params[1] })
         ).pipe(
           map(() => SurveyActions.likeSurveySuccess()),
@@ -142,7 +142,7 @@ export class SurveyEffects {
       switchMap(({ message }) =>
         from(
           this.fs
-            .collection(`surveys/${message.surveyId}/comments`)
+            .collection(`articles/${message.surveyId}/comments`)
             .add(message)
         ).pipe(
           map(() => SurveyActions.addCommentToSurveySuccess()),
@@ -159,7 +159,7 @@ export class SurveyEffects {
       ofType(SurveyActions.loadCommentsOfSurvey),
       switchMap(({ id }) =>
         this.fs
-          .collection<SurveyComment>(`surveys/${id}/comments`)
+          .collection<SurveyComment>(`articles/${id}/comments`)
           .valueChanges()
           .pipe(
             mergeMap((surveyComments) =>
@@ -206,7 +206,7 @@ export class SurveyEffects {
       concatMap((params) =>
         from(
           this.fs
-            .doc(`surveys/${params[0].id}/reports/${params[1]}`)
+            .doc(`articles/${params[0].id}/reports/${params[1]}`)
             .set({ uid: params[1] })
         ).pipe(
           map(() => SurveyActions.reportSurveySuccess()),

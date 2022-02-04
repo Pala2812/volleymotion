@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, map, tap } from 'rxjs/operators';
 import { ArticleListFilterDialogComponent } from '../../article/article-list/article-list-filter-dialog/article-list-filter-dialog.component';
 import { VideoTrainingService } from '../../core/services/video-training.service';
-import { TagSelectors } from '../../core/store/selectors';
+import { TagSelectors, UserSelectors } from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-video-training-list',
@@ -15,6 +15,7 @@ import { TagSelectors } from '../../core/store/selectors';
   styleUrls: ['./video-training-list.component.scss'],
 })
 export class VideoTrainingListComponent implements OnInit {
+  isEditor$: Observable<boolean> | undefined;
   isLoading$ = new BehaviorSubject(false);
   tags$: Observable<Tag[]> | undefined;
   videoTrainings$: Observable<VideoTraining[] | any[]> | undefined;
@@ -31,6 +32,10 @@ export class VideoTrainingListComponent implements OnInit {
   ngOnInit(): void {
     this.loadVideos(this.sportType);
     this.tags$ = this.store.pipe(select(TagSelectors.selectTags));
+    this.isEditor$ = this.store.pipe(
+      select(UserSelectors.selectUser),
+      map((user) => user?.roles?.includes('Editor') ?? false)
+    );
   }
 
   loadVideos(sportType: string, tagIds?: string[]) {

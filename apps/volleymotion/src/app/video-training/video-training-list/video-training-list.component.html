@@ -1,4 +1,10 @@
-<div class="video-container" *ngIf="(videoTrainings$ | async)?.length >=1 && (isLoading$ | async) === false; else noData">
+<div
+  class="video-container"
+  *ngIf="
+    (videoTrainings$ | async)?.length >= 1 && (isLoading$ | async) === false;
+    else noData
+  "
+>
   <iframe
     *ngFor="let videoTraining of videoTrainings$ | async"
     id="ytplayer"
@@ -17,11 +23,18 @@
   ></vm-no-data>
 </ng-template>
 
-
-<button mat-fab class="filter-btn" color="primary" (click)="showFilterDialog()" [matBadge]="selectedTags?.length ? selectedTags.length + 1 : 1" matBadgeColor="accent">
+<button
+  mat-fab
+  class="filter-btn"
+  color="primary"
+  (click)="showFilterDialog()"
+  [matBadge]="selectedTags?.length ? selectedTags.length + 1 : 1"
+  matBadgeColor="accent"
+>
   <mat-icon>filter_alt</mat-icon>
 </button>
 
-<button class="add-btn" mat-fab [routerLink]="['../erstellen']">
+
+<button *ngIf="isEditor$ | async" class="add-btn" mat-fab [routerLink]="['../erstellen']">
   <mat-icon>add</mat-icon>
 </button>

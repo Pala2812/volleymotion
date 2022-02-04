@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
+import { User } from '@volleymotion/models';
 
-import { User } from '../../../models';
 import { UserActions } from '../../actions';
 
 export const userFeatureKey = 'user';

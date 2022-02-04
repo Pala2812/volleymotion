@@ -4,12 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { select } from '@ngrx/store';
 import { Store } from '@ngrx/store';
-import { Match, MatchComment, Player, PlayerParticipation, Team } from '@volleymotion/models';
+import { Match, MatchComment, Player, PlayerParticipation, Team, User } from '@volleymotion/models';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import firebase from 'firebase/app';
 import { Actions, ofType } from '@ngrx/effects';
 
-import { User } from '../../core/models';
 import { MatchActions } from '../../core/store/actions';
 import { StoreState } from '../../core/store/reducers';
 import { MatchSelectors, PlayerSelectors, TeamSelectors, UserSelectors } from '../../core/store/selectors';

@@ -58,6 +58,12 @@ quill-editor {
   }
 }
 
+.ql-formats {
+  button.ql-image {
+    display: none;
+  }
+}
+
 .nb-theme-cosmic nb-chat {
   height: 80vh;
 }

@@ -16,11 +16,10 @@ import {
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-
-import { User } from './core/models';
 import { AppInitService } from './core/services/app-init.service';
 import { SeasonSelectors } from './core/store/selectors';
 import { Router } from '@angular/router';
+import { User } from '@volleymotion/models';
 @Component({
   selector: 'volleymotion-root',
   templateUrl: './app.component.html',

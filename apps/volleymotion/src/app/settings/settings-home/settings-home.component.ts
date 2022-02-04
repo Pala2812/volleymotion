@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { select, Store } from '@ngrx/store';
+import { User } from '@volleymotion/models';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { User } from '../../core/models';
 import { StoreState } from '../../core/store/reducers';
 import { UserSelectors } from '../../core/store/selectors';
 

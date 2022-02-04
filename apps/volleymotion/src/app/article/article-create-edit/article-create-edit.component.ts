@@ -11,17 +11,21 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Tag } from '@volleymotion/models';
+import { Tag, User } from '@volleymotion/models';
 import firebase from 'firebase/app';
 import { QuillEditorComponent } from 'ngx-quill';
 import { Observable, Subject } from 'rxjs';
-import { filter, map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 
-import { Article, User } from '../../core/models';
+import { Article } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
 import { loadSurveyById } from '../../core/store/actions/article/article.actions';
 import { StoreState } from '../../core/store/reducers';
-import { AuthSelectors, SurveySelectors, TagSelectors, UserSelectors } from '../../core/store/selectors';
+import {
+  SurveySelectors,
+  TagSelectors,
+  UserSelectors,
+} from '../../core/store/selectors';
 
 @Component({
   selector: 'vm-article-create-edit',
@@ -29,7 +33,8 @@ import { AuthSelectors, SurveySelectors, TagSelectors, UserSelectors } from '../
   styleUrls: ['./article-create-edit.component.scss'],
 })
 export class ArticleCreateEditComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild('quill') quill: ElementRef<QuillEditorComponent> | undefined;
   user$: Observable<User | undefined> | undefined;
   tags$: Observable<Tag[]> | undefined;
@@ -39,8 +44,12 @@ export class ArticleCreateEditComponent
   uid$: Observable<string> | undefined;
   surveyForm: FormGroup = this.initSurveyForm();
   isEdit = false;
-  sportTypes = ['Allgemein', 'Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
-
+  sportTypes = [
+    'Allgemein',
+    'Hallenvolleyball',
+    'Beachvolleyball',
+    'Snowvolleyball',
+  ];
 
   private unsubscribe$ = new Subject();
 
@@ -50,13 +59,12 @@ export class ArticleCreateEditComponent
     private router: Router,
     private route: ActivatedRoute,
     private fs: AngularFirestore
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isCreatingSurvey$ = this.store.pipe(
       select(SurveySelectors.selectIsCreatingSurvey)
     );
-
 
     this.user$ = this.store.pipe(select(UserSelectors.selectUser));
     this.article$ = this.store.pipe(select(SurveySelectors.selectSurvey));
@@ -90,7 +98,9 @@ export class ArticleCreateEditComponent
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(SurveyActions.loadSurveyByIdSuccess({ article: undefined }));
+    this.store.dispatch(
+      SurveyActions.loadSurveyByIdSuccess({ article: undefined })
+    );
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -136,7 +146,9 @@ export class ArticleCreateEditComponent
     }
 
     this.filteredTags$ = this.filteredTags$?.pipe(
-      map(tags => tags.filter(tag => tag.name.toLowerCase().includes(query)))
+      map((tags) =>
+        tags.filter((tag) => tag.name.toLowerCase().includes(query))
+      )
     );
   }
 
@@ -154,9 +166,13 @@ export class ArticleCreateEditComponent
   initSurveyForm(article?: Article): FormGroup {
     return new FormGroup({
       title: new FormControl(article?.title || '', [Validators.required]),
-      sportType: new FormControl(article?.sportType || 'Allgemein', [Validators.required]),
+      sportType: new FormControl(article?.sportType || 'Allgemein', [
+        Validators.required,
+      ]),
       tags: new FormArray([]),
-      description: new FormControl(article?.description || '', [Validators.required]),
+      description: new FormControl(article?.description || '', [
+        Validators.required,
+      ]),
     });
   }
 
@@ -170,7 +186,7 @@ export class ArticleCreateEditComponent
       let article = form.value;
 
       const id = article.id || this.fs.createId();
-      const tagIds = (form.value.tags as any[]).map(tag => tag.id);
+      const tagIds = (form.value.tags as any[]).map((tag) => tag.id);
 
       article = { ...article, ...this.surveyForm.value, tagIds };
       article.id = id;
@@ -178,12 +194,12 @@ export class ArticleCreateEditComponent
       article.author = {};
       article.author.firstname = user.firstname;
       article.author.lastname = user.lastname;
-      (article as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      (article as any).createdAt =
+        firebase.firestore.FieldValue.serverTimestamp();
 
       this.isEdit
         ? this.store.dispatch(SurveyActions.updateSurvey({ article }))
         : this.store.dispatch(SurveyActions.createSurvey({ article }));
-
     }
   }
 }

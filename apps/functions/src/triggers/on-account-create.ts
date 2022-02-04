@@ -14,7 +14,7 @@ export const onAccountCreate = functions
         createdAt,
         updatedAt: createdAt,
       };
-      const roles: role[] = ['Admin'];
+      const roles: role[] = ['User'];
 
       const user: Partial<User> = {
         uid,

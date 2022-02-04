@@ -47,7 +47,7 @@
       </nb-card>
 
       <nb-card [nbSpinner]="isLoadingPlayerComments$ | async">
-        <nb-card-header>Kommentare</nb-card-header>
+        <nb-card-header>Anmerkung</nb-card-header>
         <nb-card-body>
 
           <vm-player-comment [playerComment]="comment" (deletePlayerComment)="onPlayerCommentDelete($event)"
@@ -57,7 +57,7 @@
         <nb-card-body>
           <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="addComment(commentForm, player,user)">
             <nb-form-field>
-              <input nbInput fullWidth placeholder="Kommentar hinzufügen" formControlName="comment" />
+              <input nbInput fullWidth placeholder="Anmerkung hinzufügen" formControlName="comment" />
             </nb-form-field>
             <button nbButton type="submit" [disabled]="isAddingCommentToPlayer$ | async">
               <nb-icon icon="plus-outline"></nb-icon>

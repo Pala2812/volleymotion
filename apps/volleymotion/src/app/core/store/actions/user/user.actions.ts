@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../../models';
+import { User } from '@volleymotion/models';
 
 const key = '[User]';
 
@@ -18,4 +18,7 @@ export const UpdateUserFailure = createAction(
   props<{ error: Error }>()
 );
 
-export const setUser = createAction(`${key} Set User`, props<{ user: User | undefined }>());
+export const setUser = createAction(
+  `${key} Set User`,
+  props<{ user: User | undefined }>()
+);
