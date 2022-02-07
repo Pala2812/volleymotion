@@ -31,14 +31,6 @@
       {{ training?.address?.postalcode }} {{ training?.address?.locality }}
     </div>
   </nb-card-body>
-  <nb-card-footer>
-    <button
-      nbButton
-      (click)="createTrainingUnit(training, uid, seasonId, teamId)"
-    >
-      Trainingseinheit erstellen
-    </button>
-  </nb-card-footer>
 </nb-card>
 
 <nb-card *ngFor="let unit of trainingUnits$ | async" [routerLink]="['../einheit/' + unit.id]">

@@ -8,8 +8,9 @@ export interface TrainingUnit {
   teamId: string;
   trainingId: string,
   date: Timestamp;
-  participantIds: Player[];
+  admins: string[];
+  participantIds: string[];
   description?: string;
-  exerciseIds: Exercise[];
-  videoTrainingIds: VideoTraining[];
+  exerciseIds: string[];
+  videoTrainingIds: string[];
 }

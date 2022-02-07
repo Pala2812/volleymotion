@@ -45,39 +45,6 @@ export class TrainingListComponent implements OnInit {
       });
   }
 
-  createTrainingUnit(
-    training: Training,
-    uid: string,
-    seasonId: string,
-    teamId: string
-  ) {
-    if (!seasonId || !teamId) {
-      throw new Error('SeasonId or TeamId is undefined');
-    }
-
-    // get day - create for today or next day
-    const today = DateTime.now().weekday;
-    if (today === training.weekday) {
-      const date = DateTime.now().endOf('day').toJSDate() as any;
-      const trainingUnit: TrainingUnit = {
-        id: this.trainingService.getId(),
-        trainingId: training?.id,
-        seasonId,
-        teamId,
-        uid,
-        date,
-        participantIds: [],
-        exerciseIds: [],
-        videoTrainingIds: [],
-      };
-      console.log(trainingUnit);
-      this.trainingService
-        .createTrainingUnit(trainingUnit)
-        .subscribe(() => alert('Success'));
-    } else {
-    }
-  }
-
   async deleteTraining(id: string, event: Event) {
     const deleteTraining = confirm(
       'Möchtest du diesen Trainingstag löschen und alle damit verbunden Einheiten?'

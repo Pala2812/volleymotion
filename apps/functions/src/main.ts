@@ -14,6 +14,8 @@ import { onPlayerDelete } from './triggers/on-player-delete';
 import { onSeasonEdit } from './triggers/on-season-edit';
 import { onMatchUpdate } from './triggers/on-match-update';
 import { onMatchDelete } from './triggers/on-match-delete';
+import { onTrainingDayCreate } from './triggers/on-training-day-create';
+import { onTrainingDayDelete } from './triggers/on-training-day-delete';
 
 import { AppModule } from './app/app.module';
 
@@ -47,3 +49,5 @@ exports.onPlayerDelete = onPlayerDelete;
 exports.onSeasonEdit = onSeasonEdit;
 exports.onMatchUpdate = onMatchUpdate;
 exports.onMatchDelete = onMatchDelete;
+exports.onTrainingDayCreate = onTrainingDayCreate;
+exports.onTrainingDayDelete = onTrainingDayDelete;
