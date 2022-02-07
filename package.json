@@ -46,7 +46,7 @@
     }
   },
   "dependencies": {
-    "@agm/core": "^1.1.0",
+    "@agm/core": "^3.0.0-beta.0",
     "@angular/animations": "13.2.1",
     "@angular/cdk": "13.2.1",
     "@angular/common": "13.2.1",
