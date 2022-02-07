@@ -22,29 +22,29 @@
       }
     }
   },
-  "projects": {
-    "volleymotion": {
-      "tags": []
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
+  },
+  "defaultProject": "volleymotion",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
     },
-    "volleymotion-e2e": {
-      "tags": [],
-      "implicitDependencies": ["volleymotion"]
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
-    "functions": {
-      "tags": []
-    },
-    "models": {
-      "tags": []
-    },
-    "address-input": {
-      "tags": []
-    },
-    "homepage": {
-      "tags": []
-    },
-    "homepage-e2e": {
-      "tags": [],
-      "implicitDependencies": ["homepage"]
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
     }
   }
 }

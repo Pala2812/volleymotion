@@ -17,8 +17,8 @@
     "baseUrl": ".",
     "strict": true,
     "paths": {
-      "@volleymotion/models": ["libs/models/src/index.ts"],
-      "@volleymotion/address-input": ["libs/address-input/src/index.ts"]
+      "@volleymotion/address-input": ["libs/address-input/src/index.ts"],
+      "@volleymotion/models": ["libs/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
