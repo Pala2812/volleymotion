@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, take, withLatestFrom } from 'rxjs/operators';
-import firebase from 'firebase/app';
+import { serverTimestamp } from 'firebase/firestore';
 
 import { Article, SurveyComment } from '../../core/models';
 import { SurveyActions } from '../../core/store/actions';
@@ -103,7 +103,7 @@ export class ArticleDetailComponent implements OnInit {
             message: comment,
             surveyId: article!.id,
           };
-          (message as any).createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          (message as any).createdAt = serverTimestamp();
 
           this.store.dispatch(SurveyActions.addCommentToSurvey({ message }));
           form.reset();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { Subject } from 'rxjs';
@@ -53,7 +53,7 @@ export class ConfirmAccountComponent implements OnInit {
           this.router.navigate(['']);
         }, 3000);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         this.isLoading$.next(false);
         this.toastService.danger(error.message, 'Fehler', {
           duration: 5000,

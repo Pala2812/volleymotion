@@ -1,9 +1,9 @@
-import firebase from 'firebase/app';
+import { Timestamp } from 'firebase/firestore';
 
 export interface PlayerComment {
-    createdAt: firebase.firestore.Timestamp;
-    id: string;
-    uid: string;
-    playerId: string;
-    comment: string;
+  createdAt: Timestamp;
+  id: string;
+  uid: string;
+  playerId: string;
+  comment: string;
 }

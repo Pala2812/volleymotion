@@ -5,7 +5,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Match, Season } from '@volleymotion/models';
 import { isDate } from 'date-fns';
-import * as firebase from 'firebase/app';
+import { Timestamp } from 'firebase/firestore';
 import { Observable, Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { MatchService } from '../../core/services/match.service';
@@ -140,7 +140,7 @@ export class MatchCreateComponent implements OnInit, OnDestroy {
       matchDate.setHours(time.getHours());
       matchDate.setMinutes(time.getMinutes());
 
-      let date = firebase.default.firestore.Timestamp.fromDate(matchDate);
+      let date = Timestamp.fromDate(matchDate);
       const match: Partial<Match> = {
         id,
         seasonId,

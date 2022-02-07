@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'apps/volleymotion/src/environments/environment';
 import { from, throwError } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class AuthService {
 
   signInWithEmailAndPassword(email: string, password: string) {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
-      mergeMap((userCredentials) =>
+      mergeMap((userCredentials: any) =>
         this.fs
           .doc<User>(`users/${userCredentials?.user?.uid}`)
           .valueChanges()
@@ -42,19 +42,19 @@ export class AuthService {
     user: Partial<User>
   ) {
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
-      mergeMap((userCredentials) =>
+      mergeMap((userCredentials: any) =>
         this.fs
           .doc<User>(`users/${userCredentials?.user?.uid}`)
           .snapshotChanges()
           .pipe(
-            filter((snapshot) => snapshot.payload.exists),
+            filter((snapshot: any) => snapshot.payload.exists),
             mergeMap((snapshot) =>
               this.fs
                 .doc(`users/${snapshot.payload.id}`)
                 .update(user)
                 .then(() => snapshot)
             ),
-            map((snapshot) => snapshot.payload.data())
+            map((snapshot: any) => snapshot.payload.data())
           )
       )
     );

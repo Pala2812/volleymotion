@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 import { Season, Team, User } from '@volleymotion/models';
 import { take } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class AppInitService {
     return this.auth.user
       .pipe(take(1))
       .toPromise()
-      .then(async (userCrendetials) => {
+      .then(async (userCrendetials: any) => {
         if (userCrendetials?.uid) {
           this.store.dispatch(AuthActions.setUid({ uid: userCrendetials.uid }));
 
@@ -36,9 +36,9 @@ export class AppInitService {
             .collection('users')
             .doc<User>(userCrendetials.uid)
             .valueChanges()
-            .subscribe(async (user) => {
-              this.store.dispatch(UserActions.setUser({ user }));
-            });
+            .subscribe((user: User | undefined) =>
+              this.store.dispatch(UserActions.setUser({ user }))
+            );
         }
       });
   }

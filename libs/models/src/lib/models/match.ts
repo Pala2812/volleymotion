@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+import { Timestamp } from 'firebase/firestore';
 import { Address } from './address';
 import { MatchSet } from './match-set';
 import { PlayerParticipation } from './player-participation';
@@ -10,7 +10,7 @@ export interface Match {
   teamId: string;
   seasonId: string;
   opponent: string;
-  date: firebase.default.firestore.Timestamp;
+  date: Timestamp;
   address: Address;
   _geoloc: _geoloc;
   status: 'Ausstehend' | 'Gewonnen' | 'Verloren';

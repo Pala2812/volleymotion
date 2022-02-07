@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { select, Store } from '@ngrx/store';
 import { filter, throttleTime } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import {
 } from './core/store/actions';
 import { StoreState } from './core/store/reducers';
 import { NetworkStatusService } from './core/services/network-status.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AppInitService } from './core/services/app-init.service';
 import { SeasonSelectors } from './core/store/selectors';
 import { Router } from '@angular/router';

@@ -6,13 +6,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Tag, User } from '@volleymotion/models';
-import firebase from 'firebase/app';
+import { serverTimestamp } from 'firebase/firestore';
 import { QuillEditorComponent } from 'ngx-quill';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, take, takeUntil } from 'rxjs/operators';
@@ -194,8 +194,7 @@ export class ArticleCreateEditComponent
       article.author = {};
       article.author.firstname = user.firstname;
       article.author.lastname = user.lastname;
-      (article as any).createdAt =
-        firebase.firestore.FieldValue.serverTimestamp();
+      (article as any).createdAt = serverTimestamp();
 
       this.isEdit
         ? this.store.dispatch(SurveyActions.updateSurvey({ article }))

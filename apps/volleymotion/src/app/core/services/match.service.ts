@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Match, MatchComment } from '@volleymotion/models';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -64,7 +64,7 @@ export class MatchService {
       .pipe(
         map((comments) =>
           comments?.sort(
-            (a, b) => b?.createdAt?.toMillis() - a?.createdAt?.toMillis()
+            (a: any, b: any) => b?.createdAt?.toMillis() - a?.createdAt?.toMillis()
           )
         )
       );

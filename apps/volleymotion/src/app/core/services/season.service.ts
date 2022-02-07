@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Season } from '@volleymotion/models';
 import { from } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class SeasonService {
         .collection('seasons')
         .ref.where('teamId', '==', teamId)
         .get()
-        .then((docs) => docs.docs.map((doc) => doc.data() as Season))
+        .then((docs: any) => docs.docs.map((doc: any) => doc.data() as Season))
     );
   }
 
@@ -25,7 +25,7 @@ export class SeasonService {
         .collection('seasons')
         .doc(id)
         .ref.get()
-        .then((doc) => doc.data() as Season)
+        .then((doc: any) => doc.data() as Season)
     );
   }
 

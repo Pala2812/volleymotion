@@ -40,8 +40,8 @@ export class VideoTrainingListComponent implements OnInit {
       .loadVideoTrainingList(sportType, tagIds)
       .pipe(
         tap(() => this.isLoading$.next(true)),
-        map((videos) =>
-          videos.map((video) => ({
+        map((videos: any[]) =>
+          videos.map((video: any) => ({
             ...video,
             url: this.sanitizer.bypassSecurityTrustResourceUrl(video.url),
           }))

@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { filter, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Component({
   selector: 'vm-team-create',
   templateUrl: './team-create.component.html',

@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
+import { Timestamp, FieldValue } from 'firebase/firestore';
 
 export interface ChatMessage {
-  createdAt: firebase.firestore.FieldValue | firebase.firestore.Timestamp;
+  createdAt: FieldValue | Timestamp;
   id: string;
   user: {
     uid: string;

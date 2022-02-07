@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { select, Store } from '@ngrx/store';
 import { User } from '@volleymotion/models';
 import { Observable } from 'rxjs';

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChatMessage } from '@volleymotion/models';
-import * as firebase from 'firebase/app';
+import { serverTimestamp } from 'firebase/firestore';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  
+
   constructor(private fs: AngularFirestore) {}
 
   getMessages() {
@@ -22,6 +22,6 @@ export class ChatService {
   }
 
   getTimestamp() {
-    return firebase.default.firestore.FieldValue.serverTimestamp();
+    return serverTimestamp();
   }
 }

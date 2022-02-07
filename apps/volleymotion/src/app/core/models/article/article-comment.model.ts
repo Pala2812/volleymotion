@@ -1,11 +1,9 @@
-import firebase from 'firebase/app';
 import { User } from '../user.model';
-import Timestamp = firebase.firestore.Timestamp;
-
+import { Timestamp } from 'firebase/firestore';
 export interface SurveyComment {
-    uid?: string;
-    user?: User;
-    surveyId: string;
-    createdAt?: Timestamp;
-    message: string;
+  uid?: string;
+  user?: User;
+  surveyId: string;
+  createdAt?: Timestamp;
+  message: string;
 }

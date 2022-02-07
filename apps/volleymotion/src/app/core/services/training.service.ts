@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Training, TrainingUnit } from '@volleymotion/models';
 import { DateTime } from 'luxon';
 import { from } from 'rxjs';
@@ -41,7 +41,7 @@ export class TrainingService {
         .ref.where('seasonId', '==', seasonId)
         .where('teamId', '==', teamId)
         .get()
-        .then((docs) => docs.docs.map((doc) => doc.data()))
+        .then((docs: any) => docs.docs.map((doc: any) => doc.data()))
     );
   }
 
@@ -61,7 +61,7 @@ export class TrainingService {
         .where('date', '>=', today)
         .limit(2)
         .get()
-        .then((docs) => docs.docs.map((doc) => doc.data()))
+        .then((docs: any) => docs.docs.map((doc: any) => doc.data() as TrainingUnit))
     );
   }
 
