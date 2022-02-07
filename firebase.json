@@ -1,7 +1,19 @@
 {
   "functions": {
     "source": "/",
-    "predeploy": ["npm run build functions"]
+    "predeploy": ["npm run build functions"],
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**",
+      "**/apps/volleymotion/**",
+      "**/apps/volleymotion-e2e/**",
+      "**/apps/homepage/**",
+      "**/apps/homepage-e2e/**",
+      "**/apps/functions",
+      "**/dist/apps/volleymotion/**",
+      "**/libs/**",
+      "**/tools/**"
+    ]
   },
   "hosting": {
     "public": "dist/apps/volleymotion",
@@ -11,7 +23,11 @@
       "**/apps/volleymotion/**",
       "**/apps/volleymotion-e2e/**",
       "**/apps/homepage/**",
-      "**/apps/homepage-e2e/**"
+      "**/apps/homepage-e2e/**",
+      "**/apps/functions",
+      "**/dist/apps/functions/**",
+      "**/libs/**",
+      "**/tools/**"
     ],
     "headers": [
       {

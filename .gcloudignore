@@ -12,6 +12,12 @@
 # below:
 .git
 .gitignore
+.firebase
+.vscode
+.github
 
 # Node.js dependencies:
 node_modules/
+apps/**
+libs/**
+tools/**

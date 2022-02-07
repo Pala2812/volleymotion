@@ -1,0 +1,13 @@
+[debug] [2022-02-07T15:08:31.911Z] ----------------------------------------------------------------------
+[debug] [2022-02-07T15:08:31.913Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\PatLa\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-02-07T15:08:31.914Z] CLI Version:   10.1.2
+[debug] [2022-02-07T15:08:31.914Z] Platform:      win32
+[debug] [2022-02-07T15:08:31.914Z] Node Version:  v16.13.2
+[debug] [2022-02-07T15:08:31.915Z] Time:          Mon Feb 07 2022 16:08:31 GMT+0100 (Mitteleuropäische Normalzeit)
+[debug] [2022-02-07T15:08:31.915Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-02-07T15:08:31.980Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-02-07T15:08:31.980Z] > authorizing via signed-in user (patricklange2812@googlemail.com)
+[debug] [2022-02-07T15:08:31.980Z] [iam] checking project volley-motion for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-02-07T15:08:31.983Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/volley-motion:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}

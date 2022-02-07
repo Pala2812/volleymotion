@@ -1,4 +1,6 @@
-<ng-container *ngIf="(isLoadingPlayers$ | async) === false && (players$ | async)?.length; else noData">
+<ng-container
+  *ngIf="(isLoadingPlayers$ | async) === false && (players$ | async)?.length"
+>
   <nb-card
     class="card"
     *ngFor="let player of players$ | async"
@@ -33,6 +35,7 @@
   </nb-card>
 </ng-container>
 
+<!--
 <ng-template #noData>
   <vm-no-data
     [routerLink]="['../erstellen']"
@@ -40,6 +43,7 @@
     linkMessage="Erstelle jetzt einen Spieler!"
   ></vm-no-data>
 </ng-template>
+-->
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
   <mat-icon>add</mat-icon>

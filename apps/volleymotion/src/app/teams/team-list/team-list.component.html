@@ -1,4 +1,6 @@
-<ng-container *ngIf="(teams$ | async)?.length && (isLoadingTeams$ | async) === false; else noData">
+<ng-container
+  *ngIf="(teams$ | async)?.length && (isLoadingTeams$ | async) === false"
+>
   <nb-card
     class="team-card"
     *ngFor="let team of teams$ | async"
@@ -33,8 +35,11 @@
   </nb-card>
 </ng-container>
 
-<nb-spinner *ngIf="(isLoadingTeams$ | async) === true && (teams$ | async)?.length === 0"></nb-spinner>
+<nb-spinner
+  *ngIf="(isLoadingTeams$ | async) === true && (teams$ | async)?.length === 0"
+></nb-spinner>
 
+<!--
 <ng-template #noData>
   <vm-no-data
     [routerLink]="['../erstellen']"
@@ -42,6 +47,7 @@
     linkMessage="Erstelle jetzt eine Mannschaft!"
   ></vm-no-data>
 </ng-template>
+-->
 
 <button class="add-btn" mat-fab [routerLink]="['../erstellen']">
   <mat-icon>add</mat-icon>

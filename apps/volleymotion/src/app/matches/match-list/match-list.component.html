@@ -1,4 +1,6 @@
-<ng-container *ngIf="(matches$ | async)?.length && (isLoadingMatches$ | async) === false; else noData">
+<ng-container
+  *ngIf="(matches$ | async)?.length && (isLoadingMatches$ | async) === false"
+>
   <nb-card
     class="card"
     *ngFor="let match of matches$ | async"
@@ -38,6 +40,7 @@
   </nb-card>
 </ng-container>
 
+<!--
 <ng-template #noData>
   <vm-no-data
     [routerLink]="['../erstellen']"
@@ -45,6 +48,7 @@
     linkMessage="Erstelle jetzt ein Spieltag!"
   ></vm-no-data>
 </ng-template>
+-->
 
 <vm-loading-card
   class="loading-spinner"

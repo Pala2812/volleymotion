@@ -18,7 +18,7 @@ export const onTeamCreate = functions
       batch.create(currentSeason.doc, currentSeason.season);
       batch.create(nextSeason.doc, nextSeason.season);
 
-      const createdAt = firestore.Timestamp.now();
+      const createdAt = firestore.Timestamp.now() as any;
 
       const meta: Meta = {
         createdAt,

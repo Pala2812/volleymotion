@@ -1,4 +1,5 @@
 import { Exercise, Player, VideoTraining } from '.';
+import { Timestamp } from 'firebase/firestore';
 
 export interface TrainingUnit {
   id: string;
@@ -6,7 +7,7 @@ export interface TrainingUnit {
   seasonId: string;
   teamId: string;
   trainingId: string,
-  date: firebase.default.firestore.Timestamp;
+  date: Timestamp;
   participantIds: Player[];
   description?: string;
   exerciseIds: Exercise[];

@@ -9,7 +9,7 @@ export const onAccountCreate = functions
     try {
       const uid = userRecord?.uid;
       const email = userRecord?.email;
-      const createdAt = admin.firestore.Timestamp.now();
+      const createdAt = admin.firestore.Timestamp.now() as any;
       const meta: Meta = {
         createdAt,
         updatedAt: createdAt,

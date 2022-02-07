@@ -1,5 +1,5 @@
 import { Address, _geoloc } from '.';
-
+import { Timestamp } from 'firebase/firestore';
 export interface Training {
   uid: string;
   id: string;
@@ -14,8 +14,8 @@ export interface Training {
     | 'Freitag'
     | 'Samstag'
     | 'Sonntag';
-  from: firebase.default.firestore.Timestamp;
-  to: firebase.default.firestore.Timestamp;
+  from: Timestamp;
+  to: Timestamp;
   address: Address;
   _geoloc: _geoloc;
 }
