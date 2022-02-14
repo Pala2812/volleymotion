@@ -19,19 +19,7 @@ export class TrainingService {
   }
 
   delete(id: string) {
-    const unitDeletionRequest = this.fs
-      .collection('training-units')
-      .ref.where('trainingId', '==', id)
-      .get()
-      .then((docs) =>
-        docs.docs.map((doc) => this.fs.doc(`training-units/${doc.id}`).delete())
-      );
-
-    const trainingDayDeletionRequest = this.fs
-      .doc(`trainings-days/${id}`)
-      .delete();
-
-    return from(Promise.all([unitDeletionRequest, trainingDayDeletionRequest]));
+    return from(this.fs.doc(`training-days/${id}`).delete());
   }
 
   getAll(seasonId: string, teamId: string) {
@@ -40,6 +28,7 @@ export class TrainingService {
         .collection<Training>('training-days')
         .ref.where('seasonId', '==', seasonId)
         .where('teamId', '==', teamId)
+        .orderBy('weekday', 'asc')
         .get()
         .then((docs: any) => docs.docs.map((doc: any) => doc.data()))
     );
@@ -51,17 +40,20 @@ export class TrainingService {
     );
   }
 
-  getTrainingUnits(seasonId: string, teamId: string) {
-    const today = DateTime.now().endOf('day').toJSDate();
+  getTrainingUnits(trainingId: string, seasonId: string, limit = 2) {
+    const today = DateTime.now().endOf('day').startOf('day').toJSDate();
     return from(
       this.fs
         .collection<TrainingUnit>('training-units')
         .ref.where('seasonId', '==', seasonId)
-        .where('teamId', '==', teamId)
+        .where('trainingId', '==', trainingId)
+        .orderBy('date', 'asc')
         .where('date', '>=', today)
         .limit(2)
         .get()
-        .then((docs: any) => docs.docs.map((doc: any) => doc.data() as TrainingUnit))
+        .then((docs: any) =>
+          docs.docs.map((doc: any) => doc.data() as TrainingUnit)
+        )
     );
   }
 

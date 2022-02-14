@@ -11,6 +11,8 @@ import { TeamSelectors, UserSelectors } from '../../core/store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { filter, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NbDialogService } from '@nebular/theme';
+import { GenericDialogComponent } from '../../shared/dialogs/generic-dialog/generic-dialog.component';
 @Component({
   selector: 'vm-team-create',
   templateUrl: './team-create.component.html',
@@ -48,6 +50,7 @@ export class TeamCreateComponent implements OnInit {
   sportTypes = ['Hallenvolleyball', 'Beachvolleyball', 'Snowvolleyball'];
 
   constructor(
+    private dialog: NbDialogService,
     private store: Store<StoreState>,
     private router: Router,
     private actions$: Actions,
@@ -98,6 +101,7 @@ export class TeamCreateComponent implements OnInit {
       sportType: new FormControl(team?.sportType ?? '', [Validators.required]),
       teamType: new FormControl(team?.teamType ?? '', [Validators.required]),
       division: new FormControl(team?.division ?? '', [Validators.required]),
+      publicVisibility: new FormControl(true),
     });
   }
 
@@ -121,6 +125,7 @@ export class TeamCreateComponent implements OnInit {
       const sportType = form.controls.sportType.value;
       const teamType = form.controls.teamType.value;
       const division = form.controls.division.value;
+      const publicVisibility = form.controls.publicVisibility.value;
 
       const team: Team = {
         id,
@@ -129,10 +134,20 @@ export class TeamCreateComponent implements OnInit {
         sportType,
         teamType,
         division,
+        publicVisibility,
       };
 
       const action = TeamActions.createTeam({ team });
       this.store.dispatch(action);
     }
+  }
+  showInfoDialog() {
+    this.dialog.open(GenericDialogComponent, {
+      context: {
+        title: 'Sichtbarkeit',
+        description:
+          'Wenn eine Mannschaft öffentlich sichtbar ist, so kann diese Mannschaft über unsere Homepage gefunden werden. Damit soll es für Spieler in der Zukunft einfach sein Mannschaften zu finden. Ebenfalls können die Spieltagen dieser Mannschaft ebenfalls gefunden werden.',
+      },
+    });
   }
 }

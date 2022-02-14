@@ -9,7 +9,6 @@
       "**/apps/volleymotion-e2e/**",
       "**/apps/homepage/**",
       "**/apps/homepage-e2e/**",
-      "**/apps/functions",
       "**/dist/apps/volleymotion/**",
       "**/libs/**",
       "**/tools/**"

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Season, Training, TrainingUnit } from '@volleymotion/models';
-import { Observable } from 'rxjs';
+import { Training, TrainingUnit } from '@volleymotion/models';
+import { Observable, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { DateTime } from 'luxon';
 import { TrainingService } from '../../core/services/training.service';
 import { SeasonSelectors } from '../../core/store/selectors';
 
@@ -18,6 +17,7 @@ export class TrainingListComponent implements OnInit {
   seasonId: string | undefined;
   teamId: string | undefined;
   uid: string | undefined;
+  subscriptions: Subscription[] = [];
 
   constructor(private store: Store, private trainingService: TrainingService) {}
 
@@ -43,17 +43,27 @@ export class TrainingListComponent implements OnInit {
           season!.teamId
         );
       });
+
+    this.trainingList$?.subscribe((trainingDays) => {
+      trainingDays.forEach((trainingDay) => {
+        this.trainingService
+          .getTrainingUnits(trainingDay.id, trainingDay.seasonId, 2)
+          .subscribe((units) => trainingDay.trainingUnits = units);
+      });
+    });
   }
 
   async deleteTraining(id: string, event: Event) {
-    const deleteTraining = confirm(
+    const deleteTraining = await confirm(
       'Möchtest du diesen Trainingstag löschen und alle damit verbunden Einheiten?'
     );
-
-    if (deleteTraining) {
-      this.trainingService.delete(id).subscribe();
-    }
-
     event.stopImmediatePropagation();
+    if (deleteTraining) {
+      this.trainingService.delete(id).subscribe(() => console.log('deleted'));
+    }
+  }
+
+  editTraining() {
+
   }
 }

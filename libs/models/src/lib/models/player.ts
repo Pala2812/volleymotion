@@ -7,6 +7,7 @@ export interface Player {
     seasonId: string;
     firstname: string;
     lastname: string;
+    jerseyNumber?: number;
     position: string;
     strengths: Tag[];
     weaknesses: Tag[];

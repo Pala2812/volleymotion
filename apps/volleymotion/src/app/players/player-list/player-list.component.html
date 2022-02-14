@@ -8,7 +8,10 @@
   >
     <nb-card-header class="card-header">
       <span>{{ player?.firstname }} {{ player?.lastname }}</span>
-      <span>{{ player?.position }}</span>
+      <div>
+        <span>{{ player?.position }}</span>
+        <span class="player-card-jersey-container">T: {{ player?.jerseyNumber }}</span>
+      </div>
 
       <div class="card-header-actions">
         <button

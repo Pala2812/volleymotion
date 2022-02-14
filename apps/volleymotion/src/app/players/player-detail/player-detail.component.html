@@ -7,6 +7,9 @@
         </nb-card-header>
         <nb-card-body>
           {{ player?.firstname }} {{ player?.lastname }}
+          <div *ngIf="player?.jerseyNumber">
+            Trikot: {{ player?.jerseyNumber }}
+          </div>
           <div>
             {{ player?.position }}
           </div>

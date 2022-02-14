@@ -43,7 +43,7 @@ export const fullItems = [
     icon: 'list-outline',
   },
   // { title: 'Trainingsspiele', link: 'trainingsspiele', icon: 'pin-outline' },
-  // { title: 'Übungen', link: 'übungen', icon: 'activity-outline' },
+  { title: 'Übungen', link: 'übungen', icon: 'activity-outline' },
   //  { title: 'Chat', link: 'chat', icon: 'paper-plane-outline' },
   { title: 'Video-Übungen', link: 'video-training', icon: 'film-outline' },
   { title: 'Blog', link: 'artikel', icon: 'book-outline' },

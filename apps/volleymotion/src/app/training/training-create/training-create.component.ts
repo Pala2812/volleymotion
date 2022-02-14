@@ -175,14 +175,10 @@ export class TrainingCreateComponent implements OnInit {
         _geoloc,
       };
 
-      /*  if (this.match$) {
-        return this.store.dispatch(MatchActions.updateMatch({ match: match }));
-      } */
-
       this.trainingService.create(training).subscribe(() => {
+        alert('Deine Trainingseinheiten werden im Hintergrund erstellt und sind bald verfügbar!');
         this.router.navigate(['training']);
       });
-      // this.store.dispatch(MatchActions.createMatch({ match }));
     }
   }
 

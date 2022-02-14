@@ -97,6 +97,7 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
         Validators.required,
       ]),
       lastname: new FormControl(player?.lastname ?? '', [Validators.required]),
+      jerseyNumber: new FormControl(player?.jerseyNumber ?? null),
       position: new FormControl(player?.position ?? '', [Validators.required]),
       strengths: new FormArray(this.getControlArray(player?.strengths ?? [])),
       weaknesses: new FormArray(this.getControlArray(player?.weaknesses ?? [])),
@@ -145,6 +146,7 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
       const seasonId = season.id;
       const firstname = form.controls.firstname.value;
       const lastname = form.controls.lastname.value;
+      const jerseyNumber = form.controls.jerseyNumber.value;
       const position = form.controls.position.value;
       const strengths = [...new Set(form.controls.strengths.value as any[])];
       const weaknesses = [...new Set(form.controls.weaknesses.value as any[])];
@@ -159,6 +161,7 @@ export class PlayerCreateComponent implements OnInit, OnDestroy {
         seasonId,
         firstname,
         lastname,
+        jerseyNumber,
         position,
         strengths,
         weaknesses,

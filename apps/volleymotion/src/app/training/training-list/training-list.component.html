@@ -3,16 +3,6 @@
     >{{ training?.day }}
     <div class="card-header-actions">
       <button
-        class="edit-btn"
-        nbButton
-        ghost
-        status="info"
-        (click)="editTraining(training.id, $event)"
-      >
-        <nb-icon icon="edit-outline"></nb-icon>
-      </button>
-
-      <button
         class="delete-btn"
         nbButton
         ghost
@@ -31,9 +21,34 @@
       {{ training?.address?.postalcode }} {{ training?.address?.locality }}
     </div>
   </nb-card-body>
+  <nb-card-footer>
+    <div class="training-units">
+      <div *ngFor="let unit of training?.trainingUnits">
+        <a [routerLink]="['../einheit/bearbeiten/' + unit.id]">
+          {{ unit?.date | timestamp | date: 'dd.MM.yy' }}
+        </a>
+
+        <button nbButton ghost [nbTooltip]="unit?.participants?.length ?? 0 + ' Zusagen'" >
+          <nb-icon icon="people-done-outline"></nb-icon>
+          {{0}}
+        </button>
+        <button nbButton ghost [nbTooltip]="unit?.participants?.length ?? 0 + ' Unbestimmt'" >
+          <nb-icon icon="people-outline"></nb-icon>
+          {{0}}
+        </button>
+        <button nbButton ghost [nbTooltip]="unit?.participants?.length ?? 0 + ' Absagen'" >
+          <nb-icon icon="people-delete-outline"></nb-icon>
+          {{0}}
+        </button>
+      </div>
+    </div>
+  </nb-card-footer>
 </nb-card>
 
-<nb-card *ngFor="let unit of trainingUnits$ | async" [routerLink]="['../einheit/' + unit.id]">
+<nb-card
+  *ngFor="let unit of trainingUnits$ | async"
+  [routerLink]="['../einheit/' + unit.id]"
+>
   <nb-card-header>{{ unit?.date | timestamp | date: 'dd.MM' }}</nb-card-header>
 </nb-card>
 

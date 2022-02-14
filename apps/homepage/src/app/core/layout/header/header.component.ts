@@ -6,7 +6,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @HostListener('window:scroll', ['event$']) onScroll(event) {
+  @HostListener('window:scroll', ['event$']) onScroll(event: any) {
     this.isScrolled = window.scrollY > 50 ? true : false;
   }
   isScrolled = false;

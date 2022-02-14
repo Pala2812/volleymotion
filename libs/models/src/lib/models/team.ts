@@ -8,4 +8,5 @@ export interface Team {
   teamType: string;
   sportType: string;
   division: string;
+  publicVisibility: boolean;
 }

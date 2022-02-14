@@ -10,6 +10,8 @@ export interface TrainingUnit {
   date: Timestamp;
   admins: string[];
   participantIds: string[];
+  pendingParticipantIds: string[];
+  nonParticipantIds: string[];
   description?: string;
   exerciseIds: string[];
   videoTrainingIds: string[];

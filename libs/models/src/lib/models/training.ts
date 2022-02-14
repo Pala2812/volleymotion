@@ -1,4 +1,4 @@
-import { Address, _geoloc } from '.';
+import { Address, TrainingUnit, _geoloc } from '.';
 import { Timestamp } from 'firebase/firestore';
 export interface Training {
   uid: string;
@@ -18,4 +18,5 @@ export interface Training {
   to: Timestamp;
   address: Address;
   _geoloc: _geoloc;
+  trainingUnits?: TrainingUnit[]
 }

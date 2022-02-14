@@ -15,6 +15,7 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
 import { TagInputComponent } from './components/tag-input/tag-input.component';
 import { TagExplanationComponent } from './dialogs/tag-explanation/tag-explanation.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
+import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NoDataComponent } from './components/no-data/no-data.component';
     TagInputComponent,
     TagExplanationComponent,
     NoDataComponent,
+    GenericDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { NoDataComponent } from './components/no-data/no-data.component';
     AuthDialogComponent,
     DeleteDialogComponent,
     TagExplanationComponent,
+    GenericDialogComponent,
   ],
 })
 export class SharedModule {}

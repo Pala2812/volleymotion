@@ -16,9 +16,16 @@
 .vscode
 .github
 .angular
+.pretierrc
+.app.yaml
+.capacitor.config.tools
+.decorate-angular-cli.js
+.ionic.config.json
+.jest.config.js
+.jest.preset.js
+.firebase-debug.log
 
 # Node.js dependencies:
 node_modules/
-apps/**
 libs/**
 tools/**
